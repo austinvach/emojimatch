@@ -259,7 +259,8 @@ textarea {
   }
 
   .grid {
-    margin-top: 50px;
+    margin-top: min(15vh, 200px);
+    /* margin-top: 50px; */
     display: grid;
     grid-template-columns: 100px 100px;
     justify-content: center;
@@ -267,10 +268,4 @@ textarea {
 
   .grid img {
     height: 100px;
-  }
-
-  @media only screen and (min-width: 769px) {
-    .grid {
-      margin-top: 200px;
-    }
   }
