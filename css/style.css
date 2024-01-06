@@ -260,7 +260,6 @@ textarea {
 
   .grid {
     margin-top: min(15vh, 200px);
-    /* margin-top: 50px; */
     display: grid;
     grid-template-columns: 100px 100px;
     justify-content: center;
