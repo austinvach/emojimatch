@@ -1,19 +1,43 @@
 body {
-    font-family: Segoe, "Segoe UI", Verdana, sans-serif;
-    text-align: center;
+  font-family: Segoe, "Segoe UI", Verdana, sans-serif;
+  text-align: center;
+  margin: 0px
 }
 
-.subtitle {
-    font-size: 18px;
+.main {
+  max-width: 1200px;
+  margin: min(5vh, 200px) auto; 
+}
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 14px;
+  font-size: 2em;
+}
+
+.buttons {
+  /* Is there a better layout option for content in a grid? */
+  display: flex;
+  justify-content: end;
 }
 
 .grid {
-    margin-top: min(15vh, 200px);
-    display: grid;
-    grid-template-columns: 100px 100px;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  justify-content: center;
 }
 
 .grid img {
-    height: 100px;
+  height: 150px;
+  -webkit-user-drag: none;
+}
+
+.cleared {
+  visibility: hidden;
+}
+
+footer, footer a {
+  margin-top: min(3vh, 200px);
+  color:darkgrey
 }
