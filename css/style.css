@@ -6,7 +6,7 @@ body {
 
 .main {
   /* max-width: 1140px; */
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
   margin-top: min(5vh, 200px);
 }
@@ -24,12 +24,17 @@ body {
   font-size: 2em;
 }
 
-.header .buttons {
+.buttons {
   /* Is there a better layout option for content in a grid? */
   display: flex;
   justify-content: end;
 }
 
 .grid img {
-  height: 100px;
+  height: 150px;
+  -webkit-user-drag: none;
+}
+
+.cleared {
+  visibility: hidden;
 }
