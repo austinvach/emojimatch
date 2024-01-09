@@ -5,20 +5,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Emoji Match</title>
+  <link rel="stylesheet" href="css/boilerplate.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="media/slightly_smiling_face_flat.svg" sizes="any">
+  <link rel="icon" href="media/emoji/slightly_smiling_face_flat.svg" sizes="any">
 </head>
 
 <body>
-  <div class="grid">
-    <div><img src="media/slightly_smiling_face_flat.svg" alt="Slightly smiling face emoji"></div>
-    <div><img src="media/blue_square_flat.svg" alt="Blue square emoji"></div>
-    <div><img src="media/blue_square_flat.svg" alt="Blue square emoji"></div>
-    <div><img src="media/slightly_smiling_face_flat.svg" alt="Slightly smiling face emoji"></div>
+  <div class="main">
+    <!-- <h1>Emoji Match</h1> -->
+    <div class="header">
+      <select title="Emoji Groups" onchange="reset()"></select>
+      <div id="stopwatch">00:00</div>
+      <div class="buttons">
+        <button type="reset" id="reset" onclick="reset()">Reset</button>
+        <!-- <button type="menu" id="settings" onclick="openSettings()">Settings</button> -->
+      </div>
+    </div>
+    <div class="grid"></div>
+    <script src="js/app.js"></script>
   </div>
-  <p class="subtitle">coming soon</p>
-  </div>
-  <script src="js/app.js"></script>
 </body>
 
 </html>
