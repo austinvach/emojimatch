@@ -1,4 +1,5 @@
 ## To-do
+- [ ] Add form validation
 - [ ] Improve styling on end of game message
 - [ ] Issue high score VCs to users with DIDs
 - [ ] Make responsive
@@ -14,3 +15,5 @@
   - 😡 Pouting Face
 - Some pre-unicode 15 emoji are missing from their SVG set:
   - 🎮 Video game
+## Web 5 Challenges
+- [Quickstart guide](https://developer.tbd.website/docs/web5/build/decentralized-identifiers/how-to-create-did) is still incorrect. [See issue here](https://github.com/TBD54566975/developer.tbd.website/issues/1070#event-11367598025).

@@ -41,3 +41,25 @@ footer, footer a {
   margin-top: min(3vh, 200px);
   color:darkgrey
 }
+
+dialog {
+  margin-top: min(20vh, 200px);
+  position: absolute;
+  padding: 20px;
+  border-radius: 10px;
+  border-color: lightgray;
+  padding: 20px;
+  max-width: 50vw;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+form {
+  display: inline-block;
+}
+
+.example{
+  color: darkgrey;
+}
