@@ -6,7 +6,7 @@
 - [ ] Update [emoji.json](emoji.json) to include all emoji from [microsoft/fluentui-emoji](https://github.com/microsoft/fluentui-emoji)
 - [ ] Add leaderboard
 - [ ] Let people customize card preview time, number or cards, emojis, language, etc.
-## Issues
+## Issues (that I know of 😅)
 - Microsoft hasn't shared their Unicode 15 assets.
 - Some emoji names don't match the unicode description:
   - 😵 Dizzy face
