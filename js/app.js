@@ -1,4 +1,3 @@
-
 const backOfCard = 'media/emoji/blue_square_flat.svg';
 const cardCount = 32; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
@@ -31,7 +30,6 @@ function onLoad() {
         .then(json => prepareGame(json)) // Passes the JSON to the prepareGame() function
 }
 
-// CAN I REMOVE THIS AND JUST ADD MORE .then's UP ABOVE?
 function prepareGame(json) {
     // console.log('prepareGame');
     emoji = json; // Saves the emoji JSON to the emojis variable
@@ -39,6 +37,8 @@ function prepareGame(json) {
     pickPairs();
     setCardsFaceUp();
 };
+
+// CORE GAME FUNCTIONS
 
 function populateOptions() {
     // console.log('populateOptions');
@@ -60,18 +60,18 @@ function pickPairs() {
 
 function setCardsFaceUp() {
     // console.log('setCardsFaceUp');
-    // Shorten forEach
-    pairs.forEach((item, index) => { // Creates the cards and sets them face up
-        const section = document.querySelector('.grid');
+    const section = document.querySelector('.grid');
+    for (var i = 0; i < pairs.length; i++) {
         const card = document.createElement('img');
-        card.setAttribute('id', index);
-        card.setAttribute('alt', `${item.name} emoji`);
-        card.setAttribute('src', `media/emoji/${item.slug}_flat.svg`);
+        card.setAttribute('src', backOfCard);
+        card.setAttribute('id', i);
+        card.setAttribute('alt', `${pairs[i].name} emoji`);
+        card.setAttribute('src', `media/emoji/${pairs[i].slug}_flat.svg`);
         section.appendChild(card);
         card.addEventListener('click', e => {
             selectedCards = document.querySelectorAll('.faceUp')
             if (selectedCards.length === 0) {
-                flipCardFaceUp(e.target);
+                flipSelectedCardFaceUp(e.target);
             }
             else if (selectedCards.length === 1 && e.target.id != selectedCards[0].id) {
                 e.target.setAttribute('src', `media/emoji/${pairs[e.target.id].slug}_flat.svg`);
@@ -79,27 +79,8 @@ function setCardsFaceUp() {
                 checkCards();
             }
         });
-    });
+    }
     previewTimerId = setTimeout(flipCardsFaceDown, previewTimeInMS); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
-};
-
-function checkCards() {
-    // console.log('checkCards');
-    selectedCards = document.querySelectorAll('.faceUp')
-    if (selectedCards[0].src === selectedCards[1].src) {
-        console.log('BOO YAH! THAT\'S A MATCH')
-        transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS); // Waits before clearing cards.
-    }
-    else {
-        console.log('SORRY, NOT A MATCH')
-        transitionDelayTimerId = setTimeout(flipSelectedCardsFaceDown, transitionDelayTimeInMS); // Waits before flipping cards face down.
-    }
-}
-
-function flipCardFaceUp(card) {
-    // console.log('flipCardFaceUp');
-    card.setAttribute('src', `media/emoji/${pairs[card.id].slug}_flat.svg`);
-    card.classList.toggle('faceUp');
 };
 
 function flipCardsFaceDown() {
@@ -111,6 +92,23 @@ function flipCardsFaceDown() {
     startStopwatch();
 };
 
+function flipSelectedCardFaceUp(card) {
+    // console.log('flipSelectedCardFaceUp');
+    card.setAttribute('src', `media/emoji/${pairs[card.id].slug}_flat.svg`);
+    card.classList.toggle('faceUp');
+};
+
+function checkCards() {
+    // console.log('checkCards');
+    selectedCards = document.querySelectorAll('.faceUp')
+    if (selectedCards[0].src === selectedCards[1].src) {
+        transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS); // Waits before clearing cards.
+    }
+    else {
+        transitionDelayTimerId = setTimeout(flipSelectedCardsFaceDown, transitionDelayTimeInMS); // Waits before flipping cards face down.
+    }
+}
+
 function flipSelectedCardsFaceDown() {
     // console.log('flipSelectedCardsFaceDown');
     for (var i = 0; i < selectedCards.length; i++) {
@@ -118,22 +116,6 @@ function flipSelectedCardsFaceDown() {
         selectedCards[i].classList.toggle('faceUp');
     }
 }
-
-function startStopwatch() {
-    // console.log('startStopwatch')
-    stopwatchIntervalId = window.setInterval(stopwatch, 1000);
-}
-
-function reset() {
-    // console.log('reset');
-    clearTimeout(previewTimerId);
-    clearTimeout(transitionDelayTimerId);
-    clearInterval(stopwatchIntervalId);
-    resetStopwatch();
-    clearBoard();
-    pickPairs();
-    setCardsFaceUp();
-};
 
 function clearMatch() {
     // console.log('clearMatch');
@@ -143,21 +125,16 @@ function clearMatch() {
     }
     hiddenCards = document.querySelectorAll('.cleared');
     if (hiddenCards.length === cardCount) {
-        console.log('That\s the game!')
         document.querySelector('.grid').innerHTML = 'That\s the game! Press the space bar to start a new game.';
         stopStopwatch();
     }
 }
 
-function clearBoard() {
-    // console.log('clearBoard');
-    const section = document.querySelector('.grid');
-    section.innerHTML = '';
-};
+// STOPWATCH FUNCTIONS
 
-function stopStopwatch() {
-    // console.log('stopStopwatch')
-    window.clearInterval(stopwatchIntervalId);
+function startStopwatch() {
+    // console.log('startStopwatch')
+    stopwatchIntervalId = window.setInterval(stopwatch, 1000);
 }
 
 function stopwatch() {
@@ -182,6 +159,11 @@ function stopwatch() {
     document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
 } 
 
+function stopStopwatch() {
+    // console.log('stopStopwatch')
+    window.clearInterval(stopwatchIntervalId);
+}
+
 function resetStopwatch() {
     // console.log('resetStopwatch');
     seconds = 0
@@ -191,7 +173,26 @@ function resetStopwatch() {
     document.getElementById('stopwatch').innerHTML = '00:00'
 };
 
-window.onkeydown = function (k) {
+// REST FUNCTIONS
+
+function reset() {
+    // console.log('reset');
+    clearTimeout(previewTimerId);
+    clearTimeout(transitionDelayTimerId);
+    clearInterval(stopwatchIntervalId);
+    resetStopwatch();
+    clearBoard();
+    pickPairs();
+    setCardsFaceUp();
+};
+
+function clearBoard() {
+    // console.log('clearBoard');
+    const section = document.querySelector('.grid');
+    section.innerHTML = '';
+};
+
+window.onkeydown = function (k) { // Resets the game when the user presses the space bar
     if (k.keyCode === 32) {
         reset();
     };
