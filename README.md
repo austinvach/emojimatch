@@ -2,7 +2,8 @@
 - [ ] Improve styling on end of game message
 - [ ] Issue high score VCs to users with DIDs
 - [ ] Make responsive
-- [ ] Update emoji.json to include all emoji from [microsoft/fluentui-emoji](https://github.com/microsoft/fluentui-emoji)
+- [ ] Address deprecated code property on `storageAvailable` function
+- [ ] Update [emoji.json](emoji.json) to include all emoji from [microsoft/fluentui-emoji](https://github.com/microsoft/fluentui-emoji)
 - [ ] Add leaderboard
 - [ ] Let people customize card preview time, number or cards, emojis, language, etc.
 ## Issues

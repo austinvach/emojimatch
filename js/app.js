@@ -15,6 +15,8 @@ let displaySeconds = 0;
 // Variables to hold emojis
 let emoji = [];
 let pairs = [];
+// Variables to store user preferences
+let selectedCategory;
 // Other variables
 let selectedCards = [];
 
@@ -34,24 +36,42 @@ function onLoad() {
 function prepareGame(json) {
     // console.log('prepareGame');
     emoji = json; // Saves the emoji JSON to the emojis variable
-    populateOptions(); // Populates the dropdown with the emoji categories
+    checkLocalStorage(); // Checks for any saved customer preferences
+    populateCategories(); // Populates the dropdown with the emoji categories
     pickPairs();
     setCardsFaceUp();
 };
 
-// CORE GAME FUNCTIONS
+// GAME SETUP FUNCTIONS
 
-function populateOptions() {
-    // console.log('populateOptions');
+function checkLocalStorage(){
+    // console.log('checkLocalStorage');
+    if (storageAvailable('localStorage')) {
+        selectedCategory = localStorage.getItem('selectedCategory')
+      } else {
+        console.log('LOCAL STORAGE NOT AVAILABLE');
+      }
+}
+
+function populateCategories() {
+    // console.log('populateCategories');
     const section = document.querySelector('select');
     for (var i = 0; i < emoji.length; i++) {
-        section.add(new Option(emoji[i].name, emoji[i].value));
+        if(selectedCategory && selectedCategory === emoji[i].name){ // If user settings exist, honor their selected category
+            section.add(new Option(emoji[i].name, emoji[i].name, false, true));
+        }
+        else {
+            section.add(new Option(emoji[i].name, emoji[i].name));
+        }
     }
 };
+
+// CORE GAME FUNCTIONS
 
 function pickPairs() {
     // console.log('pickPairs');
     const categoryDropdown = document.querySelector('select');
+    selectedCategory = categoryDropdown.selectedOptions[0].value;
     let selectedEmoji = emoji[categoryDropdown.selectedIndex].emojis;
     selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
     pairs = selectedEmoji.slice(0, (cardCount / 2)); // Picks half the number of cards requested in cardCount variable
@@ -174,7 +194,7 @@ function resetStopwatch() {
     document.getElementById('stopwatch').innerHTML = '00:00'
 };
 
-// REST FUNCTIONS
+// RESET FUNCTIONS
 
 function reset() {
     // console.log('reset');
@@ -185,6 +205,7 @@ function reset() {
     clearBoard();
     pickPairs();
     setCardsFaceUp();
+    saveUserSettings();
 };
 
 function clearBoard() {
@@ -193,18 +214,13 @@ function clearBoard() {
     section.innerHTML = '';
 };
 
-// FUNCTION TO STORE USER PREFERENCES
+window.onkeydown = function (k) { // Resets the game when the user presses the space bar
+    if (k.keyCode === 32) {
+        reset();
+    };
+};
 
-function checkLocalStorage(){
-    // console.log('checkLocalStorage');
-    if (storageAvailable('localStorage')) {
-        let category = localStorage.getItem('category')
-        console.log('TIME TO STORE BABY!', category);
-        localStorage.setItem('category', "HODL");
-      } else {
-        console.log('BOO HOO');
-      }
-}
+// FUNCTIONS TO MANAGE USER SETTINGS
 
 function storageAvailable(type) {
     let storage;
@@ -233,8 +249,8 @@ function storageAvailable(type) {
     }
   }
 
-window.onkeydown = function (k) { // Resets the game when the user presses the space bar
-    if (k.keyCode === 32) {
-        reset();
-    };
-};
+  function saveUserSettings(){
+    // console.log('saveUserSettings');
+    console.log(selectedCategory);
+    localStorage.setItem('selectedCategory', selectedCategory);
+}

@@ -5,16 +5,8 @@ body {
 }
 
 .main {
-  /* max-width: 1140px; */
   max-width: 1200px;
-  margin: auto;
-  margin-top: min(5vh, 200px);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  justify-content: center;
+  margin: min(5vh, 200px) auto; 
 }
 
 .header {
@@ -30,6 +22,12 @@ body {
   justify-content: end;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  justify-content: center;
+}
+
 .grid img {
   height: 150px;
   -webkit-user-drag: none;
@@ -37,4 +35,9 @@ body {
 
 .cleared {
   visibility: hidden;
+}
+
+footer, footer a {
+  margin-top: min(3vh, 200px);
+  color:darkgrey
 }
