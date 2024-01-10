@@ -1,6 +1,6 @@
 ## To-do
 - [ ] Improve styling on end of game message
-- [ ] Issue high score VCs to users with DIDs
+- [ ] Issue best time VCs to users with DIDs
 - [ ] Make responsive
 - [ ] Address deprecated code property on `storageAvailable` function
 - [ ] Update [emoji.json](emoji.json) to include all emoji from [microsoft/fluentui-emoji](https://github.com/microsoft/fluentui-emoji)
