@@ -10,9 +10,9 @@
 ## Issues (that I know of 😅)
 - Microsoft hasn't shared their Unicode 15 assets.
 - Some emoji names don't match the unicode description:
-  - 😵 Dizzy face
-  - 🤗 Hugging face
-  - 😡 Pouting Face
+  - 😵 Dizzy face - Unicode 'face with crossed-out eyes'
+  - 🤗 Hugging face - Unicode 'smiling face with open hands'
+  - 😡 Pouting Face - Unicode 'enraged face'
 - Some pre-unicode 15 emoji are missing from their SVG set:
   - 🎮 Video game
 ## Web 5 Challenges
