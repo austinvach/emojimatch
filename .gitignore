@@ -1,5 +1,11 @@
-# Web5 Data
+# TEMPORARY
+package-lock.json
+package.json
 DATA
+media/emoji/color
+media/emoji/contrast
+checkemoji.html
+checkemoji.js
 
 # Logs
 logs

@@ -1,5 +1,5 @@
 // import { VerifiableCredential } from "@web5/credentials";
-const backOfCard = 'media/emoji/blue_square_flat.svg';
+const backOfCard = 'media/emoji/flat/blue_square_flat.svg';
 const cardCount = 32; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
 const transitionDelayTimeInMS = 400;
@@ -21,24 +21,28 @@ let selectedCategory;
 // Other variables
 let selectedCards = [];
 
-//Event listeners
+// EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', e => {
-    // console.log('DOMContentLoaded');
+    // console.log('DOMContentLoaded EventListener');
     onLoad();
     checkLocalStorage();
 });
 
-document.getElementById('settings').addEventListener('click', e => {
-    showModal();
-});
-
 document.getElementById('reset').addEventListener('click', e => {
+    // console.log('Reset EventListener');
     reset();
 });
 
-document.getElementById('emojiGroups').addEventListener('change', e => {
+document.getElementById('emojiCategories').addEventListener('change', e => {
+    // console.log('EmojiCategories EventListener');
     reset();
 });
+
+// document.getElementById('settings').addEventListener('click', e => {
+//     showModal();
+// });
+
+// ONLOAD FUNCTIONS
 
 function onLoad() {
     // console.log('onLoad');
@@ -98,10 +102,9 @@ function setCardsFaceUp() {
     const section = document.querySelector('.grid');
     for (var i = 0; i < pairs.length; i++) {
         const card = document.createElement('img');
-        card.setAttribute('src', backOfCard);
         card.setAttribute('id', i);
         card.setAttribute('alt', `${pairs[i].name} emoji`);
-        card.setAttribute('src', `media/emoji/${pairs[i].slug}_flat.svg`);
+        card.setAttribute('src', `media/emoji/flat/${pairs[i].slug}_flat.svg`);
         section.appendChild(card);
         card.addEventListener('click', e => {
             selectedCards = document.querySelectorAll('.faceUp')
@@ -109,8 +112,7 @@ function setCardsFaceUp() {
                 flipSelectedCardFaceUp(e.target);
             }
             else if (selectedCards.length === 1 && e.target.id != selectedCards[0].id) {
-                e.target.setAttribute('src', `media/emoji/${pairs[e.target.id].slug}_flat.svg`);
-                e.target.classList.toggle('faceUp');
+                flipSelectedCardFaceUp(e.target);
                 checkCards();
             }
         });
@@ -129,7 +131,7 @@ function flipCardsFaceDown() {
 
 function flipSelectedCardFaceUp(card) {
     // console.log('flipSelectedCardFaceUp');
-    card.setAttribute('src', `media/emoji/${pairs[card.id].slug}_flat.svg`);
+    card.setAttribute('src', `media/emoji/flat/${pairs[card.id].slug}_flat.svg`);
     card.classList.toggle('faceUp');
 };
 
@@ -212,7 +214,7 @@ function resetStopwatch() {
 
 function reset() {
     // console.log('reset');
-    document.querySelector("#gameOverDialog").close();
+    // document.querySelector("#gameOverDialog").close();
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
     clearInterval(stopwatchIntervalId);
