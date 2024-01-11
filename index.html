@@ -8,7 +8,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-MKMTHGF4QW');
   </script>
   <meta charset="utf-8">
@@ -16,21 +15,39 @@
   <title>Emoji Match</title>
   <link rel="stylesheet" href="css/boilerplate.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="media/emoji/slightly_smiling_face_flat.svg" sizes="any">
+  <link rel="icon" href="media/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
 </head>
 
 <body>
+  <!-- Remove main - move style to body -->
   <div class="main">
     <!-- <h1>Emoji Match</h1> -->
+    <!-- Change this div to a header -->
     <div class="header">
-      <select title="Emoji Groups" onchange="reset()"></select>
+      <select id="emojiCategories"></select>
       <div id="stopwatch">00:00</div>
       <div class="buttons">
-        <button type="reset" id="reset" onclick="reset()">Reset</button>
-        <!-- <button type="menu" id="settings" onclick="openSettings()">Settings</button> -->
+        <button id="reset" type="reset">Reset</button>
+        <!-- <button id="settings" type="button" >Settings</button> -->
       </div>
     </div>
-    <div class="grid"></div>
+    <!-- <dialog id="gameOverDialog">
+      <h1>GAME OVER</h1>
+      <h2>You cleared all matches in 00:00</h2>
+      <p>If you're a <a href="https://developer.tbd.website/projects/web5/">Web5</a> nerd, enter your <a
+          href="https://developer.tbd.website/docs/web5/learn/decentralized-identifiers">DID</a> and I'll issue
+        you a <a href="https://developer.tbd.website/docs/web5/learn/verifiable-credentials">Verifiable Credential
+          (VC)</a> confirming your best time.</p>
+      <p>Otherwise press the spacebar to start a new game.</p>
+      <p class="example">DID format must be like <strong>did:example:123454klasjdfluio0089d8f888000</strong></p>
+      <form id="modalForm">
+        <textarea id="did" rows="5" cols="50" required></textarea>
+        <input type="submit" value="Submit">
+      </form>
+      <div id="jwt"></div>
+    </dialog> -->
+    <div class="grid">
+    </div>
     <footer>
       <p><strong>Press Spacebar to Reset</strong></p><a href="https://austinvach.com">Hacked together by Austin</a>
     </footer>

@@ -1,4 +1,5 @@
 ## To-do
+- [ ] Add form validation
 - [ ] Improve styling on end of game message
 - [ ] Issue best time VCs to users with DIDs
 - [ ] Make responsive
@@ -9,8 +10,10 @@
 ## Issues (that I know of 😅)
 - Microsoft hasn't shared their Unicode 15 assets.
 - Some emoji names don't match the unicode description:
-  - 😵 Dizzy face
-  - 🤗 Hugging face
-  - 😡 Pouting Face
+  - 😵 Dizzy face - Unicode 'face with crossed-out eyes'
+  - 🤗 Hugging face - Unicode 'smiling face with open hands'
+  - 😡 Pouting Face - Unicode 'enraged face'
 - Some pre-unicode 15 emoji are missing from their SVG set:
   - 🎮 Video game
+## Web 5 Challenges
+- [Quickstart guide](https://developer.tbd.website/docs/web5/build/decentralized-identifiers/how-to-create-did) is still incorrect. [See issue here](https://github.com/TBD54566975/developer.tbd.website/issues/1070#event-11367598025).

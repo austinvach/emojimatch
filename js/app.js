@@ -1,4 +1,5 @@
-const backOfCard = 'media/emoji/blue_square_flat.svg';
+// import { VerifiableCredential } from "@web5/credentials";
+const backOfCard = 'media/emoji/flat/blue_square_flat.svg';
 const cardCount = 32; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
 const transitionDelayTimeInMS = 400;
@@ -20,11 +21,28 @@ let selectedCategory;
 // Other variables
 let selectedCards = [];
 
+// EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', e => {
-    // console.log('DOMContentLoaded');
+    // console.log('DOMContentLoaded EventListener');
     onLoad();
     checkLocalStorage();
 });
+
+document.getElementById('reset').addEventListener('click', e => {
+    // console.log('Reset EventListener');
+    reset();
+});
+
+document.getElementById('emojiCategories').addEventListener('change', e => {
+    // console.log('EmojiCategories EventListener');
+    reset();
+});
+
+// document.getElementById('settings').addEventListener('click', e => {
+//     showModal();
+// });
+
+// ONLOAD FUNCTIONS
 
 function onLoad() {
     // console.log('onLoad');
@@ -44,20 +62,20 @@ function prepareGame(json) {
 
 // GAME SETUP FUNCTIONS
 
-function checkLocalStorage(){
+function checkLocalStorage() {
     // console.log('checkLocalStorage');
     if (storageAvailable('localStorage')) {
         selectedCategory = localStorage.getItem('selectedCategory')
-      } else {
+    } else {
         console.log('LOCAL STORAGE NOT AVAILABLE');
-      }
+    }
 }
 
 function populateCategories() {
     // console.log('populateCategories');
     const section = document.querySelector('select');
     for (var i = 0; i < emoji.length; i++) {
-        if(selectedCategory && selectedCategory === emoji[i].name){ // If user settings exist, honor their selected category
+        if (selectedCategory && selectedCategory === emoji[i].name) { // If user settings exist, honor their selected category
             section.add(new Option(emoji[i].name, emoji[i].name, false, true));
         }
         else {
@@ -84,10 +102,9 @@ function setCardsFaceUp() {
     const section = document.querySelector('.grid');
     for (var i = 0; i < pairs.length; i++) {
         const card = document.createElement('img');
-        card.setAttribute('src', backOfCard);
         card.setAttribute('id', i);
         card.setAttribute('alt', `${pairs[i].name} emoji`);
-        card.setAttribute('src', `media/emoji/${pairs[i].slug}_flat.svg`);
+        card.setAttribute('src', `media/emoji/flat/${pairs[i].slug}_flat.svg`);
         section.appendChild(card);
         card.addEventListener('click', e => {
             selectedCards = document.querySelectorAll('.faceUp')
@@ -95,8 +112,7 @@ function setCardsFaceUp() {
                 flipSelectedCardFaceUp(e.target);
             }
             else if (selectedCards.length === 1 && e.target.id != selectedCards[0].id) {
-                e.target.setAttribute('src', `media/emoji/${pairs[e.target.id].slug}_flat.svg`);
-                e.target.classList.toggle('faceUp');
+                flipSelectedCardFaceUp(e.target);
                 checkCards();
             }
         });
@@ -115,7 +131,7 @@ function flipCardsFaceDown() {
 
 function flipSelectedCardFaceUp(card) {
     // console.log('flipSelectedCardFaceUp');
-    card.setAttribute('src', `media/emoji/${pairs[card.id].slug}_flat.svg`);
+    card.setAttribute('src', `media/emoji/flat/${pairs[card.id].slug}_flat.svg`);
     card.classList.toggle('faceUp');
 };
 
@@ -166,7 +182,7 @@ function stopwatch() {
         minutes++;
     }
     if (seconds < 10) { // Adds a leading 0 if the seconds/minutes are only one digit.
-        displaySeconds = `0${seconds}`; 
+        displaySeconds = `0${seconds}`;
     }
     else {
         displaySeconds = seconds;
@@ -178,7 +194,7 @@ function stopwatch() {
         displayMinutes = minutes;
     }
     document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
-} 
+}
 
 function stopStopwatch() {
     // console.log('stopStopwatch')
@@ -198,6 +214,7 @@ function resetStopwatch() {
 
 function reset() {
     // console.log('reset');
+    // document.querySelector("#gameOverDialog").close();
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
     clearInterval(stopwatchIntervalId);
@@ -225,32 +242,78 @@ window.onkeydown = function (k) { // Resets the game when the user presses the s
 function storageAvailable(type) {
     let storage;
     try {
-      storage = window[type];
-      const x = "__storage_test__";
-      storage.setItem(x, x);
-      storage.removeItem(x);
-      return true;
+        storage = window[type];
+        const x = "__storage_test__";
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
     } catch (e) {
-      return (
-        e instanceof DOMException &&
-        // everything except Firefox
-        (e.code === 22 ||
-          // Firefox
-          e.code === 1014 ||
-          // test name field too, because code might not be present
-          // everything except Firefox
-          e.name === "QuotaExceededError" ||
-          // Firefox
-          e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
-        // acknowledge QuotaExceededError only if there's something already stored
-        storage &&
-        storage.length !== 0
-      );
+        return (
+            e instanceof DOMException &&
+            // everything except Firefox
+            (e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === "QuotaExceededError" ||
+                // Firefox
+                e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage &&
+            storage.length !== 0
+        );
     }
-  }
+}
 
-  function saveUserSettings(){
+function saveUserSettings() {
     // console.log('saveUserSettings');
     console.log(selectedCategory);
     localStorage.setItem('selectedCategory', selectedCategory);
 }
+
+// MODAL STUFF - NEEDS CLEANUP
+
+function showModal() {
+    document.querySelector("#gameOverDialog").showModal();
+}
+
+// var form = document.getElementById("modalForm");
+// var settings = document.getElementById("settings");
+
+// settings.addEventListener("click", function () {
+//     showModal();
+// });
+
+
+// // Add an event listener to the form's submit event
+// form.addEventListener("submit", function (event) {
+//     event.preventDefault(); // Prevent the default form submission behavior
+//     var textarea = document.getElementById("did"); // Get the textarea element by its id
+//     var did = textarea.value; // Get the value of the textarea
+//     console.log(did);
+//     issueVC();
+//     // textarea.value = ""; // Clear the textarea
+// });
+
+// async function issueVC() {
+//     console.log("issueVC");
+//     const currentTime = document.getElementById('stopwatch').innerHTML;
+//     console.log(currentTime);
+//     document.querySelector("#gameOverDialog").showModal();
+
+//     // Create VC
+//     const vc = await VerifiableCredential.create({
+//         type: 'EmojiMatchAchievement',
+//         issuer: issuer.did,
+//         subject: player.did,
+//         data: {
+//           "bestTime": "00:59"
+//         }
+//       });
+
+//     // Sign with Issuer DID
+//     const signedVcJwt = await vc.sign({ did: issuer });
+
+//     console.log(signedVcJwt);
+// }

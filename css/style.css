@@ -1,7 +1,16 @@
+html {
+  /* font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; */
+  font-size: 1.3em;
+  max-width: 50rem;
+  padding: 2rem 2rem 0;
+  margin: auto;
+  line-height: 1.5rem;
+}
+
 body {
   font-family: Segoe, "Segoe UI", Verdana, sans-serif;
   text-align: center;
-  margin: 0px
+  margin: 0px;
 }
 
 .main {
@@ -29,7 +38,7 @@ body {
 }
 
 .grid img {
-  height: 150px;
+  height: 100%;
   -webkit-user-drag: none;
 }
 
@@ -40,4 +49,34 @@ body {
 footer, footer a {
   margin-top: min(3vh, 200px);
   color:darkgrey
+}
+
+dialog {
+  margin-top: min(20vh, 200px);
+  position: absolute;
+  padding: 20px;
+  border-radius: 10px;
+  border-color: lightgray;
+  padding: 20px;
+  max-width: 50vw;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+form {
+  display: inline-block;
+}
+
+.example{
+  color: darkgrey;
+}
+
+.svgbg {
+  background-image: url("../media/emoji/slightly_smiling_face_flat.svg");
+  background-size: cover;
+  background-color: blue;
+  height: 100%;
+  width: 100%;
 }
