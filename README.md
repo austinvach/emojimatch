@@ -9,10 +9,10 @@
 - [ ] Let people customize card preview time, number or cards, emojis, language, etc.
 ## Issues (that I know of 😅)
 - Microsoft hasn't shared their Unicode 15 assets.
-- Some emoji names don't match the unicode description:
-  - 😵 Dizzy face - Unicode 'face with crossed-out eyes'
-  - 🤗 Hugging face - Unicode 'smiling face with open hands'
-  - 😡 Pouting Face - Unicode 'enraged face'
+- Some emoji names don't match the unicode description (Microsoft name in parenthesis):
+  - 😵 Face with crossed-out eyes (Dizzy face)
+  - 🤗 Smiling face with open hands (Hugging face)
+  - 😡 Enraged face (Pouting Face)
 - Some pre-unicode 15 emoji are missing from their SVG set:
   - 🎮 Video game
 ## Web 5 Challenges
