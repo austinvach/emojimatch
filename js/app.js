@@ -20,6 +20,7 @@ let pairs = [];
 let selectedCategory;
 // Other variables
 let selectedCards = [];
+let ignoreClicks = true;
 
 // EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', e => {
@@ -99,16 +100,19 @@ function pickPairs() {
 
 function setCardsFaceUp() {
     // console.log('setCardsFaceUp');
-    const section = document.querySelector('.grid');
+    const grid = document.querySelector('.grid');
     for (var i = 0; i < pairs.length; i++) {
-        const card = document.createElement('img');
+        const card = document.createElement('div');
+        card.setAttribute('class', 'faceUp');
         card.setAttribute('id', i);
-        card.setAttribute('alt', `${pairs[i].name} emoji`);
-        card.setAttribute('src', `media/emoji/flat/${pairs[i].slug}_flat.svg`);
-        section.appendChild(card);
+        const img = document.createElement('img');
+        img.setAttribute('alt', `${pairs[i].name} emoji`);
+        img.setAttribute('src', `media/emoji/flat/${pairs[i].slug}_flat.svg`);
+        grid.appendChild(card);
+        card.appendChild(img);
         card.addEventListener('click', e => {
             selectedCards = document.querySelectorAll('.faceUp')
-            if (selectedCards.length === 0) {
+            if (selectedCards.length === 0 && !ignoreClicks) {
                 flipSelectedCardFaceUp(e.target);
             }
             else if (selectedCards.length === 1 && e.target.id != selectedCards[0].id) {
@@ -122,23 +126,25 @@ function setCardsFaceUp() {
 
 function flipCardsFaceDown() {
     // console.log('flipCardsFaceDown');
-    var cards = document.getElementsByTagName('img');
+    var cards = document.querySelectorAll('.faceUp');
+    console.log(cards);
     for (var i = 0; i < cards.length; i++) {
-        cards[i].setAttribute('src', backOfCard);
+        console.log(i);
+        cards[i].classList.replace('faceUp','faceDown');
     }
+    ignoreClicks = false;
     startStopwatch();
 };
 
 function flipSelectedCardFaceUp(card) {
     // console.log('flipSelectedCardFaceUp');
-    card.setAttribute('src', `media/emoji/flat/${pairs[card.id].slug}_flat.svg`);
-    card.classList.toggle('faceUp');
+    card.classList.replace('faceDown','faceUp');
 };
 
 function checkCards() {
     // console.log('checkCards');
     selectedCards = document.querySelectorAll('.faceUp')
-    if (selectedCards[0].src === selectedCards[1].src) {
+    if (selectedCards[0].firstChild.src === selectedCards[1].firstChild.src) {
         transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS); // Waits before clearing cards.
     }
     else {
@@ -149,8 +155,7 @@ function checkCards() {
 function flipSelectedCardsFaceDown() {
     // console.log('flipSelectedCardsFaceDown');
     for (var i = 0; i < selectedCards.length; i++) {
-        selectedCards[i].setAttribute('src', backOfCard);
-        selectedCards[i].classList.toggle('faceUp');
+        selectedCards[i].classList.replace('faceUp','faceDown');
     }
 }
 
@@ -215,6 +220,7 @@ function resetStopwatch() {
 function reset() {
     // console.log('reset');
     // document.querySelector("#gameOverDialog").close();
+    ignoreClicks = true;
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
     clearInterval(stopwatchIntervalId);

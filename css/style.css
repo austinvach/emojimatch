@@ -1,28 +1,32 @@
 html {
-  /* font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif; */
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 1.3em;
   max-width: 50rem;
-  padding: 2rem 2rem 0;
   margin: auto;
   line-height: 1.5rem;
 }
 
 body {
-  font-family: Segoe, "Segoe UI", Verdana, sans-serif;
+  /* font-family: "Segoe UI", Verdana, Arial, Helvetica, sans-serif; */
   text-align: center;
-  margin: 0px;
+  /* margin: 0px; */
+  margin: min(2vh, 200px) auto; 
+  height: 100%;
+  overflow-y: hidden;
 }
 
-.main {
-  max-width: 1200px;
-  margin: min(5vh, 200px) auto; 
-}
-
-.header {
+header {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin: 14px;
-  font-size: 2em;
+  margin: 14px 0 px;
+}
+
+select {
+  width:fit-content;
+}
+
+#stopwatch {
+  font-size: 1.5em;
 }
 
 .buttons {
@@ -32,13 +36,29 @@ body {
 }
 
 .grid {
+  margin-top: 2vh;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   justify-content: center;
+  gap: 10px;
+}
+
+.faceUp {
+  background:none;
+}
+
+.faceDown {
+  background-image: url("../media/bg.svg");
+  border-radius: 10px;
+}
+
+.faceUp :first-child {
+  visibility: visible;
 }
 
 .grid img {
   height: 100%;
+  visibility: hidden;
   -webkit-user-drag: none;
 }
 
@@ -67,16 +87,4 @@ dialog::backdrop {
 
 form {
   display: inline-block;
-}
-
-.example{
-  color: darkgrey;
-}
-
-.svgbg {
-  background-image: url("../media/emoji/slightly_smiling_face_flat.svg");
-  background-size: cover;
-  background-color: blue;
-  height: 100%;
-  width: 100%;
 }
