@@ -1,18 +1,15 @@
 html {
   font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-  font-size: 1.3em;
-  max-width: 50rem;
+  max-width: 80rem;
   margin: auto;
-  line-height: 1.5rem;
+  height: 100%;
 }
 
 body {
-  /* font-family: "Segoe UI", Verdana, Arial, Helvetica, sans-serif; */
   text-align: center;
-  /* margin: 0px; */
-  margin: min(2vh, 200px) auto; 
+  margin: 2vh;
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
 header {
@@ -26,7 +23,7 @@ select {
 }
 
 #stopwatch {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .buttons {
@@ -35,43 +32,7 @@ select {
   justify-content: end;
 }
 
-.grid {
-  margin-top: 2vh;
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  justify-content: center;
-  gap: 10px;
-}
-
-.faceUp {
-  background:none;
-}
-
-.faceDown {
-  background-image: url("../media/bg.svg");
-  border-radius: 10px;
-}
-
-.faceUp :first-child {
-  visibility: visible;
-}
-
-.grid img {
-  height: 100%;
-  visibility: hidden;
-  -webkit-user-drag: none;
-}
-
-.cleared {
-  visibility: hidden;
-}
-
-footer, footer a {
-  margin-top: min(3vh, 200px);
-  color:darkgrey
-}
-
-dialog {
+/* dialog {
   margin-top: min(20vh, 200px);
   position: absolute;
   padding: 20px;
@@ -87,4 +48,49 @@ dialog::backdrop {
 
 form {
   display: inline-block;
+} */
+
+.cards {
+  margin-top: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap:min(.4vw,6px);
+}
+
+.cards div {
+  flex-basis: 12%;
+  min-width: 80px;
+}
+
+.faceUp {
+  background:none;
+}
+
+.faceUp :first-child {
+  visibility: visible;
+}
+
+.faceDown {
+  background-image: url("../media/bg.svg");
+  background-size: 30%;
+  border-radius: 10px;
+}
+
+.cleared {
+  visibility: hidden;
+}
+
+.cards img {
+  visibility: hidden;
+  -webkit-user-drag: none;
+}
+
+.endScreen {
+  visibility: hidden;
+}
+
+footer, a {
+  margin-top: 2vh;
+  color:darkgrey
 }

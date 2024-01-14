@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MKMTHGF4QW"></script>
@@ -12,9 +13,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Emoji Match</title>
-  <meta	name="description" content="Test your visual memory matching emoji in this classic game"/>
+  <meta name="description" content="Test your visual memory matching emoji in this classic game" />
   <meta property="og:url" content="https://emojimatch.com" />
-  <meta property="og:title" content="Emoji Match | Test Your Memory" />
+  <meta property="og:title" content="Emoji Match | Test Your Visual Memory" />
   <meta property="og:description" content="Test your visual memory matching emoji in this classic game" />
   <meta property="og:image" content="media/og.png" />
   <link rel="stylesheet" href="css/boilerplate.css">
@@ -24,6 +25,7 @@
 
 <body>
   <header>
+    <!-- <h1>Emoji Match</h1> -->
     <select id="emojiCategories"></select>
     <div id="stopwatch">00:00</div>
     <div class="buttons">
@@ -31,29 +33,20 @@
       <!-- <button id="settings" type="button" >Settings</button> -->
     </div>
   </header>
-  <div class="grid"></div>
+  <div class="main">
+    <div class="cards"></div>
+    <p>Press Spacebar to Reset</p>
+    <div class="endScreen">
+      <p>That's the game! Press the spacebar to start a new one.</p>
+    </div>
+  </div>
   <footer>
-    <p><strong>Press Spacebar to Reset</strong></p><a href="https://austinvach.com">Hacked together by Austin</a>
+    <a href="https://austinvach.com">Built by Austin</a>
   </footer>
   <script src="js/app.js"></script>
 
-  
-  
-  
-  
-  <!-- Remove main - move style to body -->
-  <!-- <div class="main"> -->
-    <!-- <h1>Emoji Match</h1> -->
-    <!-- Change this div to a header -->
-    <!-- <div class="header">
-      <select id="emojiCategories"></select>
-      <div id="stopwatch">00:00</div>
-      <div class="buttons">
-        <button id="reset" type="reset">Reset</button>
-        <button id="settings" type="button" >Settings</button>
-      </div>
-    </div> -->
-    <!-- <dialog id="gameOverDialog">
+
+  <!-- <dialog id="gameOverDialog">
       <h1>GAME OVER</h1>
       <h2>You cleared all matches in 00:00</h2>
       <p>If you're a <a href="https://developer.tbd.website/projects/web5/">Web5</a> nerd, enter your <a
@@ -68,13 +61,6 @@
       </form>
       <div id="jwt"></div>
     </dialog> -->
-    <!-- <div class="grid">
-    </div>
-    <footer>
-      <p><strong>Press Spacebar to Reset</strong></p><a href="https://austinvach.com">Hacked together by Austin</a>
-    </footer>
-    <script src="js/app.js"></script>
-  </div> -->
 </body>
 
 </html>

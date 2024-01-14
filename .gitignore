@@ -3,7 +3,7 @@ package-lock.json
 package.json
 DATA
 media/emoji/color
-media/emoji/contrast
+media/emoji/high_contrast
 checkemoji.html
 checkemoji.js
 

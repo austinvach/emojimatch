@@ -1,5 +1,4 @@
 // import { VerifiableCredential } from "@web5/credentials";
-const backOfCard = 'media/emoji/flat/blue_square_flat.svg';
 const cardCount = 32; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
 const transitionDelayTimeInMS = 400;
@@ -18,6 +17,7 @@ let emoji = [];
 let pairs = [];
 // Variables to store user preferences
 let selectedCategory;
+let emojiPreference = 'flat';
 // Other variables
 let selectedCards = [];
 let ignoreClicks = true;
@@ -100,15 +100,15 @@ function pickPairs() {
 
 function setCardsFaceUp() {
     // console.log('setCardsFaceUp');
-    const grid = document.querySelector('.grid');
+    const cards = document.querySelector('.cards');
     for (var i = 0; i < pairs.length; i++) {
         const card = document.createElement('div');
         card.setAttribute('class', 'faceUp');
         card.setAttribute('id', i);
         const img = document.createElement('img');
         img.setAttribute('alt', `${pairs[i].name} emoji`);
-        img.setAttribute('src', `media/emoji/flat/${pairs[i].slug}_flat.svg`);
-        grid.appendChild(card);
+        img.setAttribute('src', `media/emoji/${emojiPreference}/${pairs[i].slug}_${emojiPreference}.svg`);
+        cards.appendChild(card);
         card.appendChild(img);
         card.addEventListener('click', e => {
             selectedCards = document.querySelectorAll('.faceUp')
@@ -127,9 +127,7 @@ function setCardsFaceUp() {
 function flipCardsFaceDown() {
     // console.log('flipCardsFaceDown');
     var cards = document.querySelectorAll('.faceUp');
-    console.log(cards);
     for (var i = 0; i < cards.length; i++) {
-        console.log(i);
         cards[i].classList.replace('faceUp','faceDown');
     }
     ignoreClicks = false;
@@ -167,7 +165,7 @@ function clearMatch() {
     }
     hiddenCards = document.querySelectorAll('.cleared');
     if (hiddenCards.length === cardCount) {
-        document.querySelector('.grid').innerHTML = 'That\s the game! Press the space bar to start a new game.';
+        document.querySelector('.main').innerHTML = 'That\s the game! Press the spacebar to start a new game.';
         stopStopwatch();
     }
 }
@@ -233,11 +231,12 @@ function reset() {
 
 function clearBoard() {
     // console.log('clearBoard');
-    const section = document.querySelector('.grid');
+    const section = document.querySelector('.cards');
     section.innerHTML = '';
 };
 
 window.onkeydown = function (k) { // Resets the game when the user presses the space bar
+    // console.log('SPACEBAR');
     if (k.keyCode === 32) {
         reset();
     };
@@ -274,7 +273,6 @@ function storageAvailable(type) {
 
 function saveUserSettings() {
     // console.log('saveUserSettings');
-    console.log(selectedCategory);
     localStorage.setItem('selectedCategory', selectedCategory);
 }
 

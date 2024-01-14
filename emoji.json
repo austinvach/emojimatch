@@ -239,7 +239,7 @@
         "emoji": "🤗",
         "skin_tone_support": false,
         "name": "smiling face with open hands",
-        "slug": "smiling_face_with_open_hands",
+        "slug": "hugging_face",
         "unicode_version": "1.0",
         "emoji_version": "1.0"
       },
@@ -511,7 +511,7 @@
         "emoji": "😵",
         "skin_tone_support": false,
         "name": "face with crossed-out eyes",
-        "slug": "face_with_crossed-out_eyes",
+        "slug": "dizzy_face",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -799,7 +799,7 @@
         "emoji": "😡",
         "skin_tone_support": false,
         "name": "enraged face",
-        "slug": "enraged_face",
+        "slug": "pouting_face",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
