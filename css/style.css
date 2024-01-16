@@ -71,8 +71,10 @@ form {
 }
 
 .faceDown {
-  background-image: url("../media/bg.svg");
+  background-image: url("../media/bg2.svg");
+  /* background-blend-mode: hue; */
   background-size: 30%;
+  background-color: #00A6ED;
 }
 
 .notVisible {
