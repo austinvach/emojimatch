@@ -161,9 +161,9 @@ function clearMatch() {
     // console.log('clearMatch');
     for (var i = 0; i < selectedCards.length; i++) {
         selectedCards[i].classList.toggle('faceUp');
-        selectedCards[i].classList.add('hidden');
+        selectedCards[i].classList.add('notVisible');
     }
-    hiddenCards = document.querySelectorAll('.hidden');
+    hiddenCards = document.querySelectorAll('.notVisible');
     if (hiddenCards.length === cardCount) {
         document.getElementById('cards').classList.add('notDisplayed');
         document.getElementById('endScreen').classList.remove('notDisplayed');

@@ -75,7 +75,7 @@ form {
   background-size: 30%;
 }
 
-.hidden {
+.notVisible {
   visibility: hidden;
 }
 
