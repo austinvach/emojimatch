@@ -10,7 +10,7 @@
 ## Issues (that I know of 😅)
 - Microsoft hasn't shared their Unicode 15 assets.
 - Some emoji names don't match the unicode description (Microsoft name in parenthesis):
-  - 😵 Face with crossed-out eyes (Dizzy face)
+  - 😵 Face with crossed-out eyes (Dizzy)
   - 🤗 Smiling face with open hands (Hugging face)
   - 😡 Enraged face (Pouting Face)
 - Some pre-unicode 15 emoji are missing from their SVG set:
