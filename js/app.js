@@ -1,5 +1,5 @@
 // import { VerifiableCredential } from "@web5/credentials";
-const cardCount = 32; // Must be an even number since every card needs a pair
+const cardCount = 2; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
@@ -100,7 +100,7 @@ function pickPairs() {
 
 function setCardsFaceUp() {
     // console.log('setCardsFaceUp');
-    const cards = document.querySelector('.cards');
+    const cards = document.getElementById('cards');
     for (var i = 0; i < pairs.length; i++) {
         const card = document.createElement('div');
         card.setAttribute('class', 'faceUp');
@@ -161,11 +161,12 @@ function clearMatch() {
     // console.log('clearMatch');
     for (var i = 0; i < selectedCards.length; i++) {
         selectedCards[i].classList.toggle('faceUp');
-        selectedCards[i].classList.add('cleared');
+        selectedCards[i].classList.add('hidden');
     }
-    hiddenCards = document.querySelectorAll('.cleared');
+    hiddenCards = document.querySelectorAll('.hidden');
     if (hiddenCards.length === cardCount) {
-        document.querySelector('.main').innerHTML = 'That\s the game! Press the spacebar to start a new game.';
+        document.getElementById('cards').classList.add('notDisplayed');
+        document.getElementById('endScreen').classList.remove('notDisplayed');
         stopStopwatch();
     }
 }
@@ -210,7 +211,7 @@ function resetStopwatch() {
     minutes = 0
     displaySeconds = 0;
     displayMinutes = 0;
-    document.getElementById('stopwatch').innerHTML = '00:00'
+    document.getElementById('stopwatch').innerHTML = '00:00';
 };
 
 // RESET FUNCTIONS
@@ -231,8 +232,9 @@ function reset() {
 
 function clearBoard() {
     // console.log('clearBoard');
-    const section = document.querySelector('.cards');
-    section.innerHTML = '';
+    document.getElementById('cards').innerHTML = '';
+    document.getElementById('cards').classList.remove('notDisplayed');
+    document.getElementById('endScreen').classList.add('notDisplayed');
 };
 
 window.onkeydown = function (k) { // Resets the game when the user presses the space bar
@@ -279,7 +281,7 @@ function saveUserSettings() {
 // MODAL STUFF - NEEDS CLEANUP
 
 function showModal() {
-    document.querySelector("#gameOverDialog").showModal();
+    document.getElementById('gameOverDialog').showModal();
 }
 
 // var form = document.getElementById("modalForm");
