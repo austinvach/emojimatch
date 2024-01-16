@@ -1,5 +1,5 @@
 // import { VerifiableCredential } from "@web5/credentials";
-const cardCount = 2; // Must be an even number since every card needs a pair
+const cardCount = 32; // Must be an even number since every card needs a pair
 const previewTimeInMS = 8000;
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
