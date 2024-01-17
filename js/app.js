@@ -17,7 +17,8 @@ let emoji = [];
 let pairs = [];
 // Variables to store user preferences
 let selectedCategory;
-let emojiPreference = 'flat';
+let emojiStylePreference = 'flat';
+let emojiSkinTonePreference = 'default';
 // let cardBackgroundColor;
 // Other variables
 let selectedCards = [];
@@ -48,7 +49,8 @@ document.getElementById('emojiCategories').addEventListener('change', e => {
 
 function onLoad() {
     // console.log('onLoad');
-    fetch('emoji.json') // Makes an HTTP/HTTPS GET request
+    // fetch('emoji.json') // Makes an HTTP/HTTPS GET request
+    fetch('data-by-group.json') // Makes an HTTP/HTTPS GET request
         .then(response => response.json()) // Parses the body as a JSON object
         .then(json => prepareGame(json)) // Passes the JSON to the prepareGame() function
 }
@@ -107,15 +109,12 @@ function setCardsFaceUp() {
         card.setAttribute('class', 'faceUp');
         card.setAttribute('id', i);
         const img = document.createElement('img');
-        img.setAttribute('alt', `${pairs[i].name} emoji`);
-        img.setAttribute('src', `assets/emoji/${emojiPreference}/${pairs[i].slug}_${emojiPreference}.svg`);
-        
-        // if(hasSkinColorModifier){
-        //     // ADD SKIN COLOR MODIFIER
-        // }else{
-        //     // DO WHAT WE'RE DOING ON LINE 111
-        // }
-
+        img.setAttribute('alt', `${pairs[i].name} emoji`);        
+        if(pairs[i].skin_tone_support){
+            img.setAttribute('src', `assets/emoji/${emojiStylePreference}/${pairs[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
+        }else{
+            img.setAttribute('src', `assets/emoji/${emojiStylePreference}/${pairs[i].slug}_${emojiStylePreference}.svg`);
+        }
         cards.appendChild(card);
         card.appendChild(img);
         card.addEventListener('click', e => {

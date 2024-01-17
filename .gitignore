@@ -1,14 +1,8 @@
 # TEMPORARY
-package-lock.json
-package.json
 DATA
 assets/emoji/color
 assets/emoji/high_contrast
-assets/oldbg.svg
-checkemoji.html
-checkemoji.js
-dialog.html
-data-by-group.json
+ignore
 
 # Logs
 logs
