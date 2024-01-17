@@ -2,11 +2,13 @@
 package-lock.json
 package.json
 DATA
-media/emoji/color
-media/emoji/high_contrast
+assets/emoji/color
+assets/emoji/high_contrast
+assets/oldbg.svg
 checkemoji.html
 checkemoji.js
 dialog.html
+data-by-group.json
 
 # Logs
 logs

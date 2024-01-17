@@ -108,7 +108,14 @@ function setCardsFaceUp() {
         card.setAttribute('id', i);
         const img = document.createElement('img');
         img.setAttribute('alt', `${pairs[i].name} emoji`);
-        img.setAttribute('src', `media/emoji/${emojiPreference}/${pairs[i].slug}_${emojiPreference}.svg`);
+        img.setAttribute('src', `assets/emoji/${emojiPreference}/${pairs[i].slug}_${emojiPreference}.svg`);
+        
+        // if(hasSkinColorModifier){
+        //     // ADD SKIN COLOR MODIFIER
+        // }else{
+        //     // DO WHAT WE'RE DOING ON LINE 111
+        // }
+
         cards.appendChild(card);
         card.appendChild(img);
         card.addEventListener('click', e => {
