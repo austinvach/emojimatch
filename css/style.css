@@ -29,25 +29,7 @@ select {
   justify-content: end;
 }
 
-/* dialog {
-  margin-top: min(20vh, 200px);
-  position: absolute;
-  padding: 20px;
-  border-radius: 10px;
-  border-color: lightgray;
-  padding: 20px;
-  max-width: 50vw;
-}
-
-dialog::backdrop {
-  backdrop-filter: blur(2px);
-}
-
-form {
-  display: inline-block;
-} */
-
-.main {
+#main {
   margin-top: 2vh;
 }
 
@@ -58,36 +40,32 @@ form {
   gap:min(.4vw,6px);
 }
 
-#cards div {
-  border-radius: 10px;
-}
-
 .faceUp {
   background:none;
 }
 
 .faceUp :first-child {
   visibility: visible;
+  -webkit-user-drag: none;
 }
 
 .faceDown {
   background-image: url("../media/bg2.svg");
-  /* background-blend-mode: hue; */
   background-size: 30%;
   background-color: #00A6ED;
+  border-radius: 10px;
+}
+
+.faceDown :first-child {
+  visibility: hidden;
 }
 
 .notVisible {
   visibility: hidden;
 }
 
-.notDisplayed {
-  display: none;
-}
-
-.main img {
-  visibility: hidden;
-  -webkit-user-drag: none;
+#endScreen {
+  display:none;
 }
 
 #endScreen h1 {
@@ -102,9 +80,7 @@ footer, a {
   color:lightgrey;
 }
 
-/* p {
-  margin: 0px;
-} */
+/* THERE HAS TO BE A SMARTER WAY OF MAKING THE TILES RESPONSIVE */
 
 @media (max-aspect-ratio: .4) {
   #cards div {

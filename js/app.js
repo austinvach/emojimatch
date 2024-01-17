@@ -18,6 +18,7 @@ let pairs = [];
 // Variables to store user preferences
 let selectedCategory;
 let emojiPreference = 'flat';
+// let cardBackgroundColor;
 // Other variables
 let selectedCards = [];
 let ignoreClicks = true;
@@ -74,13 +75,13 @@ function checkLocalStorage() {
 
 function populateCategories() {
     // console.log('populateCategories');
-    const section = document.querySelector('select');
+    const categoryDropdown = document.getElementById('emojiCategories');
     for (var i = 0; i < emoji.length; i++) {
         if (selectedCategory && selectedCategory === emoji[i].name) { // If user settings exist, honor their selected category
-            section.add(new Option(emoji[i].name, emoji[i].name, false, true));
+            categoryDropdown.add(new Option(emoji[i].name, emoji[i].name, false, true));
         }
         else {
-            section.add(new Option(emoji[i].name, emoji[i].name));
+            categoryDropdown.add(new Option(emoji[i].name, emoji[i].name));
         }
     }
 };
@@ -89,7 +90,7 @@ function populateCategories() {
 
 function pickPairs() {
     // console.log('pickPairs');
-    const categoryDropdown = document.querySelector('select');
+    const categoryDropdown = document.getElementById('emojiCategories');
     selectedCategory = categoryDropdown.selectedOptions[0].value;
     let selectedEmoji = emoji[categoryDropdown.selectedIndex].emojis;
     selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
@@ -126,7 +127,7 @@ function setCardsFaceUp() {
 
 function flipCardsFaceDown() {
     // console.log('flipCardsFaceDown');
-    var cards = document.querySelectorAll('.faceUp');
+    let cards = document.querySelectorAll('.faceUp');
     for (var i = 0; i < cards.length; i++) {
         cards[i].classList.replace('faceUp','faceDown');
     }
@@ -165,8 +166,8 @@ function clearMatch() {
     }
     hiddenCards = document.querySelectorAll('.notVisible');
     if (hiddenCards.length === cardCount) {
-        document.getElementById('cards').classList.add('notDisplayed');
-        document.getElementById('endScreen').classList.remove('notDisplayed');
+        document.getElementById('cards').style.setProperty('display', 'none');
+        document.getElementById('endScreen').style.setProperty('display', 'block');
         stopStopwatch();
     }
 }
@@ -218,7 +219,6 @@ function resetStopwatch() {
 
 function reset() {
     // console.log('reset');
-    // document.querySelector("#gameOverDialog").close();
     ignoreClicks = true;
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
@@ -232,9 +232,10 @@ function reset() {
 
 function clearBoard() {
     // console.log('clearBoard');
-    document.getElementById('cards').innerHTML = '';
-    document.getElementById('cards').classList.remove('notDisplayed');
-    document.getElementById('endScreen').classList.add('notDisplayed');
+    let cards = document.getElementById('cards');
+    cards.innerHTML = '';
+    cards.removeAttribute('style');
+    document.getElementById('endScreen').removeAttribute('style');
 };
 
 window.onkeydown = function (k) { // Resets the game when the user presses the space bar
