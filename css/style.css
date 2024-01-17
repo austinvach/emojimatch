@@ -50,7 +50,7 @@ select {
 }
 
 .faceDown {
-  background-image: url("../assets/");
+  background-image: url("../assets/bg.svg");
   background-size: 30%;
   background-color: #00A6ED;
   border-radius: 10px;
