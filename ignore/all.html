@@ -27,7 +27,7 @@
       .then(response => response.json()) // Parses the body as a JSON object
       .then(emojiJson => showAllEmoji(emojiJson)) // Passes the JSON to the showAllEmoji() function
       .catch(e => {
-        pre(`Caugth error: ${e.message}`)
+        pre(`Caught error: ${e.message}`)
     });
 
     function showAllEmoji(emojiJson) {
@@ -38,7 +38,11 @@
           let div = document.createElement('div');
           let img = document.createElement('img');
           img.setAttribute('alt', `${currentEmojiCategory[i].name} emoji`);
-          img.setAttribute('src', `../assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}.svg`);
+          if(currentEmojiCategory[i].skin_tone_support){
+            img.setAttribute('src', `../assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
+          }else{
+              img.setAttribute('src', `../assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}.svg`);
+          }
           div.appendChild(img);
           body.appendChild(div);
         }

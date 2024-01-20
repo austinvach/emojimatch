@@ -1,3 +1,5 @@
+https://unicode.org/Public/emoji/15.1/emoji-test.txt
+
 upside_down_face_flat.svg
 smiling_face_with_heart_eyes_flat.svg
 star_struck_flat.svg
