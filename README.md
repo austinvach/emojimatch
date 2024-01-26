@@ -6,9 +6,9 @@
 - [ ] Let people customize card preview time, card background color, number or cards, emojis, language, etc.
 
 ## Issues (that I know of 😅)
-### 1. Some emoji names don't match the [unicode description](https://unicode.org/Public/emoji/15.1/emoji-test.txt)
+### 1. Some emoji names don't match the [unicode CLDR short name](https://unicode.org/Public/emoji/15.1/emoji-test.txt). [More Info](https://www.unicode.org/emoji/charts-15.1/)
 
-Emoji|Unicode Name|Microsoft Name
+Emoji|Unicode CLDR Short Name|Microsoft Name
 ---|---|---
 🐦‍⬛ | Black bird | Blackbird
 😡|Enraged face|Pouting Face
@@ -21,16 +21,18 @@ Emoji|Unicode Name|Microsoft Name
   - hands
     - handshake
   - person
-    - person: blond_hair
-    - woman: blond_hair
-    - man: blond_hair
+    - person: blond hair
+    - woman: blond hair
+    - man: blond hair
   - person-gesture
     - deaf person
-    - deaf_man
-    - deaf_woman
+    - deaf man
+    - deaf woman
+  - person-role
     - technologist
-    - man_technologist
-    - woman_technologist
+    - man technologist
+    - woman technologist
+  - person-fantasy
     - superhero
     - supervillain
     - mage
@@ -42,71 +44,83 @@ Emoji|Unicode Name|Microsoft Name
     - elf
     - genie
     - zombie
-    - people_with_bunny_ears
-    - men_with_bunny_ears
-    - women_with_bunny_ears
-    - people_wrestling
-    - women_wrestling
-    - men_wrestling
-    - people_holding_hands
-    - women_holding_hands
-    - woman_and_man_holding_hands
-    - men_holding_hands
+  - person-activity
+    - people with bunny ears
+    - men with bunny ears
+    - women with bunny ears
+  - person-sport
+    - people wrestling
+    - women wrestling
+    - men wrestling
+  - family
+    - people holding hands
+    - women holding hands
+    - woman and man holding hands
+    - men holding hands
     - kiss
-    - kiss_woman_man
-    - kiss_man_man
-    - kiss_woman_woman
-    - couple_with_heart
-    - couple_with_heart_woman_man
-    - couple_with_heart_man_man
-    - couple_with_heart_woman_woman
+    - kiss: woman, man
+    - kiss: man, man
+    - kiss: woman, woman
+    - couple with heart
+    - couple with heart: woman, man
+    - couple with heart: man, man
+    - couple with heart: woman, woman
+    - family: man, woman, boy
+    - family: man, woman, girl
+    - family: man, woman, girl, boy
+    - family: man, woman, boy, boy
+    - family: man, woman, girl, girl
+    - family: man, man, boy
+    - family: man, man, girl
+    - family: man, man, girl, boy
+    - family: man, man, boy, boy
+    - family: man, man, girl, girl
+    - family: woman, woman, boy
+    - family: woman, woman, girl
+    - family: woman, woman, girl, boy
+    - family: woman, woman, boy, boy
+    - family: woman, woman, girl, girl
+    - family: man, boy
+    - family: man, boy, boy
+    - family: man, girl
+    - family: man, girl, boy
+    - family: man, girl, girl
+    - family: woman, boy
+    - family: woman, boy, boy
+    - family: woman, girl
+    - family: woman, girl, boy
+    - family: woman, girl, girl
+  - person-symbol
     - family
-    - family_man_woman_boy
-    - family_man_woman_girl
-    - family_man_woman_girl_boy
-    - family_man_woman_boy_boy
-    - family_man_woman_girl_girl
-    - family_man_man_boy
-    - family_man_man_girl
-    - family_man_man_girl_boy
-    - family_man_man_boy_boy
-    - family_man_man_girl_girl
-    - family_woman_woman_boy
-    - family_woman_woman_girl
-    - family_woman_woman_girl_boy
-    - family_woman_woman_boy_boy
-    - family_woman_woman_girl_girl
-    - family_man_boy
-    - family_man_boy_boy
-    - family_man_girl
-    - family_man_girl_boy
-    - family_man_girl_girl
-    - family_woman_boy
-    - family_woman_boy_boy
-    - family_woman_girl
-    - family_woman_girl_boy
-    - family_woman_girl_girl
+  - game
     - video_game
-    - pinata
-    - woman_s_clothes
-    - man_s_shoe
-    - woman_s_sandal
-    - woman_s_boot
-    - woman_s_hat
-    - rescue_worker_s_helmet
+    - piñata
+  - clothing
+    - woman's clothes
+    - man's shoe
+    - woman's sandal
+    - woman's boot
+    - woman's hat
+    - rescue worker's helmet
+  - office
     - paperclip
-    - men_s_room
-    - women_s_room
-    - on_arrow
-    - keycap_number_sign
-    - a_button
-    - ab_button
-    - b_button
-    - o_button
-    - up_button
-    - red_triangle_pointed_up
+  - transport-sign
+    - men's room
+    - women's room
+  - arrow
+    - ON! arrow
+  - keycap
+    - keycap: #
+  - alphanum
+    - A button (blood type)
+    - AB button (blood type)
+    - B button (blood type)
+    - O button (blood type)
+    - UP! button
+  - geometric
+    - red triangle pointed up
 - Flags
-  - Country Flag
+  - country-flag
     - flag: Ascension Island
     - flag: Andorra
     - flag: United Arab Emirates
