@@ -10,7 +10,7 @@
 
 Emoji|Unicode CLDR Short Name|Microsoft Name
 ---|---|---
-🐦‍⬛ | Black bird | Blackbird
+🐦‍⬛|Black bird|Blackbird
 😡|Enraged face|Pouting Face
 😵|Face with crossed-out eyes|Dizzy
 🤗|Smiling face with open hands|Hugging face
