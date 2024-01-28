@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Emoji Match</title>
-  <link rel="icon" href="../assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
+  <link rel="icon" href="../docs/assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
   <style>
     body {
       display: flex;
@@ -38,9 +38,9 @@
           img.setAttribute('alt', `${currentEmojiCategory[i].name} emoji`);
           // img.setAttribute('onerror', 'this.onerror=null;this.src="http://127.0.0.1:5500/assets/emoji/flat/face_with_symbols_on_mouth_flat.svg";');
           if(currentEmojiCategory[i].skin_tone_support){
-            img.setAttribute('src', `../assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
+            img.setAttribute('src', `../docs/assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
           }else{
-              img.setAttribute('src', `../assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}.svg`);
+              img.setAttribute('src', `../docs/assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}.svg`);
           }
           div.appendChild(img);
           body.appendChild(div);
