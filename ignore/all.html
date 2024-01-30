@@ -35,7 +35,7 @@
         for (let i = 0; i < currentEmojiCategory.length; i++) {
           let div = document.createElement('div');
           let img = document.createElement('img');
-          img.setAttribute('alt', `${currentEmojiCategory[i].name} emoji`);
+          img.setAttribute('alt', `${currentEmojiCategory[i].name}`);
           // img.setAttribute('onerror', 'this.onerror=null;this.src="http://127.0.0.1:5500/assets/emoji/flat/face_with_symbols_on_mouth_flat.svg";');
           if(currentEmojiCategory[i].skin_tone_support){
             img.setAttribute('src', `../docs/assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
@@ -48,7 +48,7 @@
       }
     };
 
-    console.log(unsupportedEmoji);
+    // console.log(unsupportedEmoji);
   </script>
 </body>
 

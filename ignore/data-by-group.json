@@ -239,7 +239,7 @@
         "emoji": "🤗",
         "skin_tone_support": false,
         "name": "smiling face with open hands",
-        "slug": "smiling_face_with_open_hands",
+        "slug": "hugging_face",
         "unicode_version": "1.0",
         "emoji_version": "1.0"
       },
@@ -519,7 +519,7 @@
         "emoji": "😵",
         "skin_tone_support": false,
         "name": "face with crossed-out eyes",
-        "slug": "face_with_crossed_out_eyes",
+        "slug": "dizzy",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -807,7 +807,7 @@
         "emoji": "😡",
         "skin_tone_support": false,
         "name": "enraged face",
-        "slug": "enraged_face",
+        "slug": "pouting_face",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -2293,7 +2293,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "12.0",
         "name": "deaf person",
-        "slug": "deaf_person",
+        "slug": "person_deaf",
         "unicode_version": "12.0",
         "emoji_version": "12.0"
       },
@@ -2302,7 +2302,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "12.0",
         "name": "deaf man",
-        "slug": "deaf_man",
+        "slug": "man_deaf",
         "unicode_version": "12.0",
         "emoji_version": "12.0"
       },
@@ -2311,7 +2311,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "12.0",
         "name": "deaf woman",
-        "slug": "deaf_woman",
+        "slug": "woman_deaf",
         "unicode_version": "12.0",
         "emoji_version": "12.0"
       },
@@ -3175,7 +3175,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "11.0",
         "name": "superhero",
-        "slug": "superhero",
+        "slug": "person_superhero",
         "unicode_version": "11.0",
         "emoji_version": "11.0"
       },
@@ -3202,7 +3202,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "11.0",
         "name": "supervillain",
-        "slug": "supervillain",
+        "slug": "person_supervillain",
         "unicode_version": "11.0",
         "emoji_version": "11.0"
       },
@@ -3229,7 +3229,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "mage",
-        "slug": "mage",
+        "slug": "person_mage",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3256,7 +3256,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "fairy",
-        "slug": "fairy",
+        "slug": "person_fairy",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3283,7 +3283,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "vampire",
-        "slug": "vampire",
+        "slug": "person_vampire",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3310,7 +3310,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "merperson",
-        "slug": "merperson",
+        "slug": "person_merpeople",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3319,7 +3319,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "merman",
-        "slug": "merman",
+        "slug": "man_merpeople",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3328,7 +3328,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "mermaid",
-        "slug": "mermaid",
+        "slug": "woman_merpeople",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3337,7 +3337,7 @@
         "skin_tone_support": true,
         "skin_tone_support_unicode_version": "5.0",
         "name": "elf",
-        "slug": "elf",
+        "slug": "person_elf",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3363,7 +3363,7 @@
         "emoji": "🧞",
         "skin_tone_support": false,
         "name": "genie",
-        "slug": "genie",
+        "slug": "person_genie",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3387,7 +3387,7 @@
         "emoji": "🧟",
         "skin_tone_support": false,
         "name": "zombie",
-        "slug": "zombie",
+        "slug": "person_zombie",
         "unicode_version": "5.0",
         "emoji_version": "5.0"
       },
@@ -3689,7 +3689,7 @@
         "emoji": "👯",
         "skin_tone_support": false,
         "name": "people with bunny ears",
-        "slug": "people_with_bunny_ears",
+        "slug": "person_with_bunny_ears",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -3697,7 +3697,7 @@
         "emoji": "👯‍♂️",
         "skin_tone_support": false,
         "name": "men with bunny ears",
-        "slug": "men_with_bunny_ears",
+        "slug": "man_with_bunny_ears",
         "unicode_version": "4.0",
         "emoji_version": "4.0"
       },
@@ -3705,7 +3705,7 @@
         "emoji": "👯‍♀️",
         "skin_tone_support": false,
         "name": "women with bunny ears",
-        "slug": "women_with_bunny_ears",
+        "slug": "woman_with_bunny_ears",
         "unicode_version": "4.0",
         "emoji_version": "4.0"
       },
@@ -4044,7 +4044,7 @@
         "emoji": "🤼",
         "skin_tone_support": false,
         "name": "people wrestling",
-        "slug": "people_wrestling",
+        "slug": "person_wrestling",
         "unicode_version": "3.0",
         "emoji_version": "3.0"
       },
@@ -4052,7 +4052,7 @@
         "emoji": "🤼‍♂️",
         "skin_tone_support": false,
         "name": "men wrestling",
-        "slug": "men_wrestling",
+        "slug": "man_wrestling",
         "unicode_version": "4.0",
         "emoji_version": "4.0"
       },
@@ -4060,7 +4060,7 @@
         "emoji": "🤼‍♀️",
         "skin_tone_support": false,
         "name": "women wrestling",
-        "slug": "women_wrestling",
+        "slug": "woman_wrestling",
         "unicode_version": "4.0",
         "emoji_version": "4.0"
       },
@@ -9134,7 +9134,7 @@
         "emoji": "🪅",
         "skin_tone_support": false,
         "name": "piñata",
-        "slug": "pinata",
+        "slug": "piñata",
         "unicode_version": "13.0",
         "emoji_version": "13.0"
       },
@@ -9436,7 +9436,7 @@
         "emoji": "👚",
         "skin_tone_support": false,
         "name": "woman’s clothes",
-        "slug": "woman_s_clothes",
+        "slug": "womans_clothes",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -9500,7 +9500,7 @@
         "emoji": "👞",
         "skin_tone_support": false,
         "name": "man’s shoe",
-        "slug": "man_s_shoe",
+        "slug": "mans_shoe",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -9540,7 +9540,7 @@
         "emoji": "👡",
         "skin_tone_support": false,
         "name": "woman’s sandal",
-        "slug": "woman_s_sandal",
+        "slug": "womans_sandal",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -9556,7 +9556,7 @@
         "emoji": "👢",
         "skin_tone_support": false,
         "name": "woman’s boot",
-        "slug": "woman_s_boot",
+        "slug": "womans_boot",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -9580,7 +9580,7 @@
         "emoji": "👒",
         "skin_tone_support": false,
         "name": "woman’s hat",
-        "slug": "woman_s_hat",
+        "slug": "womans_hat",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -9620,7 +9620,7 @@
         "emoji": "⛑️",
         "skin_tone_support": false,
         "name": "rescue worker’s helmet",
-        "slug": "rescue_worker_s_helmet",
+        "slug": "rescue_workers_helmet",
         "unicode_version": "0.7",
         "emoji_version": "0.7"
       },
@@ -11410,7 +11410,7 @@
         "emoji": "🚹",
         "skin_tone_support": false,
         "name": "men’s room",
-        "slug": "men_s_room",
+        "slug": "mens_room",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -11418,7 +11418,7 @@
         "emoji": "🚺",
         "skin_tone_support": false,
         "name": "women’s room",
-        "slug": "women_s_room",
+        "slug": "womens_room",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -11730,7 +11730,7 @@
         "emoji": "🔛",
         "skin_tone_support": false,
         "name": "ON! arrow",
-        "slug": "on_arrow",
+        "slug": "on!_arrow",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12474,7 +12474,7 @@
         "emoji": "#️⃣",
         "skin_tone_support": false,
         "name": "keycap #",
-        "slug": "keycap_number_sign",
+        "slug": "keycap_hastag",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12618,7 +12618,7 @@
         "emoji": "🅰️",
         "skin_tone_support": false,
         "name": "A button (blood type)",
-        "slug": "a_button",
+        "slug": "a_button_blood_type",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12626,7 +12626,7 @@
         "emoji": "🆎",
         "skin_tone_support": false,
         "name": "AB button (blood type)",
-        "slug": "ab_button",
+        "slug": "ab_button_blood_type",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12634,7 +12634,7 @@
         "emoji": "🅱️",
         "skin_tone_support": false,
         "name": "B button (blood type)",
-        "slug": "b_button",
+        "slug": "b_button_blood_type",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12706,7 +12706,7 @@
         "emoji": "🅾️",
         "skin_tone_support": false,
         "name": "O button (blood type)",
-        "slug": "o_button",
+        "slug": "o_button_blood_type",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -12738,7 +12738,7 @@
         "emoji": "🆙",
         "skin_tone_support": false,
         "name": "UP! button",
-        "slug": "up_button",
+        "slug": "up!_button",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
@@ -13114,7 +13114,7 @@
         "emoji": "🔺",
         "skin_tone_support": false,
         "name": "red triangle pointed up",
-        "slug": "red_triangle_pointed_up",
+        "slug": "red_triangle",
         "unicode_version": "0.6",
         "emoji_version": "0.6"
       },
