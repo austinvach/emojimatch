@@ -1,7 +1,8 @@
 # TEMPORARY
 DATA
-docs/assets/emoji/color
-docs/assets/emoji/high_contrast
+assets/emoji/color
+assets/emoji/high_contrast
+ignore
 
 # Logs
 logs
