@@ -22,7 +22,6 @@
   <script>
     let emojiStylePreference = 'flat';
     let emojiSkinTonePreference = 'default';
-    let unsupportedEmoj = [];
 
     fetch('emoji.json') // Makes an HTTP/HTTPS GET request
       .then(response => response.json()) // Parses the body as a JSON object
@@ -33,11 +32,9 @@
       for (let i = 0; i < emojiJson.length; i++) {
         let currentEmojiCategory = emojiJson[i].emojis;
         for (let i = 0; i < currentEmojiCategory.length; i++) {
-          if(currentEmojiCategory[i].svg_available){
-            let div = document.createElement('div');
+          let div = document.createElement('div');
             let img = document.createElement('img');
             img.setAttribute('alt', `${currentEmojiCategory[i].name}`);
-            // img.setAttribute('onerror', 'this.onerror=null;this.src="http://127.0.0.1:5500/assets/emoji/flat/face_with_symbols_on_mouth_flat.svg";');
             if(currentEmojiCategory[i].skin_tone_support){
               img.setAttribute('src', `assets/emoji/${emojiStylePreference}/${currentEmojiCategory[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
             }else{
@@ -45,12 +42,9 @@
             }
             div.appendChild(img);
             body.appendChild(div);
-          }
         }
       }
     };
-
-    // console.log(unsupportedEmoji);
   </script>
 </body>
 
