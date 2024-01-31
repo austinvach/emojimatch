@@ -50,7 +50,6 @@ document.getElementById('emojiCategories').addEventListener('change', e => {
 function onLoad() {
     // console.log('onLoad');
     fetch('emoji.json') // Makes an HTTP/HTTPS GET request
-    // fetch('data-by-group.json') // Makes an HTTP/HTTPS GET request
         .then(response => response.json()) // Parses the body as a JSON object
         .then(json => prepareGame(json)) // Passes the JSON to the prepareGame() function
 }
