@@ -10,10 +10,74 @@
     body {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     body div {
       flex-basis: 2%;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html {
+        color:#FFFFFF;
+        background-color: #000000;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      html {
+        color:#000000;
+        background-color: #FFFFFF;
+      }
+    }
+
+    /* Laptop L */
+    @media screen and (max-width: 2560px) {
+      body div {
+        flex-basis: 4%;
+      }
+    }
+
+    /* Laptop L */
+    @media screen and (max-width: 1440px) {
+      body div {
+        flex-basis: 6%;
+      }
+    }
+
+    /* Laptop */
+    @media screen and (max-width: 1024px) {
+      body div {
+        flex-basis: 10%;
+      }
+    }
+
+    /* Tablet */
+    @media screen and (max-width: 768px) {
+      body div {
+        flex-basis: 12.5%;
+      }
+    }
+
+    /* Mobile L */
+    @media screen and (max-width: 425px) {
+      body div {
+        flex-basis: 14%;
+      }
+    }
+
+    /* Mobile M */
+    @media screen and (max-width: 375px) {
+      body div {
+        flex-basis: 16%;
+      }
+    }
+
+    /* Mobile S */
+    @media screen and (max-width: 320px) {
+      body div {
+        flex-basis: 20%;
+      }
     }
   </style>
 </head>
