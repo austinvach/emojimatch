@@ -80,6 +80,20 @@ footer, a {
   color:lightgrey;
 }
 
+@media (prefers-color-scheme: dark) {
+  html {
+    color:#FFFFFF;
+    background-color: #000000;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    color:#000000;
+    background-color: #FFFFFF;
+  }
+}
+
 /* THERE HAS TO BE A SMARTER WAY OF MAKING THE TILES RESPONSIVE */
 
 @media (max-aspect-ratio: .4) {
