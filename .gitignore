@@ -2,7 +2,7 @@
 DATA
 assets/emoji/color
 assets/emoji/high_contrast
-ignore
+web5.js
 
 # Logs
 logs
