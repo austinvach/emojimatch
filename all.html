@@ -84,8 +84,8 @@
 
 <body>
   <script>
-    let emojiStylePreference = 'flat';
-    let emojiSkinTonePreference = 'default';
+    let emojiStylePreference = 'flat'; // Options are color, flat, high_contrast (not every emoji has a high_contrast option)
+    let emojiSkinTonePreference = 'default'; // Options are default, light, medium_light, medium, medium_dark, dark. 
 
     fetch('emoji.json') // Makes an HTTP/HTTPS GET request
       .then(response => response.json()) // Parses the body as a JSON object
