@@ -6,29 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>EMOJI MATCH</title>
+    <title>Emoji Match</title>
+    <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
 </head>
 
 <body>
     <div class="w-full bg-primary">
     <div class="navbar max-w-screen-lg mx-auto">
             <div class="navbar-start">
-                <select class="select select-bordered w-fit max-w-xs">
+                <div class="dropdown">
+                    <!-- Menu Button -->
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle md:hidden">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#FFF"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                    </div>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                      <li><a>Smileys & Emotion</a></li>
+                      <li><a>People & Body</a></li>
+                      <li><a>Animals & Nature</a></li>
+                      <li><a>Food & Drink</a></li>
+                      <li><a>Travel & Places</a></li>
+                      <li><a>Activities</a></li>
+                      <li><a>Objects</a></li>
+                      <li><a>Symbols & Flags</a></li>
+                    </ul>
+                  </div>
+                <!-- Category Dropdown -->
+                <select class="select select-bordered w-fit max-w-xs hidden md:flex">
                     <option selected>Smileys & Emotion</option>
+                    <option>People & Body</option>
+                    <option>Animals & Nature</option>
                     <option>Food & Drink</option>
+                    <option>Travel & Places</option>
+                    <option>Activities</option>
+                    <option>Objects</option>
+                    <option>Symbols & Flags</option>
                 </select>
             </div>
             <div class="navbar-center text-xl">
-                <!-- Mr.Quiz -->
+                <!-- EmojiMatch Logo -->
                 <img src="assets/logo.svg" alt="Logo" height="100%" , width="100%">
             </div>
             <div class="navbar-end">
+                <!-- Reset Button -->
                 <button class="btn btn-ghost btn-circle">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#FFF">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                     </svg>
                 </button>
+                <!-- Settings Button -->
                 <button class="btn btn-ghost btn-circle" onclick="my_modal_2.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="#FFF">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
