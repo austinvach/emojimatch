@@ -5,5 +5,10 @@
     "@web5/dids": "^0.2.4",
     "@web5/identity-agent": "^0.2.5"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
+    "daisyui": "^4.7.2",
+    "tailwindcss": "^3.4.1"
+  }
 }
