@@ -67,7 +67,10 @@
                 <!-- Settings Modal -->
                 <dialog id="settings_modal" class="modal">
                     <div class="modal-box">
-                        <div class="prose-2xl">Settings</div>
+                        <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+                        <div class="font-bold text-2xl">Settings</div>
                         <div class="divider"></div> 
                         <div class="form-control">
                             <!-- <label class="label cursor-pointer">
@@ -83,7 +86,7 @@
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Skin Tone</span>
-                                <select class="select select-bordered w-2/4">
+                                <select class="select select-bordered w-2/4" >
                                     <option selected>Default</option>
                                     <option>Light</option>
                                     <option>Medium-Light</option>
