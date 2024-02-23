@@ -2256,8 +2256,20 @@ html {
   background-color: var(--fallback-nc,oklch(var(--nc)/var(--tw-bg-opacity)));
 }
 
+.fill-primary-content {
+  fill: var(--fallback-pc,oklch(var(--pc)/1));
+}
+
 .stroke-cyan-500 {
   stroke: #06b6d4;
+}
+
+.stroke-primary-content {
+  stroke: var(--fallback-pc,oklch(var(--pc)/1));
+}
+
+.stroke-\[\.5\] {
+  stroke-width: .5;
 }
 
 .p-2 {
