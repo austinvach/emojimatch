@@ -64,13 +64,13 @@
             </div>
             <div class="navbar-end">
                 <!-- Menu Button -->
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle md:hidden" onclick="settings_modal.showModal()">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none" onclick="settings_modal.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="oklch(var(--pc))">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </div>
                 <!-- Settings Button -->
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle hidden md:flex focus-visible:outline-none" onclick="settings_modal.showModal()">
+                <!-- <div tabindex="0" role="button" class="btn btn-ghost btn-circle hidden md:flex focus-visible:outline-none" onclick="settings_modal.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="oklch(var(--pc))">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -78,15 +78,15 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
-                </div>
-                <!-- Settings Modal -->
+                </div> -->
+                <!-- Options Modal -->
                 <dialog id="settings_modal" class="modal">
                     <div class="modal-box">
                         <!-- <form method="dialog">
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-6 top-6">✕</button>
                         </form> -->
                         <div class="flex justify-between">
-                            <div class="font-bold text-2xl">Settings</div>
+                            <div class="font-bold text-2xl">Game Options</div>
                             <form method="dialog">
                                 <button class="btn btn-sm btn-circle btn-ghost focus-visible:outline-none">✕</button>
                             </form>
@@ -107,22 +107,22 @@
                                 </select>
                             </label>
                             <label class="label cursor-pointer">
-                                <span class="label-text">Game Preview</span>
+                                <span class="label-text">Emoji Skin Tone</span>
+                                <select class="select select-bordered w-2/4">
+                                    <option selected>✌️ Default</option>
+                                    <option>✌🏻 Light</option>
+                                    <option>✌🏼 Medium-Light</option>
+                                    <option>✌🏽 Medium</option>
+                                    <option>✌🏾 Medium-Dark</option>
+                                    <option>✌🏿 Dark</option>
+                                </select>
+                            </label>
+                            <label class="label cursor-pointer">
+                                <span class="label-text">Card Preview</span>
                                 <select class="select select-bordered w-2/4">
                                     <option>4 Seconds</option>
                                     <option selected>8 Seconds</option>
                                     <option>16 Seconds</option>
-                                </select>
-                            </label>
-                            <label class="label cursor-pointer">
-                                <span class="label-text">Skin Tone</span>
-                                <select class="select select-bordered w-2/4">
-                                    <option selected>Default</option>
-                                    <option>Light</option>
-                                    <option>Medium-Light</option>
-                                    <option>Medium</option>
-                                    <option>Medium-Dark</option>
-                                    <option>Dark</option>
                                 </select>
                             </label>
                         </div>
