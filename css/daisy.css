@@ -25,9 +25,15 @@
   }
 }
 
-@media (min-aspect-ratio: .4) and (max-aspect-ratio: .6) {
+@media (min-aspect-ratio: .4) and (max-aspect-ratio: .5) {
   #cards div {
       flex-basis: 18%;
+  }
+}
+
+@media (min-aspect-ratio: .5) and (max-aspect-ratio: .6) {
+  #cards div {
+      flex-basis: 17%;
   }
 }
 
