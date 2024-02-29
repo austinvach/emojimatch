@@ -7,6 +7,11 @@
     <link href="./src/output.css" rel="stylesheet">
     <title>Emoji Match</title>
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
+    <style>
+        #cards div {
+    flex-basis: 7%;
+}
+    </style>
 </head>
 
 <body>
@@ -120,8 +125,8 @@
         </div>
     </div>
     <!-- GAME BOARD -->
-    <div id="main">
-        <div id="cards"></div>
+    <div id="main" class="max-w-screen-lg mx-auto px-2 mt-3">
+        <div id="cards" class="flex justify-center flex-wrap gap-1.5"></div>
         <div id="endScreen">
           <h1>Nice Work!</h1>
           <p>Think you can do it faster?</p>
