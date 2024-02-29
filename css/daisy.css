@@ -45,7 +45,7 @@
 
 @media (min-aspect-ratio: .7) and (max-aspect-ratio: .8) {
   #cards div {
-      flex-basis: 14%;
+      flex-basis: 13%;
   }
 }
 
@@ -57,19 +57,19 @@
 
 @media (min-aspect-ratio: .9) and (max-aspect-ratio: 1.1) {
   #cards div {
-      flex-basis: 12%;
+      flex-basis: 11%;
   }
 }
 
 @media (min-aspect-ratio: 1.1) and (max-aspect-ratio: 1.3) {
   #cards div {
-      flex-basis: 11%;
+      flex-basis: 9%;
   }
 }
 
 @media (min-aspect-ratio: 1.3) and (max-aspect-ratio: 1.7) {
   #cards div {
-      flex-basis: 10%;
+      flex-basis: 8%;
   }
 }
 
