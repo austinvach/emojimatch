@@ -109,7 +109,7 @@
             </div>
             <div class="w-2/4 shrink flex justify-end">
                 <!-- Reset Button -->
-                <button class="btn btn-ghost btn-circle">
+                <button id="reset" class="btn btn-ghost btn-circle">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="oklch(var(--nc))">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -134,18 +134,20 @@
         <a href="https://austinvach.com">Made by AV</a>
       </footer>
     <script src="js/daisy.js"></script>
-    <script>
+    <!-- <script>
         var headerCategoryList = document.getElementById('headerCategoryList');
         var optionsCategoryList = document.getElementById('optionsCategoryList');
 
         headerCategoryList.addEventListener('change', function() {
             optionsCategoryList.value = this.value;
+            reset();
         });
 
         optionsCategoryList.addEventListener('change', function() {
             headerCategoryList.value = this.value;
+            reset();
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

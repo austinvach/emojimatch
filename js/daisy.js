@@ -36,8 +36,15 @@ document.getElementById('reset').addEventListener('click', e => {
     reset();
 });
 
-document.getElementById('emojiCategories').addEventListener('change', e => {
-    // console.log('EmojiCategories EventListener');
+document.getElementById('headerCategoryList').addEventListener('change', e => {
+    // console.log('headerCategoryList EventListener');
+    optionsCategoryList.value = headerCategoryList.value;
+    reset();
+});
+
+document.getElementById('optionsCategoryList').addEventListener('change', e => {
+    // console.log('optionsCategoryList EventListener');
+    headerCategoryList.value = optionsCategoryList.value;
     reset();
 });
 
@@ -107,9 +114,9 @@ function populateCategories() {
 
 function pickPairs() {
     // console.log('pickPairs');
-    const categoryDropdown = document.getElementById('emojiCategories');
-    selectedCategory = categoryDropdown.selectedOptions[0].value;
-    let selectedEmoji = emoji[categoryDropdown.selectedIndex].emojis;
+    const optionsCategoryList = document.getElementById('optionsCategoryList');
+    selectedCategory = optionsCategoryList.selectedOptions[0].value;
+    let selectedEmoji = emoji[optionsCategoryList.selectedIndex].emojis;
     selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
     pairs = selectedEmoji.slice(0, (cardCount / 2)); // Picks half the number of cards requested in cardCount variable
     pairs = pairs.concat(pairs) // Duplicates each value in the array so that each emoji has a pair
@@ -219,7 +226,7 @@ function stopwatch() {
     else {
         displayMinutes = minutes;
     }
-    document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
+    // document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
 }
 
 function stopStopwatch() {
@@ -233,13 +240,13 @@ function resetStopwatch() {
     minutes = 0
     displaySeconds = 0;
     displayMinutes = 0;
-    document.getElementById('stopwatch').innerHTML = '00:00';
+    // document.getElementById('stopwatch').innerHTML = '00:00';
 };
 
 // RESET FUNCTIONS
 
 function reset() {
-    // console.log('reset');
+    console.log('reset');
     ignoreClicks = true;
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
