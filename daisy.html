@@ -9,12 +9,24 @@
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
     <style>
         #cards div {
-    flex-basis: 7%;
-}
+            flex-basis: 7%;
+        }
+        .faceDown {
+            background-image: url(../assets/bg.svg);
+            background-size: 30%;
+            background-color: oklch(var(--p));
+            border-radius: 10px;
+        }
+        .faceDown :first-child {
+            visibility: hidden;
+        }
+        .notVisible {
+            visibility: hidden;
+        }   
     </style>
 </head>
 
-<body>
+<body class="text-center">
     <!-- FIRST BANNER -->
     <div class="w-full bg-primary">
         <div class="navbar max-w-screen-lg mx-auto">
@@ -127,32 +139,18 @@
     <!-- GAME BOARD -->
     <div id="main" class="max-w-screen-lg mx-auto px-2 mt-3">
         <div id="cards" class="flex justify-center flex-wrap gap-1.5"></div>
-        <div id="endScreen">
+        <div id="endScreen" class="hidden">
           <h1>Nice Work!</h1>
           <p>Think you can do it faster?</p>
         </div>
-        <div id="resetHint">
+        <div id="resetHint" class="px-2 mt-3">
           <p>Press the spacebar or tap 'Reset' to start over.</p>
         </div>
       </div>
-    <footer>
-        <a href="https://austinvach.com">Made by AV</a>
+    <footer class="px-2 mt-3">
+        <a href="https://austinvach.com" class="link">Made by AV</a>
       </footer>
     <script src="js/daisy.js"></script>
-    <!-- <script>
-        var headerCategoryList = document.getElementById('headerCategoryList');
-        var optionsCategoryList = document.getElementById('optionsCategoryList');
-
-        headerCategoryList.addEventListener('change', function() {
-            optionsCategoryList.value = this.value;
-            reset();
-        });
-
-        optionsCategoryList.addEventListener('change', function() {
-            headerCategoryList.value = this.value;
-            reset();
-        });
-    </script> -->
 </body>
 
 </html>
