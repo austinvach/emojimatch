@@ -4,29 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script> -->
     <link href="./src/output.css" rel="stylesheet">
     <title>Emoji Match</title>
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
 </head>
 
 <body>
-    <!-- First Banner -->
+    <!-- FIRST BANNER -->
     <div class="w-full bg-primary">
         <div class="navbar max-w-screen-lg mx-auto">
             <div class="navbar-start">
                 <!-- Category Dropdown -->
-                <select id="header-category-list" class="select select-bordered w-fit max-w-xs hidden md:flex">
-                    <option selected>🙂 Smileys & Emotion</option>
-                    <option>✌🏽 People & Body</option>
-                    <option>🕸️ Animals & Nature</option>
-                    <option>🍪 Food & Drink</option>
-                    <option>🌎 Travel & Places</option>
-                    <option>🧩 Activities</option>
-                    <option>💎 Objects</option>
-                    <option>🚫 Symbols & Flags</option>
-                </select>
+                <select id="headerCategoryList" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
             </div>
             <div class="navbar-center shrink-[.25]">
                 <!-- EmojiMatch Logo -->
@@ -60,31 +49,17 @@
                     <path class="features"
                         d="M67.91,18.38c1.61,0,2.91-1.3,2.91-2.91s-1.3-2.91-2.91-2.91-2.91,1.3-2.91,2.91,1.3,2.91,2.91,2.91Z M77.61,18.38c1.61,0,2.91-1.3,2.91-2.91s-1.3-2.91-2.91-2.91-2.91,1.3-2.91,2.91,1.3,2.91,2.91,2.91Z M67.33,21.48c.43-.32,1.04-.23,1.36.19.3.4,1.66,1.55,4.07,1.55s3.77-1.15,4.07-1.55c.32-.43.93-.52,1.36-.19.43.32.52.93.19,1.36-.67.89-2.61,2.33-5.63,2.33s-4.96-1.43-5.63-2.33c-.32-.43-.23-1.04.19-1.36Z" />
                 </svg>
-                <!-- <img src="assets/logo.svg" alt="EmojiMatch Logo" class="w-full"> -->
             </div>
             <div class="navbar-end">
                 <!-- Menu Button -->
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none" onclick="settings_modal.showModal()">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none" onclick="options_modal.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="oklch(var(--pc))">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </div>
-                <!-- Settings Button -->
-                <!-- <div tabindex="0" role="button" class="btn btn-ghost btn-circle hidden md:flex focus-visible:outline-none" onclick="settings_modal.showModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="oklch(var(--pc))">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                    </svg>
-                </div> -->
                 <!-- Options Modal -->
-                <dialog id="settings_modal" class="modal">
+                <dialog id="options_modal" class="modal">
                     <div class="modal-box">
-                        <!-- <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-6 top-6">✕</button>
-                        </form> -->
                         <div class="flex justify-between">
                             <div class="font-bold text-2xl">Game Options</div>
                             <form method="dialog">
@@ -93,18 +68,9 @@
                         </div>
                         <div class="divider"></div>
                         <div class="form-control">
-                            <label class="label cursor-pointer md:hidden">
+                            <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Category</span>
-                                <select id="settings-category-list" class="select select-bordered w-2/4">
-                                    <option selected>🙂 Smileys & Emotion</option>
-                                    <option>✌🏽 People & Body</option>
-                                    <option>🕸️ Animals & Nature</option>
-                                    <option>🍪 Food & Drink</option>
-                                    <option>🌎 Travel & Places</option>
-                                    <option>🧩 Activities</option>
-                                    <option>💎 Objects</option>
-                                    <option>🚫 Symbols & Flags</option>
-                                </select>
+                                <select id="optionsCategoryList" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Skin Tone</span>
@@ -134,7 +100,7 @@
             </div>
         </div>
     </div>
-    <!-- Second Banner -->
+    <!-- SECOND BANNER -->
     <div class="w-full bg-neutral">
         <div class="flex items-center max-w-screen-lg mx-auto px-2">
             <div class="w-2/4 shrink"></div>
@@ -153,16 +119,31 @@
             </div>
         </div>
     </div>
+    <!-- GAME BOARD -->
+    <div id="main">
+        <div id="cards"></div>
+        <div id="endScreen">
+          <h1>Nice Work!</h1>
+          <p>Think you can do it faster?</p>
+        </div>
+        <div id="resetHint">
+          <p>Press the spacebar or tap 'Reset' to start over.</p>
+        </div>
+      </div>
+    <footer>
+        <a href="https://austinvach.com">Made by AV</a>
+      </footer>
+    <script src="js/daisy.js"></script>
     <script>
-        var headerCategories = document.getElementById('header-category-list');
-        var settingsCategories = document.getElementById('settings-category-list');
+        var headerCategoryList = document.getElementById('headerCategoryList');
+        var optionsCategoryList = document.getElementById('optionsCategoryList');
 
-        headerCategories.addEventListener('change', function() {
-            settingsCategories.value = this.value;
+        headerCategoryList.addEventListener('change', function() {
+            optionsCategoryList.value = this.value;
         });
 
-        settingsCategories.addEventListener('change', function() {
-            headerCategories.value = this.value;
+        optionsCategoryList.addEventListener('change', function() {
+            headerCategoryList.value = this.value;
         });
     </script>
 </body>
