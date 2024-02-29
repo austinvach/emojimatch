@@ -6,24 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./src/output.css" rel="stylesheet">
     <title>Emoji Match</title>
+    <meta name="description" content="Test your visual memory matching emoji in this classic game">
+    <meta property="og:url" content="https://emojimatch.com">
+    <meta property="og:title" content="Emoji Match | Test Your Visual Memory">
+    <meta property="og:description" content="Test your visual memory matching emoji in this classic game">
+    <meta property="og:image" content="assets/og.png">
+    <link rel="stylesheet" href="css/daisy.css">
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
-    <style>
-        #cards div {
-            flex-basis: 7%;
-        }
-        .faceDown {
-            background-image: url(../assets/bg.svg);
-            background-size: 30%;
-            background-color: oklch(var(--p));
-            border-radius: 10px;
-        }
-        .faceDown :first-child {
-            visibility: hidden;
-        }
-        .notVisible {
-            visibility: hidden;
-        }   
-    </style>
 </head>
 
 <body class="text-center">
@@ -34,7 +23,7 @@
                 <!-- Category Dropdown -->
                 <select id="headerCategoryList" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
             </div>
-            <div class="navbar-center shrink-[.25]">
+            <div class="shrink-[.25]">
                 <!-- EmojiMatch Logo -->
                 <svg id="a" alt="EmojiMatch Logo" class="w-full" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 240 40">
@@ -69,9 +58,12 @@
             </div>
             <div class="navbar-end">
                 <!-- Menu Button -->
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none" onclick="options_modal.showModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="oklch(var(--pc))">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none"
+                    onclick="options_modal.showModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="oklch(var(--pc))">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </div>
                 <!-- Options Modal -->
@@ -140,17 +132,18 @@
     <div id="main" class="max-w-screen-lg mx-auto px-2 mt-3">
         <div id="cards" class="flex justify-center flex-wrap gap-1.5"></div>
         <div id="endScreen" class="hidden">
-          <h1>Nice Work!</h1>
-          <p>Think you can do it faster?</p>
+            <h1>Nice Work!</h1>
+            <p>Think you can do it faster?</p>
         </div>
         <div id="resetHint" class="px-2 mt-3">
-          <p>Press the spacebar or tap 'Reset' to start over.</p>
+            <p>Press the spacebar or tap 'Reset' to start over.</p>
         </div>
-      </div>
+    </div>
     <footer class="px-2 mt-3">
         <a href="https://austinvach.com" class="link">Made by AV</a>
-      </footer>
+    </footer>
     <script src="js/daisy.js"></script>
 </body>
+<!-- Shoutout to Microsoft for making their emoji designs open source 🙏 https://github.com/microsoft/fluentui-emoji -->
 
 </html>
