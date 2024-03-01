@@ -1,4 +1,3 @@
-// import { VerifiableCredential } from "@web5/credentials";
 const cardCount = 32; // Must be an even number since every card needs a pair
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
@@ -25,83 +24,44 @@ let emojiStyle = "flat";
 
 // EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", (e) => {
-  // console.log('DOMContentLoaded EventListener');
   onLoad();
-  // IS THIS NECESSARY?
-  checkLocalStorage();
 });
 
-document.getElementById("reset").addEventListener("click", (e) => {
-  // console.log('Reset EventListener');
+addEventListenerById("emojiCategoryDropdownInHeader", "change", (e) => {
+  emojiCategoryDropdown.value = emojiCategoryDropdownInHeader.value;
   reset();
 });
 
-document
-  .getElementById("emojiCategoryDropdownInHeader")
-  .addEventListener("change", (e) => {
-    // console.log('emojiCategoryDropdownInHeader EventListener');
-    emojiCategoryDropdownInOptions.value = emojiCategoryDropdownInHeader.value;
-    reset();
-  });
+addEventListenerById("emojiCategoryDropdown", "change", (e) => {
+  emojiCategoryDropdownInHeader.value = emojiCategoryDropdown.value;
+  reset();
+});
 
-document
-  .getElementById("emojiCategoryDropdownInOptions")
-  .addEventListener("change", (e) => {
-    // console.log('emojiCategoryDropdownInOptions EventListener');
-    emojiCategoryDropdownInHeader.value = emojiCategoryDropdownInOptions.value;
-    reset();
-  });
+addEventListenerById("reset", "click", reset);
+addEventListenerById("emojiSkinToneDropdown", "change", reset);
+addEventListenerById("cardPreviewTimeDropdown", "change", reset);
 
-document
-  .getElementById("emojiSkinToneDropdown")
-  .addEventListener("change", (e) => {
-    // console.log('emojiSkinToneDropdown EventListener');
-    reset();
-  });
+// SETUP FUNCTIONS - ONLY RUN WHEN THE PAGE IS LOADED/RELOADED
 
-document
-  .getElementById("cardPreviewTimeDropdown")
-  .addEventListener("change", (e) => {
-    // console.log('cardPreviewTimeDropdown EventListener');
-    reset();
-  });
-
-// ONLOAD FUNCTIONS
-
-function onLoad() {
+async function onLoad() {
   // console.log('onLoad');
-  fetch("emoji.json") // Makes an HTTP/HTTPS GET request
-    .then((response) => response.json()) // Parses the body as a JSON object
-    .then((json) => prepareGame(json)); // Passes the JSON to the prepareGame() function
-}
-
-function prepareGame(json) {
-  // console.log('prepareGame');
-  emoji = json; // Saves the emoji JSON to the emojis variable
+  const response = await fetch("emoji.json"); // Makes an HTTP/HTTPS GET request
+  emoji = await response.json(); // Parses the body as a JSON object and saves it to the emojis variable
   checkLocalStorage(); // Checks for any saved customer preferences
   populateCategories(); // Populates the dropdown with the emoji categories
-  populateSkinTones(); // Populates the dropdown with the emoji categories
-  populateCardPreviewTimes(); // Populates the dropdown with the emoji categories
+  populateSkinTones(); // Populates the dropdown with the emoji skin tones
+  populateCardPreviewTimes(); // Populates the dropdown with the card preview times
   pickPairs();
   setCardsFaceUp();
 }
 
-// GAME SETUP FUNCTIONS
-
 function checkLocalStorage() {
   // console.log('checkLocalStorage');
   if (storageAvailable("localStorage")) {
-    if (localStorage.getItem("selectedEmojiCategory")) {
-      selectedEmojiCategory = localStorage.getItem("selectedEmojiCategory");
-    }
-    if (localStorage.getItem("selectedEmojiSkinTone")) {
-      selectedEmojiSkinTone = localStorage.getItem("selectedEmojiSkinTone");
-    }
-    if (localStorage.getItem("selectedCardPreviewTime")) {
-      selectedCardPreviewTime = localStorage.getItem("selectedCardPreviewTime");
-    } else {
-      selectedCardPreviewTime = "8000";
-    }
+    selectedEmojiCategory = localStorage.getItem("selectedEmojiCategory");
+    selectedEmojiSkinTone = localStorage.getItem("selectedEmojiSkinTone");
+    selectedCardPreviewTime =
+      localStorage.getItem("selectedCardPreviewTime") || "8000";
   } else {
     console.log("LOCAL STORAGE NOT AVAILABLE");
   }
@@ -112,8 +72,8 @@ function populateCategories() {
   const emojiCategoryDropdownInHeader = document.getElementById(
     "emojiCategoryDropdownInHeader"
   );
-  const emojiCategoryDropdownInOptions = document.getElementById(
-    "emojiCategoryDropdownInOptions"
+  const emojiCategoryDropdown = document.getElementById(
+    "emojiCategoryDropdown"
   );
   const emojiCategories = [
     { icon: "🙂", name: "Smileys & Emotion", value: "smileys_and_emotion" },
@@ -125,28 +85,31 @@ function populateCategories() {
     { icon: "🧮", name: "Objects", value: "objects" },
     { icon: "⛔", name: "Symbols & Flags", value: "symbols_and_flags" },
   ];
-  emojiCategories.forEach((emojiCategory) => {
-    var categoryDisplayName = `${emojiCategory.icon} ${emojiCategory.name}`;
-    if (
-      selectedEmojiCategory &&
-      selectedEmojiCategory === emojiCategory.value
-    ) {
-      // If user settings exist, honor their selected category
-      emojiCategoryDropdownInHeader.add(
-        new Option(categoryDisplayName, emojiCategory.value, false, true)
-      );
-      emojiCategoryDropdownInOptions.add(
-        new Option(categoryDisplayName, emojiCategory.value, false, true)
-      );
-    } else {
-      emojiCategoryDropdownInHeader.add(
-        new Option(categoryDisplayName, emojiCategory.value)
-      );
-      emojiCategoryDropdownInOptions.add(
-        new Option(categoryDisplayName, emojiCategory.value)
-      );
-    }
+
+  const options = emojiCategories.map((emojiCategory) => {
+    const categoryDisplayName = `${emojiCategory.icon} ${emojiCategory.name}`;
+    const isSelected = selectedEmojiCategory === emojiCategory.value;
+    return new Option(
+      categoryDisplayName,
+      emojiCategory.value,
+      false,
+      isSelected
+    );
   });
+
+  const headerOptions = emojiCategories.map((emojiCategory) => {
+    const categoryDisplayName = `${emojiCategory.icon} ${emojiCategory.name}`;
+    const isSelected = selectedEmojiCategory === emojiCategory.value;
+    return new Option(
+      categoryDisplayName,
+      emojiCategory.value,
+      false,
+      isSelected
+    );
+  });
+
+  emojiCategoryDropdown.append(...options);
+  emojiCategoryDropdownInHeader.append(...headerOptions);
 }
 
 function populateSkinTones() {
@@ -162,20 +125,14 @@ function populateSkinTones() {
     { icon: "✌🏾", name: "Medium-Dark", value: "medium_dark" },
     { icon: "✌🏿", name: "Dark", value: "dark" },
   ];
-  emojiSkinTones.forEach((emojiSkinTone) => {
-    var displayName = `${emojiSkinTone.icon} ${emojiSkinTone.name}`;
-    if (
-      selectedEmojiSkinTone &&
-      selectedEmojiSkinTone === emojiSkinTone.value
-    ) {
-      // If user settings exist, honor their selected skin tone
-      emojiSkinToneDropdown.add(
-        new Option(displayName, emojiSkinTone.value, false, true)
-      );
-    } else {
-      emojiSkinToneDropdown.add(new Option(displayName, emojiSkinTone.value));
-    }
+
+  const options = emojiSkinTones.map((emojiSkinTone) => {
+    const displayName = `${emojiSkinTone.icon} ${emojiSkinTone.name}`;
+    const isSelected = selectedEmojiSkinTone === emojiSkinTone.value;
+    return new Option(displayName, emojiSkinTone.value, false, isSelected);
   });
+
+  emojiSkinToneDropdown.append(...options);
 }
 
 function populateCardPreviewTimes() {
@@ -188,69 +145,52 @@ function populateCardPreviewTimes() {
     { name: "8 Seconds", value: "8000" },
     { name: "16 Seconds", value: "16000" },
   ];
-  cardPreviewTimes.forEach((cardPreviewTime) => {
-    if (
-      selectedCardPreviewTime &&
-      selectedCardPreviewTime === cardPreviewTime.value
-    ) {
-      // If user settings exist, honor their selected category
-      cardPreviewTimeDropdown.add(
-        new Option(cardPreviewTime.name, cardPreviewTime.value, false, true)
-      );
-    } else {
-      cardPreviewTimeDropdown.add(
-        new Option(cardPreviewTime.name, cardPreviewTime.value)
-      );
-    }
+
+  const options = cardPreviewTimes.map((cardPreviewTime) => {
+    const isSelected = selectedCardPreviewTime === cardPreviewTime.value;
+    return new Option(
+      cardPreviewTime.name,
+      cardPreviewTime.value,
+      false,
+      isSelected
+    );
   });
+
+  cardPreviewTimeDropdown.append(...options);
 }
 
-// CORE GAME FUNCTIONS
+// CARD PREP FUNCTIONS - RUN ON PAGE LOAD/RELOAD AND WHENEVER THE USER CLICKS THE RESET BUTTON
 
 function pickPairs() {
   // console.log('pickPairs');
-  const emojiCategoryDropdownInOptions = document.getElementById(
-    "emojiCategoryDropdownInOptions"
-  );
-  const emojiSkinToneDropdown = document.getElementById(
-    "emojiSkinToneDropdown"
-  );
-  const cardPreviewTimeDropdown = document.getElementById(
-    "cardPreviewTimeDropdown"
-  );
-  selectedEmojiCategory =
-    emojiCategoryDropdownInOptions.selectedOptions[0].value;
-  selectedEmojiSkinTone = emojiSkinToneDropdown.selectedOptions[0].value;
-  selectedCardPreviewTime = cardPreviewTimeDropdown.selectedOptions[0].value;
-  let selectedEmoji =
-    emoji[emojiCategoryDropdownInOptions.selectedIndex].emojis;
+  selectedEmojiCategory = getSelectedValue("emojiCategoryDropdown");
+  selectedEmojiSkinTone = getSelectedValue("emojiSkinToneDropdown");
+  selectedCardPreviewTime = getSelectedValue("cardPreviewTimeDropdown");
+
+  let selectedEmoji = emoji[emojiCategoryDropdown.selectedIndex].emojis;
   selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
+
   pairs = selectedEmoji.slice(0, cardCount / 2); // Picks half the number of cards requested in cardCount variable
-  pairs = pairs.concat(pairs); // Duplicates each value in the array so that each emoji has a pair
+  pairs = [...pairs, ...pairs]; // Duplicates each value in the array so that each emoji has a pair
+
   pairs.sort(() => Math.random() - 0.5); // Randomizes the pairs
 }
 
 function setCardsFaceUp() {
   // console.log('setCardsFaceUp');
   const cards = document.getElementById("cards");
-  for (var i = 0; i < pairs.length; i++) {
+  const fragment = document.createDocumentFragment();
+
+  pairs.forEach((emoji, i) => {
     const card = document.createElement("div");
-    card.setAttribute("class", "faceUp");
-    card.setAttribute("id", i);
+    card.classList.add("faceUp");
+    card.id = i;
     const img = document.createElement("img");
-    img.setAttribute("alt", `${pairs[i].name} emoji`);
-    if (pairs[i].skin_tone_support) {
-      img.setAttribute(
-        "src",
-        `assets/emoji/${emojiStyle}/${pairs[i].slug}_${emojiStyle}_${selectedEmojiSkinTone}.svg`
-      );
-    } else {
-      img.setAttribute(
-        "src",
-        `assets/emoji/${emojiStyle}/${pairs[i].slug}_${emojiStyle}.svg`
-      );
-    }
-    cards.appendChild(card);
+    img.alt = `${emoji.name} emoji`;
+    img.src =
+      `assets/emoji/${emojiStyle}/${emoji.slug}_${emojiStyle}` +
+      (emoji.skin_tone_support ? `_${selectedEmojiSkinTone}` : "") +
+      ".svg";
     card.appendChild(img);
     card.addEventListener("click", (e) => {
       selectedCards = document.querySelectorAll(".faceUp");
@@ -264,19 +204,44 @@ function setCardsFaceUp() {
         checkCards();
       }
     });
-  }
+    fragment.appendChild(card);
+  });
+
+  cards.appendChild(fragment);
   previewTimerId = setTimeout(flipCardsFaceDown, selectedCardPreviewTime); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
 }
 
 function flipCardsFaceDown() {
   // console.log('flipCardsFaceDown');
-  let cards = document.querySelectorAll(".faceUp");
-  for (var i = 0; i < cards.length; i++) {
-    cards[i].classList.replace("faceUp", "faceDown");
-  }
+  const faceUpCards = document.querySelectorAll(".faceUp");
+  faceUpCards.forEach((card) => {
+    card.classList.replace("faceUp", "faceDown");
+  });
   ignoreClicks = false;
   startStopwatch();
 }
+
+function startStopwatch() {
+  // console.log('startStopwatch')
+  stopwatchIntervalId = window.setInterval(stopwatch, 1000);
+}
+
+function stopwatch() {
+  // console.log('stopwatch');
+  seconds++;
+  if (seconds / 60 === 1) {
+    // Logic to determine when to increment next value
+    seconds = 0;
+    minutes++;
+  }
+
+  // Adds a leading 0 if the seconds/minutes are only one digit.
+  displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+  displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  // document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
+}
+
+// GAME FUNCTIONS - RUN AS NEEDED BASED ON USER INTERACTION
 
 function flipSelectedCardFaceUp(card) {
   // console.log('flipSelectedCardFaceUp');
@@ -317,47 +282,9 @@ function clearMatch() {
   }
 }
 
-// STOPWATCH FUNCTIONS
-
-function startStopwatch() {
-  // console.log('startStopwatch')
-  stopwatchIntervalId = window.setInterval(stopwatch, 1000);
-}
-
-function stopwatch() {
-  // console.log('stopwatch');
-  seconds++;
-  if (seconds / 60 === 1) {
-    // Logic to determine when to increment next value
-    seconds = 0;
-    minutes++;
-  }
-  if (seconds < 10) {
-    // Adds a leading 0 if the seconds/minutes are only one digit.
-    displaySeconds = `0${seconds}`;
-  } else {
-    displaySeconds = seconds;
-  }
-  if (minutes < 10) {
-    displayMinutes = `0${minutes}`;
-  } else {
-    displayMinutes = minutes;
-  }
-  // document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
-}
-
 function stopStopwatch() {
   // console.log('stopStopwatch')
   window.clearInterval(stopwatchIntervalId);
-}
-
-function resetStopwatch() {
-  // console.log('resetStopwatch');
-  seconds = 0;
-  minutes = 0;
-  displaySeconds = 0;
-  displayMinutes = 0;
-  // document.getElementById('stopwatch').innerHTML = '00:00';
 }
 
 // RESET FUNCTIONS
@@ -381,6 +308,15 @@ function clearBoard() {
   cards.innerHTML = "";
   cards.removeAttribute("style");
   document.getElementById("endScreen").removeAttribute("style");
+}
+
+function resetStopwatch() {
+  // console.log('resetStopwatch');
+  seconds = 0;
+  minutes = 0;
+  displaySeconds = 0;
+  displayMinutes = 0;
+  // document.getElementById('stopwatch').innerHTML = '00:00';
 }
 
 window.onkeydown = function (k) {
@@ -423,6 +359,7 @@ function storageAvailable(type) {
 function saveUserSettings() {
   // console.log('saveUserSettings');
   console.log(
+    "SAVE USER SETTINGS",
     selectedEmojiCategory,
     selectedEmojiSkinTone,
     selectedCardPreviewTime
@@ -432,26 +369,12 @@ function saveUserSettings() {
   localStorage.setItem("selectedCardPreviewTime", selectedCardPreviewTime);
 }
 
-// WEB5 STUFF - NEEDS WORK
+// HELPER FUNCTIONS
 
-// async function issueVC() {
-//     console.log("issueVC");
-//     const currentTime = document.getElementById('stopwatch').innerHTML;
-//     console.log(currentTime);
-//     document.querySelector("#gameOverDialog").showModal();
+function addEventListenerById(id, event, handler) {
+  document.getElementById(id).addEventListener(event, handler);
+}
 
-//     // Create VC
-//     const vc = await VerifiableCredential.create({
-//         type: 'EmojiMatchAchievement',
-//         issuer: issuer.did,
-//         subject: player.did,
-//         data: {
-//           "bestTime": "00:59"
-//         }
-//       });
-
-//     // Sign with Issuer DID
-//     const signedVcJwt = await vc.sign({ did: issuer });
-
-//     console.log(signedVcJwt);
-// }
+function getSelectedValue(id) {
+  return document.getElementById(id).selectedOptions[0].value;
+}
