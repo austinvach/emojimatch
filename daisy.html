@@ -20,8 +20,8 @@
     <div class="w-full bg-primary">
         <div class="navbar max-w-screen-lg mx-auto">
             <div class="navbar-start">
-                <!-- Category Dropdown -->
-                <select id="emojiCategoriesInHeader" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
+                <!-- Emoji Category Dropdown -->
+                <select id="emojiCategoryDropdownInHeader" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
             </div>
             <div class="shrink-[.25]">
                 <!-- EmojiMatch Logo -->
@@ -79,20 +79,18 @@
                         <div class="form-control">
                             <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Category</span>
-                                <select id="emojiCategoriesInOptions" class="select select-bordered w-2/4"></select>
+                                <!-- Emoji Category Dropdown -->
+                                <select id="emojiCategoryDropdownInOptions" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
+                                <!-- Emoji Skin Tone Dropdown -->
                                 <span class="label-text">Emoji Skin Tone</span>
-                                <select id="skinTones" class="select select-bordered w-2/4"></select>
+                                <select id="emojiSkinToneDropdown" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Card Preview</span>
-                                <select id="cardPreviews" class="select select-bordered w-2/4">
-                                    <!-- POPULATE WITH JAVASCRIPT -->
-                                    <option value="4000">4 Seconds</option>
-                                    <option value="8000">8 Seconds</option>
-                                    <option value="16000">16 Seconds</option>
-                                </select>
+                                <!-- Card Preview Time Dropdown -->
+                                <select id="cardPreviewTimeDropdown" class="select select-bordered w-2/4"></select>
                             </label>
                         </div>
                     </div>
