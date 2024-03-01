@@ -21,7 +21,7 @@
         <div class="navbar max-w-screen-lg mx-auto">
             <div class="navbar-start">
                 <!-- Category Dropdown -->
-                <select id="headerCategoryList" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
+                <select id="emojiCategoriesInHeader" class="select select-bordered w-fit max-w-xs hidden md:flex"></select>
             </div>
             <div class="shrink-[.25]">
                 <!-- EmojiMatch Logo -->
@@ -79,25 +79,19 @@
                         <div class="form-control">
                             <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Category</span>
-                                <select id="optionsCategoryList" class="select select-bordered w-2/4"></select>
+                                <select id="emojiCategoriesInOptions" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Skin Tone</span>
-                                <select class="select select-bordered w-2/4">
-                                    <option selected>✌️ Default</option>
-                                    <option>✌🏻 Light</option>
-                                    <option>✌🏼 Medium-Light</option>
-                                    <option>✌🏽 Medium</option>
-                                    <option>✌🏾 Medium-Dark</option>
-                                    <option>✌🏿 Dark</option>
-                                </select>
+                                <select id="skinTones" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
                                 <span class="label-text">Card Preview</span>
-                                <select class="select select-bordered w-2/4">
-                                    <option>4 Seconds</option>
-                                    <option selected>8 Seconds</option>
-                                    <option>16 Seconds</option>
+                                <select id="cardPreviews" class="select select-bordered w-2/4">
+                                    <!-- POPULATE WITH JAVASCRIPT -->
+                                    <option value="4000">4 Seconds</option>
+                                    <option value="8000">8 Seconds</option>
+                                    <option value="16000">16 Seconds</option>
                                 </select>
                             </label>
                         </div>

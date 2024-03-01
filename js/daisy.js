@@ -1,6 +1,6 @@
 // import { VerifiableCredential } from "@web5/credentials";
 const cardCount = 32; // Must be an even number since every card needs a pair
-const previewTimeInMS = 8000;
+let cardPreviewInMS;
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
 let previewTimerId;
@@ -16,9 +16,9 @@ let displaySeconds = 0;
 let emoji = [];
 let pairs = [];
 // Variables to store user preferences
-let selectedCategory;
-let emojiStylePreference = 'flat';
-let emojiSkinTonePreference = 'default';
+let emojiCategory;
+let emojiSkinTone;
+let emojiStyle = 'flat';
 // let cardBackgroundColor;
 // Other variables
 let selectedCards = [];
@@ -28,6 +28,7 @@ let ignoreClicks = true;
 document.addEventListener('DOMContentLoaded', e => {
     // console.log('DOMContentLoaded EventListener');
     onLoad();
+    // IS THIS NECESSARY?
     checkLocalStorage();
 });
 
@@ -36,21 +37,27 @@ document.getElementById('reset').addEventListener('click', e => {
     reset();
 });
 
-document.getElementById('headerCategoryList').addEventListener('change', e => {
-    // console.log('headerCategoryList EventListener');
-    optionsCategoryList.value = headerCategoryList.value;
+document.getElementById('emojiCategoriesInHeader').addEventListener('change', e => {
+    // console.log('emojiCategoriesInHeader EventListener');
+    emojiCategoriesInOptions.value = emojiCategoriesInHeader.value;
     reset();
 });
 
-document.getElementById('optionsCategoryList').addEventListener('change', e => {
-    // console.log('optionsCategoryList EventListener');
-    headerCategoryList.value = optionsCategoryList.value;
+document.getElementById('emojiCategoriesInOptions').addEventListener('change', e => {
+    // console.log('emojiCategoriesInOptions EventListener');
+    emojiCategoriesInHeader.value = emojiCategoriesInOptions.value;
     reset();
 });
 
-// document.getElementById('settings').addEventListener('click', e => {
-//     showModal();
-// });
+document.getElementById('skinTones').addEventListener('change', e => {
+    // console.log('skinTones EventListener');
+    reset();
+});
+
+document.getElementById('cardPreviews').addEventListener('change', e => {
+    // console.log('cardPreviews EventListener');
+    reset();
+});
 
 // ONLOAD FUNCTIONS
 
@@ -66,6 +73,8 @@ function prepareGame(json) {
     emoji = json; // Saves the emoji JSON to the emojis variable
     checkLocalStorage(); // Checks for any saved customer preferences
     populateCategories(); // Populates the dropdown with the emoji categories
+    populateSkinTones(); // Populates the dropdown with the emoji categories
+    // populateCardPreviewDropdown(); // Populates the dropdown with the emoji categories
     pickPairs();
     setCardsFaceUp();
 };
@@ -75,7 +84,27 @@ function prepareGame(json) {
 function checkLocalStorage() {
     // console.log('checkLocalStorage');
     if (storageAvailable('localStorage')) {
-        selectedCategory = localStorage.getItem('selectedCategory')
+        if (localStorage.getItem('emojiCategory')) {
+            emojiCategory = localStorage.getItem('emojiCategory');
+        }
+        if (localStorage.getItem('emojiSkinTone')) {
+            emojiSkinTone = localStorage.getItem('emojiSkinTone');
+        }
+        else {
+            emojiSkinTone = "default";
+        }
+        if (localStorage.getItem('emojiStyle')) {
+            emojiStyle = localStorage.getItem('emojiStyle');
+        }
+        else {
+            emojiStyle = "flat";
+        }
+        if (localStorage.getItem('cardPreviewInMS')) {
+            cardPreviewInMS = localStorage.getItem('cardPreviewInMS');
+        }
+        else {
+            cardPreviewInMS = "8000";
+        }
     } else {
         console.log('LOCAL STORAGE NOT AVAILABLE');
     }
@@ -85,7 +114,7 @@ function populateCategories() {
     // console.log('populateCategories');
     const categoryIcons = {
         "Smileys & Emotion": "🙂",
-        "People & Body": "✌🏽",
+        "People & Body": "🧙‍♂️",
         "Animals & Nature": "🕸️",
         "Food & Drink": "🍪",
         "Travel & Places": "🌎",
@@ -93,19 +122,43 @@ function populateCategories() {
         "Objects": "🧮",
         "Symbols & Flags": "⛔"
     };
-    const headerCategoryList = document.getElementById('headerCategoryList');
-    const optionsCategoryList = document.getElementById('optionsCategoryList');
+    const emojiCategoriesInHeader = document.getElementById('emojiCategoriesInHeader');
+    const emojiCategoriesInOptions = document.getElementById('emojiCategoriesInOptions');
     for (var i = 0; i < emoji.length; i++) {
         var categoryName = emoji[i].name;
         var categoryIcon = categoryIcons[categoryName];
         var displayName = categoryIcon ? `${categoryIcon} ${categoryName}` : categoryName;
-        if (selectedCategory && selectedCategory === categoryName) { // If user settings exist, honor their selected category
-            headerCategoryList.add(new Option(displayName, categoryName, false, true));
-            optionsCategoryList.add(new Option(displayName, categoryName, false, true));
+        if (emojiCategory && emojiCategory === categoryName) { // If user settings exist, honor their selected category
+            emojiCategoriesInHeader.add(new Option(displayName, categoryName, false, true));
+            emojiCategoriesInOptions.add(new Option(displayName, categoryName, false, true));
         }
         else {
-            headerCategoryList.add(new Option(displayName, categoryName));
-            optionsCategoryList.add(new Option(displayName, categoryName));
+            emojiCategoriesInHeader.add(new Option(displayName, categoryName));
+            emojiCategoriesInOptions.add(new Option(displayName, categoryName));
+        }
+    }
+};
+
+function populateSkinTones() {
+    // console.log('populateSkinTones');
+    const skinTones = [
+        { icon: "✌️", name: "Default", value: "default" },
+        { icon: "✌🏻", name: "Light",  value: "light" },
+        { icon: "✌🏼", name: "Medium-Light", value: "medium_light" },
+        { icon: "✌🏽", name: "Medium", value: "medium" },
+        { icon: "✌🏾", name: "Medium-Dark", value: "medium_dark" },
+        { icon: "✌🏿", name: "Dark", value: "dark" }
+      ];
+    const skinToneList = document.getElementById('skinTones');
+    for (let skinTone of skinTones) {
+        var skinToneValue = skinTone.value;
+        var displayName = `${skinTone.icon} ${skinTone.name}`;
+    
+        if (emojiSkinTone && emojiSkinTone === skinToneValue) { // If user settings exist, honor their selected skin tone
+            skinToneList.add(new Option(displayName, skinToneValue, false, true));
+        }
+        else {
+            skinToneList.add(new Option(displayName, skinToneValue));
         }
     }
 };
@@ -114,9 +167,13 @@ function populateCategories() {
 
 function pickPairs() {
     // console.log('pickPairs');
-    const optionsCategoryList = document.getElementById('optionsCategoryList');
-    selectedCategory = optionsCategoryList.selectedOptions[0].value;
-    let selectedEmoji = emoji[optionsCategoryList.selectedIndex].emojis;
+    const emojiCategoriesInOptions = document.getElementById('emojiCategoriesInOptions');
+    const emojiSkinTones = document.getElementById('skinTones');
+    const cardPreview = document.getElementById('cardPreviews');
+    emojiCategory = emojiCategoriesInOptions.selectedOptions[0].value;
+    emojiSkinTone = emojiSkinTones.selectedOptions[0].value;
+    cardPreviewInMS = cardPreview.selectedOptions[0].value;
+    let selectedEmoji = emoji[emojiCategoriesInOptions.selectedIndex].emojis;
     selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
     pairs = selectedEmoji.slice(0, (cardCount / 2)); // Picks half the number of cards requested in cardCount variable
     pairs = pairs.concat(pairs) // Duplicates each value in the array so that each emoji has a pair
@@ -133,9 +190,9 @@ function setCardsFaceUp() {
         const img = document.createElement('img');
         img.setAttribute('alt', `${pairs[i].name} emoji`);        
         if(pairs[i].skin_tone_support){
-            img.setAttribute('src', `assets/emoji/${emojiStylePreference}/${pairs[i].slug}_${emojiStylePreference}_${emojiSkinTonePreference}.svg`);
+            img.setAttribute('src', `assets/emoji/${emojiStyle}/${pairs[i].slug}_${emojiStyle}_${emojiSkinTone}.svg`);
         }else{
-            img.setAttribute('src', `assets/emoji/${emojiStylePreference}/${pairs[i].slug}_${emojiStylePreference}.svg`);
+            img.setAttribute('src', `assets/emoji/${emojiStyle}/${pairs[i].slug}_${emojiStyle}.svg`);
         }
         cards.appendChild(card);
         card.appendChild(img);
@@ -150,7 +207,7 @@ function setCardsFaceUp() {
             }
         });
     }
-    previewTimerId = setTimeout(flipCardsFaceDown, previewTimeInMS); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
+    previewTimerId = setTimeout(flipCardsFaceDown, cardPreviewInMS); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
 };
 
 function flipCardsFaceDown() {
@@ -246,7 +303,7 @@ function resetStopwatch() {
 // RESET FUNCTIONS
 
 function reset() {
-    console.log('reset');
+    // console.log('reset');
     ignoreClicks = true;
     clearTimeout(previewTimerId);
     clearTimeout(transitionDelayTimerId);
@@ -304,32 +361,13 @@ function storageAvailable(type) {
 
 function saveUserSettings() {
     // console.log('saveUserSettings');
-    localStorage.setItem('selectedCategory', selectedCategory);
+    console.log(emojiCategory, emojiSkinTone, cardPreviewInMS);
+    localStorage.setItem('emojiCategory', emojiCategory);
+    localStorage.setItem('emojiSkinTone', emojiSkinTone);
+    localStorage.setItem('selectedcardPreviewInMS', cardPreviewInMS);
 }
 
-// MODAL STUFF - NEEDS CLEANUP
-
-function showModal() {
-    document.getElementById('gameOverDialog').showModal();
-}
-
-// var form = document.getElementById("modalForm");
-// var settings = document.getElementById("settings");
-
-// settings.addEventListener("click", function () {
-//     showModal();
-// });
-
-
-// // Add an event listener to the form's submit event
-// form.addEventListener("submit", function (event) {
-//     event.preventDefault(); // Prevent the default form submission behavior
-//     var textarea = document.getElementById("did"); // Get the textarea element by its id
-//     var did = textarea.value; // Get the value of the textarea
-//     console.log(did);
-//     issueVC();
-//     // textarea.value = ""; // Clear the textarea
-// });
+// WEB5 STUFF - NEEDS WORK
 
 // async function issueVC() {
 //     console.log("issueVC");
