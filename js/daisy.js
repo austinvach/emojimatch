@@ -210,7 +210,7 @@ function setCardsFaceUp() {
   });
 
   cards.appendChild(fragment);
-  previewTimerId = setTimeout(flipCardsFaceDown, selectedCardPreviewTime); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
+  // previewTimerId = setTimeout(flipCardsFaceDown, selectedCardPreviewTime); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
 }
 
 function flipCardsFaceDown() {
@@ -240,7 +240,7 @@ function stopwatch() {
   // Adds a leading 0 if the seconds/minutes are only one digit.
   displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
   displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  // document.getElementById('stopwatch').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
+  document.getElementById('clock').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
 }
 
 // GAME FUNCTIONS - RUN AS NEEDED BASED ON USER INTERACTION
@@ -320,7 +320,6 @@ function resetStopwatch() {
   minutes = 0;
   displaySeconds = 0;
   displayMinutes = 0;
-  // document.getElementById('stopwatch').innerHTML = '00:00';
 }
 
 window.onkeydown = function (k) {
@@ -383,7 +382,7 @@ function formatCountdownText(countdown) {
 
 function startCountdown() {
   let countdown = (selectedCardPreviewTime / 1000);
-  let countdownDisplay = document.getElementById('time');
+  let countdownDisplay = document.getElementById('clock');
 
   countdownDisplay.textContent = formatCountdownText(countdown);
 
@@ -394,6 +393,8 @@ function startCountdown() {
     if (countdown <= 0) {
       clearInterval(countdownIntervalId);
       countdownDisplay.textContent = "00:00";
+      console.log('countdown over');
+      flipCardsFaceDown();
     }
   }, 1000);
 }
