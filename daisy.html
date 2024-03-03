@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-screen">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
 </head>
 
-<body class="text-center">
+<body class="text-center h-full flex flex-col">
     <!-- FIRST BANNER -->
     <div class="w-full bg-primary">
         <div class="navbar max-w-screen-lg mx-auto">
@@ -120,8 +120,8 @@
         </div>
     </div>
     <!-- GAME BOARD -->
-    <div id="main" class="max-w-screen-lg mx-auto px-2 mt-3">
-        <div id="cards" class="flex justify-center flex-wrap gap-1.5"></div>
+    <div id="main" class="w-full max-w-screen-lg mx-auto p-2 grow">
+        <div id="cards" class="grow flex justify-center flex-wrap gap-1.5"></div>
         <div id="endScreen" class="hidden">
             <h1>Nice Work!</h1>
             <p>Think you can do it faster?</p>
@@ -130,8 +130,8 @@
             <p>Press the spacebar or tap 'Reset' to start over.</p>
         </div> -->
     </div>
-    <footer class="px-2 mt-3">
-        <a href="https://austinvach.com" class="link">Made by AV</a>
+    <footer class="p-2">
+        <a href="https://austinvach.com" class="link">Made with ❤️ by AV</a>
     </footer>
     <script src="js/daisy.js"></script>
 </body>

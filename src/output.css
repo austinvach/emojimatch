@@ -1418,6 +1418,10 @@ html {
   border-bottom-left-radius: 0px;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1437,6 +1441,14 @@ html {
 
 .h-5 {
   height: 1.25rem;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.h-full {
+  height: 100%;
 }
 
 .w-2\/4 {
@@ -1476,8 +1488,16 @@ html {
   flex-shrink: .25;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .cursor-pointer {
   cursor: pointer;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .flex-wrap {
@@ -1516,6 +1536,10 @@ html {
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-p,oklch(var(--p)/var(--tw-bg-opacity)));
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-2 {
