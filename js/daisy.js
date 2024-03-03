@@ -2,7 +2,8 @@ const cardCount = 32; // Must be an even number since every card needs a pair
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
 let previewTimerId;
-let stopwatchIntervalId = 0;
+let stopwatchIntervalId;
+let countdownIntervalId;
 let transitionDelayTimerId;
 // Variables to hold time values
 let minutes = 0;
@@ -53,6 +54,7 @@ async function onLoad() {
   populateCardPreviewTimes(); // Populates the dropdown with the card preview times
   pickPairs();
   setCardsFaceUp();
+  startCountdown();
 }
 
 function checkLocalStorage() {
@@ -294,12 +296,14 @@ function reset() {
   ignoreClicks = true;
   clearTimeout(previewTimerId);
   clearTimeout(transitionDelayTimerId);
+  clearInterval(countdownIntervalId);
   clearInterval(stopwatchIntervalId);
   resetStopwatch();
   clearBoard();
   pickPairs();
   setCardsFaceUp();
   saveUserSettings();
+  startCountdown();
 }
 
 function clearBoard() {
@@ -358,12 +362,6 @@ function storageAvailable(type) {
 
 function saveUserSettings() {
   // console.log('saveUserSettings');
-  console.log(
-    "SAVE USER SETTINGS",
-    selectedEmojiCategory,
-    selectedEmojiSkinTone,
-    selectedCardPreviewTime
-  );
   localStorage.setItem("selectedEmojiCategory", selectedEmojiCategory);
   localStorage.setItem("selectedEmojiSkinTone", selectedEmojiSkinTone);
   localStorage.setItem("selectedCardPreviewTime", selectedCardPreviewTime);
@@ -377,4 +375,25 @@ function addEventListenerById(id, event, handler) {
 
 function getSelectedValue(id) {
   return document.getElementById(id).selectedOptions[0].value;
+}
+
+function formatCountdownText(countdown) {
+  return `Game Begins in 00:${countdown < 10 ? "0" : ""}${countdown}`;
+}
+
+function startCountdown() {
+  let countdown = (selectedCardPreviewTime / 1000);
+  let countdownDisplay = document.getElementById('time');
+
+  countdownDisplay.textContent = formatCountdownText(countdown);
+
+  countdownIntervalId = setInterval(function() {
+    countdown--;
+    countdownDisplay.textContent = formatCountdownText(countdown);
+
+    if (countdown <= 0) {
+      clearInterval(countdownIntervalId);
+      countdownDisplay.textContent = "00:00";
+    }
+  }, 1000);
 }
