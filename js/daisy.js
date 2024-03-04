@@ -26,6 +26,19 @@ let emojiStyle = "flat";
 // EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", (e) => {
   onLoad();
+  var mainElement = document.getElementById('main');
+  var aspectRatioElement = document.getElementById('aspectRatio');
+
+  var observer = new ResizeObserver(function() {
+    var width = mainElement.offsetWidth;
+    var height = mainElement.offsetHeight;
+
+    var aspectRatio = width / height;
+
+    aspectRatioElement.textContent = `${width} x ${height} (${aspectRatio.toFixed(2)})`;
+  });
+
+  observer.observe(mainElement);
 });
 
 addEventListenerById("emojiCategoryDropdownInHeader", "change", (e) => {

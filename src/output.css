@@ -1504,6 +1504,10 @@ html {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-end {
   justify-content: flex-end;
 }
@@ -1522,6 +1526,14 @@ html {
 
 .gap-1\.5 {
   gap: 0.375rem;
+}
+
+.self-center {
+  align-self: center;
+}
+
+.justify-self-center {
+  justify-self: center;
 }
 
 .bg-neutral {

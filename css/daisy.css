@@ -81,6 +81,6 @@
 
 @media (min-aspect-ratio: 2.1) {
   #cards div {
-      flex-basis: 7%;
+      flex-basis: 11%;
   }
 }
