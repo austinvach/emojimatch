@@ -1574,6 +1574,10 @@ html {
   font-weight: 700;
 }
 
+.leading-none {
+  line-height: 1;
+}
+
 .text-neutral-content {
   --tw-text-opacity: 1;
   color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity)));
