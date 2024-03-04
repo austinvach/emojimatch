@@ -1418,10 +1418,6 @@ html {
   border-bottom-left-radius: 0px;
 }
 
-.m-3 {
-  margin: 0.75rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1443,12 +1439,12 @@ html {
   height: 1.25rem;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-full {
   height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-2\/4 {
@@ -1542,9 +1538,27 @@ html {
   padding: 0.5rem;
 }
 
+.p-4 {
+  padding: 1rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .text-center {
@@ -1563,51 +1577,6 @@ html {
 .text-neutral-content {
   --tw-text-opacity: 1;
   color: var(--fallback-nc,oklch(var(--nc)/var(--tw-text-opacity)));
-}
-
-.active\:btn-circle:active {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-.active\:btn-circle:active:where(.btn-xs) {
-  height: 1.5rem;
-  width: 1.5rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-.active\:btn-circle:active:where(.btn-sm) {
-  height: 2rem;
-  width: 2rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-.active\:btn-circle:active:where(.btn-md) {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-.active\:btn-circle:active:where(.btn-lg) {
-  height: 4rem;
-  width: 4rem;
-  border-radius: 9999px;
-  padding: 0px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.hover\:animate-spin:hover {
-  animation: spin 1s linear infinite;
 }
 
 .focus-visible\:outline-none:focus-visible {
