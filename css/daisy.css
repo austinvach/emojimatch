@@ -1,6 +1,6 @@
-#cards div {
+/* #cards div {
   flex-basis: 7%;
-}
+} */
 
 .faceDown {
   background-image: url(../assets/bg.svg);
@@ -19,7 +19,7 @@
 
 /* THERE HAS TO BE A SMARTER WAY OF MAKING THE TILES RESPONSIVE */
 
-@media (max-aspect-ratio: .4) {
+/* @media (max-aspect-ratio: .4) {
   #cards div {
       flex-basis: 20%;
   }
@@ -83,15 +83,4 @@
   #cards div {
       flex-basis: 11%;
   }
-}
-
-#cards > div {
-  flex-basis: calc(100% / 8); /* for desktop */
-  aspect-ratio: 1;
-}
-
-@media (max-width: 600px) {
-  #cards > div {
-    flex-basis: calc(100% / 4); /* for mobile */
-  }
-}
+} */
