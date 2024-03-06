@@ -26,19 +26,6 @@ let emojiStyle = "flat";
 // EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", (e) => {
   onLoad();
-  var cardElement = document.getElementById('cards');
-  var aspectRatioElement = document.getElementById('aspectRatio');
-
-  var observer = new ResizeObserver(function() {
-    var width = cardElement.offsetWidth;
-    var height = cardElement.offsetHeight;
-
-    var aspectRatio = width / height;
-
-    aspectRatioElement.textContent = `${width} x ${height} (${aspectRatio.toFixed(2)})`;
-  });
-
-  observer.observe(cardElement);
 });
 
 addEventListenerById("emojiCategoryDropdownInHeader", "change", (e) => {
@@ -407,98 +394,10 @@ function startCountdown() {
     if (countdown <= 0) {
       clearInterval(countdownIntervalId);
       countdownDisplay.textContent = "00:00";
-      console.log('countdown over');
       flipCardsFaceDown();
     }
   }, 1000);
 }
-
-// function adjustCardSize() {
-//   var cards = document.getElementById('cards');
-//   var cardItems = Array.from(cards.children);
-//   var parentWidth = cards.offsetWidth;
-//   var parentHeight = cards.offsetHeight;
-//   // Determine the maximum number of cards that can fit horizontally and vertically
-//   var maxCardsHorizontally = Math.floor(parentWidth / Math.sqrt(cardItems.length));
-//   console.log("MAX H",maxCardsHorizontally);
-//   var maxCardsVertically = Math.floor(parentHeight / Math.sqrt(cardItems.length));
-//   console.log("MAX V",maxCardsVertically);
-//   // Determine the size of the cards based on the smaller dimension of the parent
-//   var cardSize = Math.min(parentWidth / maxCardsHorizontally, parentHeight / maxCardsVertically);
-//   // Apply the size to each card
-//   cardItems.forEach(function(card) {
-//     card.style.width = `${cardSize}px`;
-//     card.style.height = `${cardSize}px`;
-//   });
-// }
-
-// function adjustCardSize() {
-//   var cards = document.getElementById('cards');
-//   var cardItems = Array.from(cards.children);
-//   var parentWidth = cards.offsetWidth;
-//   var parentHeight = cards.offsetHeight;
-//   var aspectRatio = parentWidth / parentHeight;
-  
-//   // Determine the optimal number of rows and columns
-//   var numCards = cardItems.length;
-//   var numColumns = Math.round(Math.sqrt(numCards * aspectRatio));
-//   var numRows = Math.round(numCards / numColumns);
-  
-//   // Adjust if necessary
-//   while (numColumns * numRows < numCards) {
-//     if (numColumns < numRows) {
-//       numColumns++;
-//     } else {
-//       numRows++;
-//     }
-//   }
-  
-//   // Determine the size of the cards
-//   var cardSize = Math.min(parentWidth / numColumns, parentHeight / numRows);
-  
-//   // Apply the size to each card
-//   cardItems.forEach(function(card) {
-//     card.style.width = `${cardSize}px`;
-//     card.style.height = `${cardSize}px`;
-//   });
-// }
-
-// function adjustCardSize() {
-//   var cards = document.getElementById('cards');
-//   var cardItems = Array.from(cards.children);
-//   var parentWidth = cards.offsetWidth;
-//   var parentHeight = cards.offsetHeight;
-  
-//   // Determine the optimal size of the cards
-//   var numCards = cardItems.length;
-//   var cardSize = Math.min(parentWidth, parentHeight) / Math.sqrt(numCards);
-  
-//   // Apply the size to each card
-//   cardItems.forEach(function(card) {
-//     card.style.width = `${cardSize}px`;
-//     card.style.height = `${cardSize}px`;
-//   });
-// }
-
-// function adjustCardSize() {
-//   var cards = document.getElementById('cards');
-//   var cardItems = Array.from(cards.children);
-//   var parentWidth = cards.offsetWidth;
-//   var parentHeight = cards.offsetHeight;
-  
-//   // Determine the optimal number of columns
-//   var numCards = cardItems.length;
-//   var numColumns = Math.floor(parentWidth / Math.sqrt(parentWidth * parentHeight / numCards));
-  
-//   // Determine the size of the cards
-//   var cardSize = parentWidth / numColumns;
-  
-//   // Apply the size to each card
-//   cardItems.forEach(function(card) {
-//     card.style.width = `${cardSize}px`;
-//     card.style.height = `${cardSize}px`;
-//   });
-// }
 
 function adjustCardSize() {
   //NEED TO ACCOUNT FOR GAP BETWEEN CARDS
@@ -507,35 +406,38 @@ function adjustCardSize() {
   var parentWidth = cards.offsetWidth;
   var parentHeight = cards.offsetHeight;
 
-  console.log('parentWidth', parentWidth);
-  console.log('parentHeight', parentHeight);
-
   // Binary search for the largest size that fits
   var gap = remToPixels(.375); // Set this to the size of your gap in rems
-  var low = 0, high = Math.min(parentWidth, parentHeight);
+  var low = 0;
+  var high = Math.min(parentWidth, parentHeight);
+
   while (high - low > 1) {
     var mid = (low + high) / 2;
-    var columns = Math.floor(parentWidth / mid );
-    var rows = Math.floor(parentHeight / mid);
-    if (columns * rows >= cardItems.length) {
+    var columns = Math.floor(parentWidth / (mid + gap));
+    var rows = Math.floor(parentHeight / (mid + gap));
+    if ((columns * mid + (columns - 1) * gap <= parentWidth) && 
+        (rows * mid + (rows - 1) * gap <= parentHeight) && 
+        (columns * rows >= cardItems.length)) {
       low = mid;
     } else {
       high = mid;
     }
   }
 
-  // Apply the size to each card
-  cardItems.forEach(function(card) {
-    card.style.width = `${low}px`;
-    card.style.height = `${low}px`;
-  });
+  // Create a CSS class with the desired width and height
+  var style = document.createElement('style');
+  style.innerHTML = `
+    #cards div {
+      width: ${low}px;
+      height: ${low}px;
+    }
+  `;
+  document.head.appendChild(style);
 }
-
 // Call the function whenever the window is resized
 window.addEventListener('resize', adjustCardSize);
 
 function remToPixels(rem) {
   var pixelValue = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-  console.log('remToPixels', pixelValue);
   return pixelValue;
 }
