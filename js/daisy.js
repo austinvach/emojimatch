@@ -400,7 +400,6 @@ function startCountdown() {
 }
 
 function adjustCardSize() {
-  //NEED TO ACCOUNT FOR GAP BETWEEN CARDS
   var cards = document.getElementById('cards');
   var cardItems = Array.from(cards.children);
   var parentWidth = cards.offsetWidth;
@@ -434,8 +433,11 @@ function adjustCardSize() {
   `;
   document.head.appendChild(style);
 }
-// Call the function whenever the window is resized
-window.addEventListener('resize', adjustCardSize);
+// Call the function whenever the cards element changes size
+var cards = document.getElementById('cards');
+
+var resizeObserver = new ResizeObserver(adjustCardSize);
+resizeObserver.observe(cards);
 
 function remToPixels(rem) {
   var pixelValue = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
