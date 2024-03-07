@@ -22,6 +22,7 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
+var resizeObserver = new ResizeObserver(adjustCardSize);
 
 // EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -53,8 +54,8 @@ async function onLoad() {
   populateSkinTones(); // Populates the dropdown with the emoji skin tones
   populateCardPreviewTimes(); // Populates the dropdown with the card preview times
   pickPairs();
+  resizeObserver.observe(cards);
   setCardsFaceUp();
-  adjustCardSize();
   startCountdown();
 }
 
@@ -400,6 +401,7 @@ function startCountdown() {
 }
 
 function adjustCardSize() {
+  console.log('adjustCardSize');
   var cards = document.getElementById('cards');
   var cardItems = Array.from(cards.children);
   var parentWidth = cards.offsetWidth;
@@ -435,9 +437,6 @@ function adjustCardSize() {
 }
 // Call the function whenever the cards element changes size
 var cards = document.getElementById('cards');
-
-var resizeObserver = new ResizeObserver(adjustCardSize);
-resizeObserver.observe(cards);
 
 function remToPixels(rem) {
   var pixelValue = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
