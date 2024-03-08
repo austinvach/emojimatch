@@ -109,7 +109,7 @@
             <div id="clock" class="flex shrink-0 justify-center text-2xl text-neutral-content"></div>
             <div class="w-2/4 shrink flex justify-end">
                 <!-- Reset Button -->
-                <button id="reset" aria-label="Reset" class="btn btn-ghost btn-circle">
+                <button id="bannerReset" aria-label="Reset" class="btn btn-ghost btn-circle">
                     <svg xmlns="http://www.w3.org/2000/svg" class="active:animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="oklch(var(--nc))">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -122,14 +122,12 @@
     <!-- GAME BOARD -->
     <div id="main" class="flex items-center w-full max-w-screen-lg mx-auto px-2 py-4 grow">
         <!-- CARDS DIV - Removed  to test my binary search code. Need to fix. -->
-        <div id="cards" class="h-full w-full flex content-center justify-center  flex-wrap gap-1.5"></div>
-        <div id="endScreen" class="hidden">
-            <h1 class="text-2xl text-neutral-content">Nice Work!</h1>
-            <p>Think you can do it faster?</p>
+        <div id="cards" class="hidden h-full w-full flex content-center justify-center flex-wrap gap-1.5"></div>
+        <div id="endScreen" class="w-full">
+            <h1 class=" text-4xl text-neutral-content">Nice Work!</h1>
+            <p class="text-2xl">Think you can do it faster?</p>
+            <button id="endScreenReset" class="btn btn-outline btn-primary mt-4">Play Again</button>
         </div>
-        <!-- <div id="resetHint" class="px-2 mt-3">
-            <p>Press the spacebar or tap 'Reset' to start over.</p>
-        </div> -->
     </div>
     <footer id="footer" class="pb-4 leading-none">
         <a href="https://austinvach.com" class="link">Made by AV</a>

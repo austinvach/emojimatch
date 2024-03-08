@@ -42,7 +42,10 @@ addEventListenerById("emojiCategoryDropdown", "change", (e) => {
 });
 
 // Calls the reset function when the reset button is clicked. 
-addEventListenerById("reset", "click", reset);
+addEventListenerById("bannerReset", "click", reset);
+
+// Calls the reset function when the reset button is clicked. 
+addEventListenerById("endScreenReset", "click", reset);
 
 // Calls the reset function when a new emoji skin tone is selected.
 addEventListenerById("emojiSkinToneDropdown", "change", reset);
