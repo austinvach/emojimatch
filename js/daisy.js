@@ -443,13 +443,14 @@ function remToPixels(rem) {
   return pixelValue;
 }
 
-window.addEventListener('resize', setMainHeight);
-setMainHeight();
+window.addEventListener('resize', updateViewport);
+updateViewport();
 
-function setMainHeight() {
-  var cards = document.getElementById('footer');
-  console.log('setMainHeight');
-  var main = document.getElementById('main');
-  cards.innerHTML = window.innerHeight  + ' vs ' + window.screen.height;
-  main.style.height = window.innerHeight + 'px';
+function updateViewport() {
+  var newHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  var newWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+
+  // document.getElementById('w').innerHTML = newWidth;
+  // document.getElementById('h').innerHTML = newHeight;
+  document.getElementById('footer').innerHTML = newWidth + ' x ' + newHeight + ' vs ' + window.screen.width + ' x ' + window.screen.height;
 }
