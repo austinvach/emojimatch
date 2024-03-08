@@ -447,6 +447,7 @@ window.addEventListener('resize', setMainHeight);
 setMainHeight();
 
 function setMainHeight() {
+  console.log('setMainHeight');
   var main = document.getElementById('main');
   main.style.height = window.innerHeight + 'px';
 }
