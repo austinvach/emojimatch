@@ -447,7 +447,9 @@ window.addEventListener('resize', setMainHeight);
 setMainHeight();
 
 function setMainHeight() {
+  var cards = document.getElementById('footer');
   console.log('setMainHeight');
   var main = document.getElementById('main');
+  cards.innerHTML = window.innerHeight  + ' vs ' + window.screen.height;
   main.style.height = window.innerHeight + 'px';
 }
