@@ -41,9 +41,6 @@ addEventListenerById("emojiCategoryDropdown", "change", (e) => {
   reset();
 });
 
-// Calls the setBodyHeight function when the the window is resized. 
-// window.addEventListener('resize', setBodyHeight);
-
 // Calls the reset function when the reset button is clicked. 
 addEventListenerById("reset", "click", reset);
 
@@ -74,6 +71,8 @@ async function onLoad() {
   populateCategories();
   // Populates the emoji skin tone dropdown.
   populateSkinTones();
+  // Sets the height of the body element.
+  setBodyHeight();
   // Populates the card preview time dropdown.
   populateCardPreviewTimes();
   // Picks the emoji pairs for the game.
