@@ -536,9 +536,22 @@ function setBodyHeight() {
   body.style.height = window.innerHeight + 'px';
 }
 
+let counter = 0;
+let timeoutId = null;
+
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
   console.log('adjustCardSize');
+
+  // Increment the counter each time the function runs
+  counter++;
+
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+
+  var footer = document.getElementById('footer');
+  footer.textContent = counter;
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
