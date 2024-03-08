@@ -1532,6 +1532,10 @@ html {
   gap: 0.375rem;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .bg-neutral {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity)));
