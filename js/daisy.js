@@ -23,11 +23,32 @@ let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
 var resizeObserver = new ResizeObserver(adjustCardSize);
+let windowHeight = window.innerHeight;
 
-// Helper function to add event listeners to elements by their id
+// Helper function to add event listeners to elements by their id.
 function addEventListenerById(id, event, handler) {
-  document.getElementById(id).addEventListener(event, handler);
+  // Check if the id is 'window'
+  if (id === 'window') {
+    // If it is, add the event listener to the window
+    window.addEventListener(event, handler);
+  } else {
+    // If it's not, add the event listener to the element with the given id
+    document.getElementById(id).addEventListener(event, handler);
+  }
 }
+
+// Runs the setBodyHeight function when the window is resized.
+addEventListenerById("window", "resize", (e) => {
+  let currentHeight = window.innerHeight;
+  // Checks if the window height has changed.
+  if (currentHeight !== windowHeight) {
+    // If it has, it resets the height of the body element.
+    setBodyHeight();
+    
+    // Updates the previous height
+    windowHeight = currentHeight;
+  }
+});
 
 // Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
@@ -505,6 +526,8 @@ function startCountdown() {
 
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
+  // console.log('setBodyHeight');
+  
   // Gets the body element.
   var body = document.body;
 
@@ -514,8 +537,7 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  console.log('adjustCardSize');
-  setBodyHeight();
+  // console.log('adjustCardSize');
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
