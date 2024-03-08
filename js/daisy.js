@@ -42,7 +42,7 @@ addEventListenerById("emojiCategoryDropdown", "change", (e) => {
 });
 
 // Calls the setBodyHeight function when the the window is resized. 
-window.addEventListener('resize', setBodyHeight);
+// window.addEventListener('resize', setBodyHeight);
 
 // Calls the reset function when the reset button is clicked. 
 addEventListenerById("reset", "click", reset);
@@ -513,6 +513,7 @@ function setBodyHeight() {
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
   console.log('adjustCardSize');
+  setBodyHeight();
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
