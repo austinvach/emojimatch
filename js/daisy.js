@@ -30,14 +30,14 @@ function addEventListenerById(id, event, handler) {
 }
 
 // Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
-addEventListenerById("emojiCategoryDropdownInHeader", "change", (e) => {
-  emojiCategoryDropdown.value = emojiCategoryDropdownInHeader.value;
+addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
+  emojiCategoryDropdown.value = secondaryEmojiCategoryDropdown.value;
   reset();
 });
 
 // Updates the value of the emoji category dropdown in the header and reset the game when the main emoji category dropdown changes.
 addEventListenerById("emojiCategoryDropdown", "change", (e) => {
-  emojiCategoryDropdownInHeader.value = emojiCategoryDropdown.value;
+  secondaryEmojiCategoryDropdown.value = emojiCategoryDropdown.value;
   reset();
 });
 
@@ -166,7 +166,7 @@ function createAndAppendEmojiCategoryOptions(dropdown, categories) {
 // This function populates the emoji category dropdowns with options.
 function populateCategories() {
   // Gets the emoji category dropdown elements.
-  const emojiCategoryDropdownInHeader = document.getElementById("emojiCategoryDropdownInHeader");
+  const secondaryEmojiCategoryDropdown = document.getElementById("secondaryEmojiCategoryDropdown");
   const emojiCategoryDropdown = document.getElementById("emojiCategoryDropdown");
   // Defines the emoji categories.
   const emojiCategories = [
@@ -182,7 +182,7 @@ function populateCategories() {
 
   // Creates and appends the emoji category options to both dropdowns.
   createAndAppendEmojiCategoryOptions(emojiCategoryDropdown, emojiCategories);
-  createAndAppendEmojiCategoryOptions(emojiCategoryDropdownInHeader, emojiCategories);
+  createAndAppendEmojiCategoryOptions(secondaryEmojiCategoryDropdown, emojiCategories);
 }
 
 // This function populates the emoji skin tone dropdown with options.
