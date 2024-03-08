@@ -444,6 +444,10 @@ function reset() {
   resetStopwatch();
   clearBoard();
 
+  // Hides the end screen and show the cards container.
+  document.getElementById("cards").style.setProperty("display", "flex");
+  document.getElementById("endScreen").style.setProperty("display", "none");
+
   // Picks new pairs of cards and sets them face up.
   pickPairs();
   setCardsFaceUp();
