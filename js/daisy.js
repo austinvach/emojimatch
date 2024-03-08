@@ -443,14 +443,22 @@ function remToPixels(rem) {
   return pixelValue;
 }
 
-window.addEventListener('resize', updateViewport);
-updateViewport();
+// window.addEventListener('resize', updateViewport);
+// updateViewport();
 
-function updateViewport() {
-  var newHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-  var newWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+// function updateViewport() {
+//   var newHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+//   var newWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
-  // document.getElementById('w').innerHTML = newWidth;
-  // document.getElementById('h').innerHTML = newHeight;
-  document.getElementById('footer').innerHTML = newWidth + ' x ' + newHeight + ' vs ' + window.screen.width + ' x ' + window.screen.height;
+//   // document.getElementById('w').innerHTML = newWidth;
+//   // document.getElementById('h').innerHTML = newHeight;
+//   document.getElementById('footer').innerHTML = newWidth + ' x ' + newHeight + ' vs ' + window.screen.width + ' x ' + window.screen.height;
+// }
+
+window.addEventListener('resize', setBodyHeight);
+setBodyHeight();
+
+function setBodyHeight() {
+  var body = document.body;
+  body.style.height = window.innerHeight + 'px';
 }
