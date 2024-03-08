@@ -442,3 +442,11 @@ function remToPixels(rem) {
   var pixelValue = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
   return pixelValue;
 }
+
+window.addEventListener('resize', setMainHeight);
+setMainHeight();
+
+function setMainHeight() {
+  var main = document.getElementById('main');
+  main.style.height = window.innerHeight + 'px';
+}
