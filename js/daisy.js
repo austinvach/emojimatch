@@ -24,61 +24,152 @@ let ignoreClicks = true;
 let emojiStyle = "flat";
 var resizeObserver = new ResizeObserver(adjustCardSize);
 
-// EVENT LISTENERS
-document.addEventListener("DOMContentLoaded", (e) => {
-  onLoad();
-});
+// Helper function to add event listeners to elements by their id
+function addEventListenerById(id, event, handler) {
+  document.getElementById(id).addEventListener(event, handler);
+}
 
+// Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
 addEventListenerById("emojiCategoryDropdownInHeader", "change", (e) => {
   emojiCategoryDropdown.value = emojiCategoryDropdownInHeader.value;
   reset();
 });
 
+// Updates the value of the emoji category dropdown in the header and reset the game when the main emoji category dropdown changes.
 addEventListenerById("emojiCategoryDropdown", "change", (e) => {
   emojiCategoryDropdownInHeader.value = emojiCategoryDropdown.value;
   reset();
 });
 
+// Calls the setBodyHeight function when the the window is resized. 
+window.addEventListener('resize', setBodyHeight);
+
+// Calls the reset function when the reset button is clicked. 
 addEventListenerById("reset", "click", reset);
+
+// Calls the reset function when a new emoji skin tone is selected.
 addEventListenerById("emojiSkinToneDropdown", "change", reset);
+
+// Calls the reset function when a new card preview time is selected.
 addEventListenerById("cardPreviewTimeDropdown", "change", reset);
 
-// SETUP FUNCTIONS - ONLY RUN WHEN THE PAGE IS LOADED/RELOADED
+// Calls the onLoad function when the document is fully loaded.
+document.addEventListener("DOMContentLoaded", (e) => {
+  onLoad();
+});
 
+///////////////////////////////////////////
+// SETUP FUNCTIONS - ONLY RUN WHEN THE PAGE IS LOADED/RELOADED
+///////////////////////////////////////////
+
+// This function is called when the page loads.
 async function onLoad() {
-  // console.log('onLoad');
-  const response = await fetch("emoji.json"); // Makes an HTTP/HTTPS GET request
-  emoji = await response.json(); // Parses the body as a JSON object and saves it to the emojis variable
-  checkLocalStorage(); // Checks for any saved customer preferences
-  populateCategories(); // Populates the dropdown with the emoji categories
-  populateSkinTones(); // Populates the dropdown with the emoji skin tones
-  populateCardPreviewTimes(); // Populates the dropdown with the card preview times
+  // Fetches the emoji JSON file.
+  const response = await fetch("emoji.json");
+  // Parses the JSON response and stores it in the emoji variable.
+  emoji = await response.json();
+  // Checks if there are any user preferences saved in local storage.
+  checkLocalStorage();
+  // Populates the emoji category dropdowns.
+  populateCategories();
+  // Populates the emoji skin tone dropdown.
+  populateSkinTones();
+  // Populates the card preview time dropdown.
+  populateCardPreviewTimes();
+  // Picks the emoji pairs for the game.
   pickPairs();
+  // Starts observing the card elements for size changes.
   resizeObserver.observe(cards);
+  // Sets the initial state of the cards face up.
   setCardsFaceUp();
+  // Starts the countdown timer.
   startCountdown();
 }
 
+// Helper function to check if the specified type of web storage is available.
+function storageAvailable(type) {
+  let storage;
+  try {
+    // Try to use the storage.
+    storage = window[type];
+    const x = "STORAGE_TEST";
+    // Try to set an item.
+    storage.setItem(x, x);
+    // Try to remove the item.
+    storage.removeItem(x);
+    // If all the above operations are successful, then the storage is available.
+    return true;
+  } catch (e) {
+    // If any of the operations fail, then the storage might not be available.
+    // The function checks for specific error codes and names that indicate quota exceeded errors.
+    // It also checks if there's already something in the storage.
+    return (
+      e instanceof DOMException &&
+      (e.code === 22 ||
+        e.code === 1014 ||
+        e.name === "QuotaExceededError" ||
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
+
+// This function checks if local storage is available and retrieves any saved user preferences.
 function checkLocalStorage() {
-  // console.log('checkLocalStorage');
-  if (storageAvailable("localStorage")) {
+  // Checks if local storage is available.
+  if (// This function checks if a specific type of web storage is available.
+function storageAvailable(type) {
+  try {
+    // Define a test string.
+    const x = "__storage_test__";
+    // Try to use the storage.
+    window[type].setItem(x, x);
+    // Try to remove the test item from the storage.
+    window[type].removeItem(x);
+    // If both operations are successful, then the storage is available.
+    return true;
+  } catch (e) {
+    // If any of the operations fail, then the storage might not be available.
+    // The function checks for specific error codes and names that indicate quota exceeded errors.
+    // It also checks if there's already something in the storage.
+    return (
+      e instanceof DOMException &&
+      (e.code === 22 ||
+        e.code === 1014 ||
+        e.name === "QuotaExceededError" ||
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      window[type] &&
+      window[type].length !== 0
+    );
+  }
+}("localStorage")) {
+    // Retrieves the user's selected emoji category, skin tone, and card preview time from local storage.
     selectedEmojiCategory = localStorage.getItem("selectedEmojiCategory");
     selectedEmojiSkinTone = localStorage.getItem("selectedEmojiSkinTone");
-    selectedCardPreviewTime =
-      localStorage.getItem("selectedCardPreviewTime") || "8000";
+    selectedCardPreviewTime = localStorage.getItem("selectedCardPreviewTime") || "8000";
   } else {
+    // Logs a message to the console if local storage is not available.
     console.log("LOCAL STORAGE NOT AVAILABLE");
   }
 }
 
+// Helper function to create emoji category options and append them to a dropdown.
+function createAndAppendEmojiCategoryOptions(dropdown, categories) {
+  const options = categories.map((category) => {
+    const displayName = `${category.icon} ${category.name}`;
+    const isSelected = selectedEmojiCategory === category.value;
+    return new Option(displayName, category.value, false, isSelected);
+  });
+  dropdown.append(...options);
+}
+
+// This function populates the emoji category dropdowns with options.
 function populateCategories() {
-  // console.log('populateCategories');
-  const emojiCategoryDropdownInHeader = document.getElementById(
-    "emojiCategoryDropdownInHeader"
-  );
-  const emojiCategoryDropdown = document.getElementById(
-    "emojiCategoryDropdown"
-  );
+  // Gets the emoji category dropdown elements.
+  const emojiCategoryDropdownInHeader = document.getElementById("emojiCategoryDropdownInHeader");
+  const emojiCategoryDropdown = document.getElementById("emojiCategoryDropdown");
+  // Defines the emoji categories.
   const emojiCategories = [
     { icon: "🙂", name: "Smileys & Emotion", value: "smileys_and_emotion" },
     { icon: "🧙‍♂️", name: "People & Body", value: "people_and_body" },
@@ -87,71 +178,55 @@ function populateCategories() {
     { icon: "🌎", name: "Travel & Places", value: "travel_and_places" },
     { icon: "⚽", name: "Activities", value: "activities" },
     { icon: "🧮", name: "Objects", value: "objects" },
-    { icon: "⛔", name: "Symbols & Flags", value: "symbols_and_flags" },
+    { icon: "⛔", name: "Symbols & Flags", value: "symbols_and_flags" }
   ];
 
-  const options = emojiCategories.map((emojiCategory) => {
-    const categoryDisplayName = `${emojiCategory.icon} ${emojiCategory.name}`;
-    const isSelected = selectedEmojiCategory === emojiCategory.value;
-    return new Option(
-      categoryDisplayName,
-      emojiCategory.value,
-      false,
-      isSelected
-    );
-  });
-
-  const headerOptions = emojiCategories.map((emojiCategory) => {
-    const categoryDisplayName = `${emojiCategory.icon} ${emojiCategory.name}`;
-    const isSelected = selectedEmojiCategory === emojiCategory.value;
-    return new Option(
-      categoryDisplayName,
-      emojiCategory.value,
-      false,
-      isSelected
-    );
-  });
-
-  emojiCategoryDropdown.append(...options);
-  emojiCategoryDropdownInHeader.append(...headerOptions);
+  // Creates and appends the emoji category options to both dropdowns.
+  createAndAppendEmojiCategoryOptions(emojiCategoryDropdown, emojiCategories);
+  createAndAppendEmojiCategoryOptions(emojiCategoryDropdownInHeader, emojiCategories);
 }
 
+// This function populates the emoji skin tone dropdown with options.
 function populateSkinTones() {
-  // console.log('populateSkinTones');
-  const emojiSkinToneDropdown = document.getElementById(
-    "emojiSkinToneDropdown"
-  );
+  // Gets the emoji skin tone dropdown element.
+  const emojiSkinToneDropdown = document.getElementById("emojiSkinToneDropdown");
+  // Defines the emoji skin tones.
   const emojiSkinTones = [
     { icon: "✌️", name: "Default", value: "default" },
     { icon: "✌🏻", name: "Light", value: "light" },
     { icon: "✌🏼", name: "Medium-Light", value: "medium_light" },
     { icon: "✌🏽", name: "Medium", value: "medium" },
     { icon: "✌🏾", name: "Medium-Dark", value: "medium_dark" },
-    { icon: "✌🏿", name: "Dark", value: "dark" },
+    { icon: "✌🏿", name: "Dark", value: "dark" }
   ];
-
+  // Creates the dropdown options for each skin tone.
   const options = emojiSkinTones.map((emojiSkinTone) => {
     const displayName = `${emojiSkinTone.icon} ${emojiSkinTone.name}`;
     const isSelected = selectedEmojiSkinTone === emojiSkinTone.value;
     return new Option(displayName, emojiSkinTone.value, false, isSelected);
   });
-
+  // Appends the options to the dropdown.
   emojiSkinToneDropdown.append(...options);
 }
 
+// This function populates the card preview time dropdown with options.
 function populateCardPreviewTimes() {
-  // console.log('populateCardPreviewTimes');
-  const cardPreviewTimeDropdown = document.getElementById(
-    "cardPreviewTimeDropdown"
-  );
+  // Gets the card preview time dropdown element.
+  const cardPreviewTimeDropdown = document.getElementById("cardPreviewTimeDropdown");
+
+  // Defines the card preview times.
   const cardPreviewTimes = [
     { name: "4 Seconds", value: "4000" },
     { name: "8 Seconds", value: "8000" },
     { name: "16 Seconds", value: "16000" },
   ];
 
+  // Creates the dropdown options for each card preview time.
   const options = cardPreviewTimes.map((cardPreviewTime) => {
+    // Checks if the current card preview time is the selected one.
     const isSelected = selectedCardPreviewTime === cardPreviewTime.value;
+
+    // Creates a new option element for the dropdown.
     return new Option(
       cardPreviewTime.name,
       cardPreviewTime.value,
@@ -160,31 +235,48 @@ function populateCardPreviewTimes() {
     );
   });
 
+  // Appends the options to the dropdown.
   cardPreviewTimeDropdown.append(...options);
 }
 
+///////////////////////////////////////////
 // CARD PREP FUNCTIONS - RUN ON PAGE LOAD/RELOAD AND WHENEVER THE USER CLICKS THE RESET BUTTON
+///////////////////////////////////////////
 
+// Helper function to get the selected value from a dropdown.
+function getSelectedValue(id) {
+  return document.getElementById(id).selectedOptions[0].value;
+}
+
+// This function picks the pairs of emojis for the game.
 function pickPairs() {
-  // console.log('pickPairs');
+  // Gets the selected values from the dropdowns.
   selectedEmojiCategory = getSelectedValue("emojiCategoryDropdown");
   selectedEmojiSkinTone = getSelectedValue("emojiSkinToneDropdown");
   selectedCardPreviewTime = getSelectedValue("cardPreviewTimeDropdown");
 
+  // Gets the emoji from the selected category.
   let selectedEmoji = emoji[emojiCategoryDropdown.selectedIndex].emojis;
-  selectedEmoji.sort(() => Math.random() - 0.5); // Randomizes the array
+  // Randomizes the array.
+  selectedEmoji.sort(() => Math.random() - 0.5);
 
-  pairs = selectedEmoji.slice(0, cardCount / 2); // Picks half the number of cards requested in cardCount variable
-  pairs = [...pairs, ...pairs]; // Duplicates each value in the array so that each emoji has a pair
+  // Picks half the number of cards requested in cardCount variable.
+  pairs = selectedEmoji.slice(0, cardCount / 2);
+  // Duplicates each value in the array so that each emoji has a match.
+  pairs = [...pairs, ...pairs];
 
+  // Randomize the pairs.
   pairs.sort(() => Math.random() - 0.5); // Randomizes the pairs
 }
 
+// This function sets the initial state of the cards to face up.
 function setCardsFaceUp() {
-  // console.log('setCardsFaceUp');
+  // Gets the cards container.
   const cards = document.getElementById("cards");
+  // Creates a document fragment to store all the cards.for performance.
   const fragment = document.createDocumentFragment();
 
+  // Creates a card element with an image and adds it to the document fragment.
   pairs.forEach((emoji, i) => {
     const card = document.createElement("div");
     card.classList.add("faceUp");
@@ -196,6 +288,8 @@ function setCardsFaceUp() {
       (emoji.skin_tone_support ? `_${selectedEmojiSkinTone}` : "") +
       ".svg";
     card.appendChild(img);
+
+    // Adds a click event listener to the card.
     card.addEventListener("click", (e) => {
       selectedCards = document.querySelectorAll(".faceUp");
       if (selectedCards.length === 0 && !ignoreClicks) {
@@ -208,76 +302,96 @@ function setCardsFaceUp() {
         checkCards();
       }
     });
+
+    // Appends the card to the document fragment.
     fragment.appendChild(card);
   });
 
+  // Appends the document fragment to the cards container.
   cards.appendChild(fragment);
-  // previewTimerId = setTimeout(flipCardsFaceDown, selectedCardPreviewTime); // Waits the amount of milliseconds specificed in the cardPreviewInMS variable before flipping the cards face down.
 }
 
+// This function flips all cards that are face up, face down.
 function flipCardsFaceDown() {
-  // console.log('flipCardsFaceDown');
+  // Selects all cards that are currently face up.
   const faceUpCards = document.querySelectorAll(".faceUp");
+
+  // Replaces the "faceUp" class with "faceDown".
   faceUpCards.forEach((card) => {
     card.classList.replace("faceUp", "faceDown");
   });
+
+  // Allows clicks on the cards again.
   ignoreClicks = false;
+
+  // Starts the stopwatch.
   startStopwatch();
 }
 
+// This function starts the stopwatch.
 function startStopwatch() {
-  // console.log('startStopwatch')
+  // Sets an interval to call the stopwatch function every 1000 milliseconds (1 second).
   stopwatchIntervalId = window.setInterval(stopwatch, 1000);
 }
 
+// This function acts as a stopwatch, incrementing the seconds and minutes.
 function stopwatch() {
-  // console.log('stopwatch');
+  // Increments the seconds variable by 1.
   seconds++;
+
+  // Resets seconds to 0 and increment minutes variable by 1 when seconds reach 60.
   if (seconds / 60 === 1) {
-    // Logic to determine when to increment next value
     seconds = 0;
     minutes++;
   }
 
-  // Adds a leading 0 if the seconds/minutes are only one digit.
+  // Adds a leading 0 to seconds if it is less than 10.
   displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+  // Adds a leading 0 to minutes if it is less than 10.
   displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  document.getElementById('clock').innerHTML = `${displayMinutes}:${displaySeconds}`; // Displays updated time to user
+
+  // Updates the 'clock' element with the new time.
+  document.getElementById('clock').innerHTML = `${displayMinutes}:${displaySeconds}`;
 }
 
 // GAME FUNCTIONS - RUN AS NEEDED BASED ON USER INTERACTION
 
+// This function flips a selected card from face down to face up.
 function flipSelectedCardFaceUp(card) {
-  // console.log('flipSelectedCardFaceUp');
   card.classList.replace("faceDown", "faceUp");
 }
 
+// This function checks if the two selected cards match.
 function checkCards() {
-  // console.log('checkCards');
+  // Gets all the cards that are currently face up.
   selectedCards = document.querySelectorAll(".faceUp");
+
+  // Checks if the cards are a match and either clears them or flips them back over after a delay.
   if (selectedCards[0].firstChild.src === selectedCards[1].firstChild.src) {
-    transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS); // Waits before clearing cards.
+    transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS);
   } else {
     transitionDelayTimerId = setTimeout(
       flipSelectedCardsFaceDown,
       transitionDelayTimeInMS
-    ); // Waits before flipping cards face down.
+    );
   }
 }
 
+// This function flips the selected cards from face up to face down.
 function flipSelectedCardsFaceDown() {
-  // console.log('flipSelectedCardsFaceDown');
   for (var i = 0; i < selectedCards.length; i++) {
     selectedCards[i].classList.replace("faceUp", "faceDown");
   }
 }
 
+// This function clears a match by making the matched cards not visible.
 function clearMatch() {
-  // console.log('clearMatch');
   for (var i = 0; i < selectedCards.length; i++) {
     selectedCards[i].classList.toggle("faceUp");
     selectedCards[i].classList.add("notVisible");
   }
+
+  // Hides the cards and shows the end screen if all the cards are not visible (i.e. all matches have been found).
   hiddenCards = document.querySelectorAll(".notVisible");
   if (hiddenCards.length === cardCount) {
     document.getElementById("cards").style.setProperty("display", "none");
@@ -286,83 +400,66 @@ function clearMatch() {
   }
 }
 
+// This function stops the stopwatch by clearing the interval.
 function stopStopwatch() {
-  // console.log('stopStopwatch')
   window.clearInterval(stopwatchIntervalId);
 }
 
-// RESET FUNCTIONS
-
+// This function resets the game state.
 function reset() {
-  // console.log('reset');
+  // Ignores any clicks while resetting.
   ignoreClicks = true;
+
+  // Clears any existing timers and intervals.
   clearTimeout(previewTimerId);
   clearTimeout(transitionDelayTimerId);
   clearInterval(countdownIntervalId);
   clearInterval(stopwatchIntervalId);
+
+  // Resets the stopwatch and clears the game board.
   resetStopwatch();
   clearBoard();
+
+  // Picks new pairs of cards and sets them face up.
   pickPairs();
   setCardsFaceUp();
+
+  // Saves the user's settings and starts the countdown.
   saveUserSettings();
   startCountdown();
 }
 
+// This function clears the game board.
 function clearBoard() {
-  // console.log('clearBoard');
+  // Gets the cards container.
   let cards = document.getElementById("cards");
+
+  // Clears the content.
   cards.innerHTML = "";
-  cards.removeAttribute("style");
-  document.getElementById("endScreen").removeAttribute("style");
 }
 
+// This function resets the stopwatch.
 function resetStopwatch() {
-  // console.log('resetStopwatch');
+  // Resets the seconds, minutes, displaySeconds, and displayMinutes values.
   seconds = 0;
   minutes = 0;
   displaySeconds = 0;
   displayMinutes = 0;
 }
 
+// This function listens for keydown events.
 window.onkeydown = function (k) {
-  // Resets the game when the user presses the space bar
-  // console.log('SPACEBAR');
+  // Reset the game if the user presses the space bar, which has a key code of 32.
   if (k.keyCode === 32) {
     reset();
   }
 };
 
-// FUNCTIONS TO MANAGE USER SETTINGS
 
-function storageAvailable(type) {
-  let storage;
-  try {
-    storage = window[type];
-    const x = "__storage_test__";
-    storage.setItem(x, x);
-    storage.removeItem(x);
-    return true;
-  } catch (e) {
-    return (
-      e instanceof DOMException &&
-      // everything except Firefox
-      (e.code === 22 ||
-        // Firefox
-        e.code === 1014 ||
-        // test name field too, because code might not be present
-        // everything except Firefox
-        e.name === "QuotaExceededError" ||
-        // Firefox
-        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
-      // acknowledge QuotaExceededError only if there's something already stored
-      storage &&
-      storage.length !== 0
-    );
-  }
-}
 
+// This function saves the user's settings to local storage.
 function saveUserSettings() {
-  // console.log('saveUserSettings');
+  // Save the selected emoji category, skin tone, and card preview time to local storage.
   localStorage.setItem("selectedEmojiCategory", selectedEmojiCategory);
   localStorage.setItem("selectedEmojiSkinTone", selectedEmojiSkinTone);
   localStorage.setItem("selectedCardPreviewTime", selectedCardPreviewTime);
@@ -370,52 +467,87 @@ function saveUserSettings() {
 
 // HELPER FUNCTIONS
 
-function addEventListenerById(id, event, handler) {
-  document.getElementById(id).addEventListener(event, handler);
-}
-
-function getSelectedValue(id) {
-  return document.getElementById(id).selectedOptions[0].value;
-}
-
+// Helper function to format the countdown text.
 function formatCountdownText(countdown) {
+  // Adds a leading zero to the countdown variable if it is less than 10.
   return `Game Begins in 00:${countdown < 10 ? "0" : ""}${countdown}`;
 }
 
+// This function starts a countdown.
 function startCountdown() {
+  // Gets the countdown time from the selected card preview time and convert it to seconds.
   let countdown = (selectedCardPreviewTime / 1000);
+  
+  // Gets the countdown display element.
   let countdownDisplay = document.getElementById('clock');
 
+  // Sets the initial countdown text.
   countdownDisplay.textContent = formatCountdownText(countdown);
 
+  // Starts the countdown interval.
   countdownIntervalId = setInterval(function() {
+    // Decrements the countdown by 1.
     countdown--;
+    
+    // Updates the countdown text.
     countdownDisplay.textContent = formatCountdownText(countdown);
 
+    // If the countdown has reached 0, stops the interval, sets the countdown text to "00:00", and flips the cards face down.
     if (countdown <= 0) {
       clearInterval(countdownIntervalId);
       countdownDisplay.textContent = "00:00";
       flipCardsFaceDown();
     }
-  }, 1000);
+  }, 1000); // The interval is set to run every 1000 milliseconds (or 1 second).
 }
 
+// This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
+function setBodyHeight() {
+  // Gets the body element.
+  var body = document.body;
+
+  // Set the height of the body to the inner height of the window.
+  body.style.height = window.innerHeight + 'px';
+}
+
+// This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
   console.log('adjustCardSize');
+
+  // Gets the cards container and its children.
   var cards = document.getElementById('cards');
   var cardItems = Array.from(cards.children);
+
+  // Get the computed style of the cards element
+  var style = getComputedStyle(cards);
+
+  // Get the gap property and convert it to pixels
+  var gap = parseFloat(style.getPropertyValue('gap'));
+
+  // If the gap is in rem, convert it to pixels
+  if (style.getPropertyValue('gap').includes('rem')) {
+    var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    gap = gap * rootFontSize;
+  }
+
+  // Gets the width and height of the parent container.
   var parentWidth = cards.offsetWidth;
   var parentHeight = cards.offsetHeight;
 
-  // Binary search for the largest size that fits
-  var gap = remToPixels(.375); // Set this to the size of your gap in rems
+  // Binary search for the largest size that fits.
   var low = 0;
   var high = Math.min(parentWidth, parentHeight);
 
+  // Continue until the difference between high and low is less than or equal to 1.
   while (high - low > 1) {
     var mid = (low + high) / 2;
+
+    // Calculate the number of columns and rows that can fit within the parent container.
     var columns = Math.floor(parentWidth / (mid + gap));
     var rows = Math.floor(parentHeight / (mid + gap));
+
+    // If the cards can fit within the parent container and there are enough cells for all cards, update low to mid.
+    // Otherwise, update high to mid.
     if ((columns * mid + (columns - 1) * gap <= parentWidth) && 
         (rows * mid + (rows - 1) * gap <= parentHeight) && 
         (columns * rows >= cardItems.length)) {
@@ -434,31 +566,4 @@ function adjustCardSize() {
     }
   `;
   document.head.appendChild(style);
-}
-// Call the function whenever the cards element changes size
-var cards = document.getElementById('cards');
-
-function remToPixels(rem) {
-  var pixelValue = rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-  return pixelValue;
-}
-
-// window.addEventListener('resize', updateViewport);
-// updateViewport();
-
-// function updateViewport() {
-//   var newHeight = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-//   var newWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-
-//   // document.getElementById('w').innerHTML = newWidth;
-//   // document.getElementById('h').innerHTML = newHeight;
-//   document.getElementById('footer').innerHTML = newWidth + ' x ' + newHeight + ' vs ' + window.screen.width + ' x ' + window.screen.height;
-// }
-
-window.addEventListener('resize', setBodyHeight);
-setBodyHeight();
-
-function setBodyHeight() {
-  var body = document.body;
-  body.style.height = window.innerHeight + 'px';
 }
