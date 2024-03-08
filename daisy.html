@@ -58,7 +58,7 @@
             </div>
             <div class="navbar-end">
                 <!-- Menu Button -->
-                <div tabindex="0" role="button" class="btn btn-ghost btn-circle focus-visible:outline-none"
+                <div tabindex="0" role="button" title="Menu Button" class="btn btn-ghost btn-circle focus-visible:outline-none"
                     onclick="options_modal.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                         stroke="oklch(var(--pc))">
@@ -80,17 +80,17 @@
                             <label class="label cursor-pointer">
                                 <span class="label-text">Emoji Category</span>
                                 <!-- Emoji Category Dropdown -->
-                                <select id="emojiCategoryDropdown" class="select select-bordered w-2/4"></select>
+                                <select id="emojiCategoryDropdown" title="Emoji Category Dropdown" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
                                 <!-- Emoji Skin Tone Dropdown -->
                                 <span class="label-text">Emoji Skin Tone</span>
-                                <select id="emojiSkinToneDropdown" class="select select-bordered w-2/4"></select>
+                                <select id="emojiSkinToneDropdown" title="Emoji Skin Tone Dropdown" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
-                                <span class="label-text">Card Preview</span>
+                                <span class="label-text">Card Preview Time</span>
                                 <!-- Card Preview Time Dropdown -->
-                                <select id="cardPreviewTimeDropdown" class="select select-bordered w-2/4"></select>
+                                <select id="cardPreviewTimeDropdown" title="Card Preview Time Dropdown" class="select select-bordered w-2/4"></select>
                             </label>
                         </div>
                     </div>
@@ -122,8 +122,8 @@
     <!-- GAME BOARD -->
     <div id="main" class="flex items-center w-full max-w-screen-lg mx-auto px-2 py-4 grow">
         <!-- CARDS DIV - Removed  to test my binary search code. Need to fix. -->
-        <div id="cards" class="hidden h-full w-full flex content-center justify-center flex-wrap gap-1.5"></div>
-        <div id="endScreen" class="w-full">
+        <div id="cards" class="h-full w-full flex content-center justify-center flex-wrap gap-1.5"></div>
+        <div id="endScreen" class="hidden w-full">
             <h1 class=" text-4xl text-neutral-content">Nice Work!</h1>
             <p class="text-2xl">Think you can do it faster?</p>
             <button id="endScreenReset" class="btn btn-outline btn-primary mt-4">Play Again</button>
