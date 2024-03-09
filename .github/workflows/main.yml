@@ -7,10 +7,16 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror Repository
-        uses: repo-sync/github-sync@v2
+      - name: Checkout source repository
+        uses: actions/checkout@v2
         with:
-          source_repo: "austinvach/emojimatch"
-          source_branch: "dev"
-          destination_branch: "https://github.com/austinvach/emdev/tree/main"
+          repository: "austinvach/emojimatch"
+          path: source-repo
+
+      - name: Push to destination repository
+        uses: ad-m/github-push-action@master
+        with:
+          directory: source-repo
           github_token: ${{ secrets.PAT }}
+          repository: austinvach/emdev
+          branch: main
