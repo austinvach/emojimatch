@@ -41,15 +41,15 @@ function addEventListenerById(id, event, handler) {
 addEventListenerById("window", "resize", (e) => {
   console.log('window resize');
   consolelog('window resize');
-  let currentHeight = window.innerHeight;
+  // let currentHeight = window.innerHeight;
   // Checks if the window height has changed.
-  if (currentHeight !== windowHeight) {
-    // If it has, it resets the height of the body element.
-    setBodyHeight();
-    
-    // Updates the previous height
-    windowHeight = currentHeight;
-  }
+  // if (currentHeight !== windowHeight) {
+  //   // If it has, it resets the height of the body element.
+  //   setBodyHeight();
+  //   // Updates the previous height
+  //   windowHeight = currentHeight;
+  // }
+  setBodyHeight();
 });
 
 // Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
