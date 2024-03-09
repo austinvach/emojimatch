@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /daisy.html
-Disallow: /js/daisy.js
-Disallow: /css/daisy.css
