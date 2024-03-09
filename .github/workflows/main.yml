@@ -4,19 +4,24 @@ on:
   push:
 
 jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v2
-        with:
-          repository: "austinvach/emojimatch"
-          path: source-repo
-
-      - name: Push to destination repository
-        uses: ad-m/github-push-action@master
-        with:
-          directory: source-repo
-          github_token: ${{ secrets.PAT }}
-          repository: austinvach/emdev
-          branch: main
+      sync:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Setup Node.js
+            uses: actions/setup-node@v2
+            with:
+              node-version: '16' # or '17' for Node.js 17
+    
+          - name: Checkout source repository
+            uses: actions/checkout@v2
+            with:
+              repository: austinvach/emojimatch
+              path: source-repo
+    
+          - name: Push to destination repository
+            uses: ad-m/github-push-action@master
+            with:
+              directory: source-repo
+              github_token: ${{ secrets.PAT }}
+              repository: austinvach/emdev
+              branch: main
