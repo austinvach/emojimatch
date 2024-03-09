@@ -1,0 +1,19 @@
+name: Repo Sync
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror Repository
+        uses: repo-sync/github-sync@v2
+        with:
+          source_repo: "austinvach/emojimatch"
+          source_branch: "dev"
+          destination_repo: "austinvach/emdev"
+          destination_branch: "main"
+          github_token: ${{ secrets.PAT }}
