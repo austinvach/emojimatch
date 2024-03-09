@@ -10,7 +10,7 @@ jobs:
           - name: Setup Node.js
             uses: actions/setup-node@v2
             with:
-              node-version: '16' # or '17' for Node.js 17
+              node-version: '17' # or '17' for Node.js 17
     
           - name: Checkout source repository
             uses: actions/checkout@v2
