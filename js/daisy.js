@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 // This function is called when the page loads.
 async function onLoad() {
-  console.log('onLoad');
+  // console.log('onLoad');
   // Fetches the emoji JSON file.
   const response = await fetch("emoji.json");
   // Parses the JSON response and stores it in the emoji variable.
@@ -532,6 +532,7 @@ function startCountdown() {
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
   console.log('setBodyHeight');
+  printToOverlay('setBodyHeight');
   
   // Gets the body element.
   var body = document.body;
@@ -540,22 +541,10 @@ function setBodyHeight() {
   body.style.height = window.innerHeight + 'px';
 }
 
-let counter = 0;
-let timeoutId = null;
-
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
   console.log('adjustCardSize');
-
-  // Increment the counter each time the function runs
-  counter++;
-
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-
-  var footer = document.getElementById('footer');
-  footer.textContent = counter;
+  printToOverlay('adjustCardSize');
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
@@ -609,4 +598,9 @@ function adjustCardSize() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function printToOverlay(message) {
+  const overlayContent = document.getElementById('overlay-content');
+  overlayContent.textContent += message + '\n';
 }

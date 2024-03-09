@@ -1653,6 +1653,10 @@ html {
   border-bottom-left-radius: 0px;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
