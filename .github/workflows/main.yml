@@ -12,6 +12,5 @@ jobs:
         with:
           source_repo: "austinvach/emojimatch"
           source_branch: "dev"
-          destination_repo: "austinvach/emdev"
-          destination_branch: "main"
+          destination_branch: "https://github.com/austinvach/emdev/tree/main"
           github_token: ${{ secrets.PAT }}
