@@ -39,6 +39,8 @@ function addEventListenerById(id, event, handler) {
 
 // Runs the setBodyHeight function when the window is resized.
 addEventListenerById("window", "resize", (e) => {
+  console.log('window resize');
+  consolelog('window resize');
   let currentHeight = window.innerHeight;
   // Checks if the window height has changed.
   if (currentHeight !== windowHeight) {
@@ -532,7 +534,7 @@ function startCountdown() {
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
   console.log('setBodyHeight');
-  printToOverlay('setBodyHeight');
+  consolelog('setBodyHeight');
   
   // Gets the body element.
   var body = document.body;
@@ -543,8 +545,8 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  console.log('adjustCardSize');
-  printToOverlay('adjustCardSize');
+  // console.log('adjustCardSize');
+  // consolelog('adjustCardSize');
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
@@ -600,7 +602,16 @@ function adjustCardSize() {
   document.head.appendChild(style);
 }
 
-function printToOverlay(message) {
+function consolelog(message) {
+  // Get the current date and time
+  let now = new Date();
+
+  // Convert to Pacific Time
+  let pacificTime = now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+
+  // Prepend the timestamp to the message
   const overlayContent = document.getElementById('overlay-content');
-  overlayContent.textContent += message + '\n';
+  overlayContent.textContent += `[${pacificTime}] ${message}\n`;
+  // PREPEND the message to the overlay content
+  // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
 }
