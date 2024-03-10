@@ -22,5 +22,5 @@ jobs:
       - name: Fetch updates from emojimatch and push updates to emojimatchdev.
         run: |
           git fetch -p origin
-          git fetch -p origin
+          git push origin dev
         working-directory: ./emojimatch
