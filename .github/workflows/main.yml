@@ -1,26 +1,26 @@
-name: Mirror emojimatch to emdev and setup Node.js
+name: Clone, Setup Node.js, and Mirror
 
 on:
   push:
     branches:
-      - main # Adjust this branch name if needed
+      - main
 
 jobs:
-  mirror:
+  clone_and_mirror:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout emojimatch repository
-        uses: actions/checkout@v2
-        with:
-          repository: austinvach/emojimatch
-          fetch-depth: 0 # Fetch all history for all branches and tags.
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16' # or '17' for Node.js 17
+    steps:
+      - name: Clone emojimatch repository
+        run: |
+          git clone https://github.com/austinvach/emojimatch.git
+          cd emojimatch
+
+      # - name: Setup Node.js
+      #   run: |
+      #     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      #     sudo apt-get install -y nodejs
 
       - name: Mirror to emdev repository
         run: |
-          git remote add mirror https://x-access-token:${{ secrets.PAT }}@github.com/austinvach/emdev.git
+          git remote add mirror https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/austinvach/emdev.git
           git push --mirror mirror
