@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Clone emojimatch 
         run: |
-          git clone https://github.com/austinvach/emojimatch.git
+          git clone --bare https://github.com/austinvach/emojimatch.git
           cd emojimatch.git
 
       - name: Mirror to emdev
