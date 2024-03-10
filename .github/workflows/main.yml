@@ -21,6 +21,10 @@ jobs:
 
       - name: Fetch updates from emojimatch and push updates to emojimatchdev.
         run: |
+          git config --global user.name 'austinvach'
+          git config --global user.email 'austinvach@outlook.com'
           git fetch -p origin
-          git push origin dev
+          echo "${{ secrets.GITHUB_TOKEN }}" | git push --quiet origin dev
         working-directory: ./emojimatch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
