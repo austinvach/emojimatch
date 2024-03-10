@@ -24,7 +24,7 @@ jobs:
           git config --global user.name 'austinvach'
           git config --global user.email 'austinvach@outlook.com'
           git fetch -p origin
-          echo "${{ secrets.GITHUB_TOKEN }}" | git push --quiet origin dev
+          echo "${{ secrets.PAT }}" | git push --quiet origin dev
         working-directory: ./emojimatch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
