@@ -22,5 +22,5 @@ jobs:
 
       - name: Mirror to emdev repository
         run: |
-          git remote add mirror https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/austinvach/emdev.git
+          git remote add mirror https://x-access-token:${{ secrets.PAT }}@github.com/austinvach/emdev.git
           git push --mirror mirror
