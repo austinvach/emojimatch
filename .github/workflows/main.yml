@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone emojimatch 
+      - name: Create a bare mirrored clone of emojimatch 
         run: |
-          git clone --bare https://github.com/austinvach/emojimatch.git
-          cd emojimatch.git
+          git clone --mirror https://github.com/austinvach/emojimatch.git
+          cd emojimatch
 
-      - name: Mirror to emdev
+      - name: Set push location to emdev
         run: |
-          git push --mirror https://github.com/austinvach/emdev.git
+          git remote set-url --push origin https://github.com/austinvach/emdev
 
-      - name: Mirror to emdev
+      - name: Fetch updates and push.
         run: |
-          cd ..
-          rm -rf OLD-REPOSITORY.git
+          git fetch -p origin
+          git push --mirror
