@@ -1,4 +1,4 @@
-name: Mirror emojimatch to emdev
+name: Mirror emojimatch to emdev and setup Node.js
 
 on:
   push:
@@ -10,10 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout emojimatch repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
         with:
           repository: austinvach/emojimatch
           fetch-depth: 0 # Fetch all history for all branches and tags.
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # or '17' for Node.js 17
 
       - name: Mirror to emdev repository
         run: |
