@@ -23,4 +23,4 @@ jobs:
         run: |
           git fetch -p origin
           git push origin dev
-          working-directory: ./emojimatch
+        working-directory: ./emojimatch
