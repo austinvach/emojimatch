@@ -18,8 +18,8 @@ jobs:
 
       - name: Copy content to /dev directory
         run: |
-          mkdir dev
-          cp -r * dev/
+          mkdir -p dev
+          find . -maxdepth 1 -name 'dev' -prune -o -exec cp -r {} dev/ \;
           rm -rf dev/.git
 
       - name: Checkout main branch
