@@ -16,7 +16,7 @@ jobs:
 
       - name: Set push location to emojimatchdev
         run: |
-          git remote set-url --push origin https://austinvach:${{ secrets.NEW }}@github.com/austinvach/emojimatchdev
+          git remote set-url --push origin https://austinvach:${{ secrets.PAT }}@github.com/austinvach/emojimatchdev
         working-directory: ./emojimatch
 
       - name: Fetch updates from emojimatch and push updates to emojimatchdev.
