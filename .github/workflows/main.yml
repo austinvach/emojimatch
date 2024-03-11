@@ -1,31 +1,40 @@
-name: Clone to Dev Site
+name: Publish to /dev
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
-  Clone:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone the dev branch of emojimatch 
-        run: |
-          git clone --branch dev https://github.com/austinvach/emojimatch
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+        with:
+          ref: dev
 
-      - name: Set push location to emojimatchdev
+      - name: Copy content to /dev directory
         run: |
-          git remote set-url --push origin https://austinvach:${{ secrets.NEW }}@github.com/austinvach/emojimatchdev
-        working-directory: ./emojimatch
+          mkdir dev
+          cp -r * dev/
+          rm -rf dev/.git
 
-      - name: Fetch updates from emojimatch
-        run: |
-          git fetch -p https://:${{ secrets.NEW }}@github.com/austinvach/emojimatchdev.git
-        working-directory: ./emojimatch
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          clean: false
 
-      - name: Push updates to emojimatchdev.
+      - name: Move /dev directory to main branch
         run: |
-          git push https://austinvach:${{ secrets.NEW }}@github.com/austinvach/emojimatchdev.git dev
-        working-directory: ./emojimatch
+          mv ../dev .
+
+      - name: Commit and push to main branch
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update /dev directory from dev branch"
+          git push
