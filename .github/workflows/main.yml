@@ -3,39 +3,20 @@ name: Publish to /dev
 on:
   workflow_dispatch:
   push:
-    branches:
-      - dev
 
 jobs:
-  publish:
+  push:
     runs-on: ubuntu-latest
-
+     
     steps:
-      - name: Checkout dev branch
-        uses: actions/checkout@v2
-        with:
-          ref: dev
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: dev
 
-      - name: Copy content to /dev directory
-        run: |
-          mkdir -p dev
-          find . -maxdepth 1 -name 'dev' -prune -o -exec cp -r {} dev/ \;
-          rm -rf dev/.git
-
-      - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: main
-          clean: false
-
-      - name: Move /dev directory to main branch
-        run: |
-          mv ../dev .
-
-      - name: Commit and push to main branch
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update /dev directory from dev branch"
-          git push
+    - name: Push to another repository
+      run: |
+        git remote add new-repo https://github.com/austinvach/emojimatchdev.git
+        git push new-repo dev
+      env:
+        NEW_REPO_TOKEN: ${{ secrets.NEW }}
