@@ -27,5 +27,5 @@ jobs:
 
       - name: Push updates to emojimatchdev.
         run: |
-          git push origin dev
+          git push https://:${{ secrets.PAT }}@github.com/austinvach/emojimatchdev.git dev
         working-directory: ./emojimatch
