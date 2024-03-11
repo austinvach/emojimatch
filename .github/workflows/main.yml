@@ -1,6 +1,7 @@
 name: Clone to Dev Site
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -24,7 +25,7 @@ jobs:
           git fetch -p https://:${{ secrets.PAT }}@github.com/austinvach/emojimatchdev.git
         working-directory: ./emojimatch
 
-        - name: Push updates to emojimatchdev.
+      - name: Push updates to emojimatchdev.
         run: |
           git push origin dev
         working-directory: ./emojimatch
