@@ -16,7 +16,7 @@ jobs:
 
     - name: Push to another repository
       run: |
-        git remote add new-repo https://github.com/austinvach/emojimatchdev.git
+        git remote add new-repo https://${{ secrets.NEW_REPO_TOKEN }}@github.com/austinvach/emojimatchdev.git
         git push new-repo dev
       env:
         NEW_REPO_TOKEN: ${{ secrets.NEW }}
