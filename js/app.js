@@ -22,7 +22,7 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-var resizeObserver = new ResizeObserver(adjustCardSize);
+var cardsObserver = new ResizeObserver(adjustCardSize);
 let windowHeight = window.innerHeight;
 
 // Helper function to add event listeners.
@@ -38,10 +38,16 @@ function addEventListenerById(id, event, handler) {
 }
 
 // Runs the setBodyHeight function when the window is resized.
-addEventListenerById("window", "resize", (e) => {
-  console.log('window resize');
-  printToOverlay('window resize');
-  setBodyHeight();
+// addEventListenerById("window", "resize", (e) => {
+//   console.log('window resize');
+//   printToOverlay('window resize');
+//   setBodyHeight();
+// });
+
+var resizeTimeout;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(setBodyHeight, 100);
 });
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
@@ -97,7 +103,7 @@ async function onLoad() {
   // Picks the emoji pairs for the game.
   pickPairs();
   // Starts observing the card elements for size changes.
-  resizeObserver.observe(cards);
+  cardsObserver.observe(cards);
   // Sets the initial state of the cards face up.
   setCardsFaceUp();
   // Starts the countdown timer.
