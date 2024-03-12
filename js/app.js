@@ -40,7 +40,8 @@ function addEventListenerById(id, event, handler) {
 // Runs the setBodyHeight function when the window is resized.
 addEventListenerById("window", "resize", (e) => {
   if (setBodyHeightTimeout) {
-    clearTimeout(resizeTimeout);
+    printToOverlay('clearing setBodyHeightTimeout');
+    clearTimeout(setBodyHeightTimeout);
   }
   // Set a new timeout to check the window height after 100 milliseconds
   setBodyHeightTimeout = setTimeout(setBodyHeight, 100);
