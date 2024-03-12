@@ -612,15 +612,7 @@ function printToOverlay(message) {
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
 }
 
-let resizeObserver = new ResizeObserver(entries => {
-  // entries is an array of ResizeObserverEntry objects
-  for (let entry of entries) {
-    // Each entry is a ResizeObserverEntry object
-    console.log('HTML element resize');
-    printToOverlay('HTML element resize');
-    setBodyHeight();
-  }
-});
+let resizeObserver = new ResizeObserver(setBodyHeight);
 
 // Start observing the HTML element
 resizeObserver.observe(document.documentElement);
