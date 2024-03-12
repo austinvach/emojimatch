@@ -39,8 +39,8 @@ function addEventListenerById(id, event, handler) {
 
 // Runs the setBodyHeight function when the window is resized.
 addEventListenerById("window", "resize", (e) => {
-  console.log('window resize');
-  printToOverlay('window resize');
+  // console.log('window resize');
+  // printToOverlay('window resize');
   setBodyHeight();
 });
 
