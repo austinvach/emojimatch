@@ -22,7 +22,8 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-let cardsObserver = new ResizeObserver(adjustCardSize);
+// let cardsObserver = new ResizeObserver(adjustCardSize);
+let cardsObserver = new ResizeObserver(debounce(adjustCardSize, 100));
 
 window.addEventListener("resize", debounce(setBodyHeight, 100));
 
@@ -600,13 +601,12 @@ function printToOverlay(message) {
 }
 
 function debounce(func, delay) {
-  console.log('Debouncing?');
   let debounceTimeout;
   return function(...args) {
     const context = this;
     if (debounceTimeout) {
       clearTimeout(debounceTimeout);
-      console.log('Yes! Debounced' + func.name);
+      console.log('Debounced ' + func.name);
     }
     debounceTimeout = setTimeout(() => func.apply(context, args), delay);
   };
