@@ -22,7 +22,7 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-var cardsObserver = new ResizeObserver(adjustCardSize);
+var cardsObserver = new ResizeObserver(debounce(adjustCardSize, 50));
 let windowHeight = window.innerHeight;
 
 // Helper function to add event listeners.
@@ -621,4 +621,13 @@ function printToOverlay(message) {
   overlayContent.textContent += `[${pacificTime}] ${message}\n`;
   // PREPEND the message to the overlay content
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
+}
+
+// Debounce function
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
 }
