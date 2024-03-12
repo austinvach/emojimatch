@@ -23,29 +23,13 @@ let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
 let cardsObserver = new ResizeObserver(adjustCardSize);
-let setBodyHeightTimeout;
+
+window.addEventListener("resize", debounce(setBodyHeight, 100));
 
 // Helper function to add event listeners.
 function addEventListenerById(id, event, handler) {
-  // Check if the id is 'window'
-  if (id === 'window') {
-    // If it is, add the event listener to the window
-    window.addEventListener(event, handler);
-  } else {
-    // If it's not, add the event listener to the element with the given id
-    document.getElementById(id).addEventListener(event, handler);
-  }
+  document.getElementById(id).addEventListener(event, handler);
 }
-
-// Runs the setBodyHeight function when the window is resized.
-addEventListenerById("window", "resize", (e) => {
-  if (setBodyHeightTimeout) {
-    printToOverlay('clearing setBodyHeightTimeout');
-    clearTimeout(setBodyHeightTimeout);
-  }
-  // Set a new timeout to check the window height after 100 milliseconds
-  setBodyHeightTimeout = setTimeout(setBodyHeight, 100);
-});
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
@@ -534,8 +518,6 @@ function setBodyHeight() {
   // Gets the body element.
   var body = document.body;
 
-  lastWindowHeight = window.innerHeight;
-
   // Set the height of the body to the inner height of the window.
   body.style.height = window.innerHeight + 'px';
   console.log(window.innerHeight + 'px');
@@ -615,4 +597,17 @@ function printToOverlay(message) {
   overlayContent.textContent += `[${pacificTime}] ${message}\n`;
   // PREPEND the message to the overlay content
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
+}
+
+function debounce(func, delay) {
+  console.log('Debouncing?');
+  let debounceTimeout;
+  return function(...args) {
+    const context = this;
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+      console.log('Yes! Debounced' + func.name);
+    }
+    debounceTimeout = setTimeout(() => func.apply(context, args), delay);
+  };
 }
