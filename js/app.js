@@ -38,11 +38,11 @@ function addEventListenerById(id, event, handler) {
 }
 
 // Runs the setBodyHeight function when the window is resized.
-addEventListenerById("window", "resize", (e) => {
-  // console.log('window resize');
-  // printToOverlay('window resize');
-  setBodyHeight();
-});
+// addEventListenerById("window", "resize", (e) => {
+//   // console.log('window resize');
+//   // printToOverlay('window resize');
+//   setBodyHeight();
+// });
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
@@ -611,3 +611,16 @@ function printToOverlay(message) {
   // PREPEND the message to the overlay content
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
 }
+
+let resizeObserver = new ResizeObserver(entries => {
+  // entries is an array of ResizeObserverEntry objects
+  for (let entry of entries) {
+    // Each entry is a ResizeObserverEntry object
+    console.log('HTML element resize');
+    printToOverlay('HTML element resize');
+    setBodyHeight();
+  }
+});
+
+// Start observing the HTML element
+resizeObserver.observe(document.documentElement);
