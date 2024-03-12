@@ -526,7 +526,7 @@ function startCountdown() {
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
   console.log('setBodyHeight');
-  // printToOverlay('setBodyHeight');
+  printToOverlay('setBodyHeight');
   
   // Gets the body element.
   var body = document.body;
@@ -538,7 +538,7 @@ function setBodyHeight() {
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
   console.log('adjustCardSize');
-  // printToOverlay('adjustCardSize');
+  printToOverlay('adjustCardSize');
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
