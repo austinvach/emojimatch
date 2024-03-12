@@ -25,7 +25,7 @@ let emojiStyle = "flat";
 var resizeObserver = new ResizeObserver(adjustCardSize);
 let windowHeight = window.innerHeight;
 
-// Helper function to add event listeners to elements by their id.
+// Helper function to add event listeners.
 function addEventListenerById(id, event, handler) {
   // Check if the id is 'window'
   if (id === 'window') {
@@ -37,36 +37,22 @@ function addEventListenerById(id, event, handler) {
   }
 }
 
-// // Runs the setBodyHeight function when the window is resized.
-// addEventListenerById("window", "resize", (e) => {
-//   console.log('window resize');
-//   printToOverlay('window resize');
-//   let currentHeight = window.innerHeight;
-//   // Checks if the window height has changed.
-//   if (currentHeight !== windowHeight) {
-//     // If it has, it resets the height of the body element.
-//     setBodyHeight();
-//     // Updates the previous height
-//     windowHeight = currentHeight;
-//   }
-// });
-
 // Runs the setBodyHeight function when the window is resized.
 addEventListenerById("window", "resize", (e) => {
   console.log('window resize');
-  // printToOverlay('window resize');
+  printToOverlay('window resize');
   setBodyHeight();
 });
 
-// Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
+// Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
-  emojiCategoryDropdown.value = secondaryEmojiCategoryDropdown.value;
+  primaryEmojiCategoryDropdown.value = secondaryEmojiCategoryDropdown.value;
   reset();
 });
 
-// Updates the value of the emoji category dropdown in the header and reset the game when the main emoji category dropdown changes.
-addEventListenerById("emojiCategoryDropdown", "change", (e) => {
-  secondaryEmojiCategoryDropdown.value = emojiCategoryDropdown.value;
+// Updates the value of the secondary emoji category dropdown and resets the game when the primary emoji category dropdown changes.
+addEventListenerById("primaryEmojiCategoryDropdown", "change", (e) => {
+  secondaryEmojiCategoryDropdown.value = primaryEmojiCategoryDropdown.value;
   reset();
 });
 
@@ -200,7 +186,7 @@ function createAndAppendEmojiCategoryOptions(dropdown, categories) {
 function populateCategories() {
   // Gets the emoji category dropdown elements.
   const secondaryEmojiCategoryDropdown = document.getElementById("secondaryEmojiCategoryDropdown");
-  const emojiCategoryDropdown = document.getElementById("emojiCategoryDropdown");
+  const primaryEmojiCategoryDropdown = document.getElementById("primaryEmojiCategoryDropdown");
   // Defines the emoji categories.
   const emojiCategories = [
     { icon: "🙂", name: "Smileys & Emotion", value: "smileys_and_emotion" },
@@ -214,7 +200,7 @@ function populateCategories() {
   ];
 
   // Creates and appends the emoji category options to both dropdowns.
-  createAndAppendEmojiCategoryOptions(emojiCategoryDropdown, emojiCategories);
+  createAndAppendEmojiCategoryOptions(primaryEmojiCategoryDropdown, emojiCategories);
   createAndAppendEmojiCategoryOptions(secondaryEmojiCategoryDropdown, emojiCategories);
 }
 
@@ -283,12 +269,12 @@ function getSelectedValue(id) {
 // This function picks the pairs of emojis for the game.
 function pickPairs() {
   // Gets the selected values from the dropdowns.
-  selectedEmojiCategory = getSelectedValue("emojiCategoryDropdown");
+  selectedEmojiCategory = getSelectedValue("primaryEmojiCategoryDropdown");
   selectedEmojiSkinTone = getSelectedValue("emojiSkinToneDropdown");
   selectedCardPreviewTime = getSelectedValue("cardPreviewTimeDropdown");
 
   // Gets the emoji from the selected category.
-  let selectedEmoji = emoji[emojiCategoryDropdown.selectedIndex].emojis;
+  let selectedEmoji = emoji[primaryEmojiCategoryDropdown.selectedIndex].emojis;
   // Randomizes the array.
   selectedEmoji.sort(() => Math.random() - 0.5);
 
@@ -551,7 +537,7 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  // console.log('adjustCardSize');
+  console.log('adjustCardSize');
   // printToOverlay('adjustCardSize');
 
   // Gets the cards container and its children.
@@ -599,12 +585,19 @@ function adjustCardSize() {
 
   // Create a CSS class with the desired width and height
   var style = document.createElement('style');
+  var percent = ((low/Math.min(parentWidth, parentHeight))*100);
   style.innerHTML = `
     #cards div {
       width: ${low}px;
       height: ${low}px;
     }
   `;
+  // style.innerHTML = `
+  //   #cards div {
+  //     width: ${percent}%;
+  //     height: ${percent}%;
+  //   }
+  // `;
   document.head.appendChild(style);
 }
 
