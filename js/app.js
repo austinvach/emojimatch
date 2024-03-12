@@ -22,8 +22,25 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-var cardsObserver = new ResizeObserver(adjustCardSize);
-let windowHeight = window.innerHeight;
+let cardsObserver = new ResizeObserver(adjustCardSize);
+
+let lastWindowHeight = window.innerHeight;
+let resizeTimeout;
+let bodyHeightTimeout;
+
+function checkWindowHeight() {
+  console.log('DOUBLE CHECKING');
+  printToOverlay('DOUBLE CHECKING');
+  // If the window height has changed since the last check
+  if (window.innerHeight !== lastWindowHeight) {
+    console.log('UPDATED');
+    printToOverlay('UPDATED');
+    // Update the last window height
+    lastWindowHeight = window.innerHeight;
+    // Call setBodyHeight
+    setBodyHeight();
+  }
+}
 
 // Helper function to add event listeners.
 function addEventListenerById(id, event, handler) {
@@ -38,11 +55,17 @@ function addEventListenerById(id, event, handler) {
 }
 
 // Runs the setBodyHeight function when the window is resized.
-// addEventListenerById("window", "resize", (e) => {
-//   // console.log('window resize');
-//   // printToOverlay('window resize');
-//   setBodyHeight();
-// });
+addEventListenerById("window", "resize", (e) => {
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
+  }
+  if (bodyHeightTimeout) {
+    clearTimeout(resizeTimeout);
+  }
+  // Set a new timeout to check the window height after 100 milliseconds
+  resizeTimeout = setTimeout(checkWindowHeight, 200);
+  bodyHeightTimeout = setTimeout(setBodyHeight, 100);
+});
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
@@ -531,6 +554,8 @@ function setBodyHeight() {
   // Gets the body element.
   var body = document.body;
 
+  lastWindowHeight = window.innerHeight;
+
   // Set the height of the body to the inner height of the window.
   body.style.height = window.innerHeight + 'px';
   console.log(window.innerHeight + 'px');
@@ -611,8 +636,3 @@ function printToOverlay(message) {
   // PREPEND the message to the overlay content
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
 }
-
-let resizeObserver = new ResizeObserver(setBodyHeight);
-
-// Start observing the HTML element
-resizeObserver.observe(document.documentElement);
