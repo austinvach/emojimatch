@@ -22,63 +22,35 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-var resizeObserver = new ResizeObserver(adjustCardSize);
-let windowHeight = window.innerHeight;
+// let cardsObserver = new ResizeObserver(adjustCardSize);
+let cardsObserver = new ResizeObserver(debounce(adjustCardSize, 100));
 
-// Helper function to add event listeners to elements by their id.
+// Event listener to call setBodyHeight when the window is resized
+window.addEventListener("resize", debounce(setBodyHeight, 100));
+
+// Helper function to add event listeners.
 function addEventListenerById(id, event, handler) {
-  // Check if the id is 'window'
-  if (id === 'window') {
-    // If it is, add the event listener to the window
-    window.addEventListener(event, handler);
-  } else {
-    // If it's not, add the event listener to the element with the given id
-    document.getElementById(id).addEventListener(event, handler);
-  }
+  document.getElementById(id).addEventListener(event, handler);
 }
 
-// // Runs the setBodyHeight function when the window is resized.
-// addEventListenerById("window", "resize", (e) => {
-//   console.log('window resize');
-//   printToOverlay('window resize');
-//   let currentHeight = window.innerHeight;
-//   // Checks if the window height has changed.
-//   if (currentHeight !== windowHeight) {
-//     // If it has, it resets the height of the body element.
-//     setBodyHeight();
-//     // Updates the previous height
-//     windowHeight = currentHeight;
-//   }
-// });
-
-// Runs the setBodyHeight function when the window is resized.
-addEventListenerById("window", "resize", (e) => {
-  console.log('window resize');
-  // printToOverlay('window resize');
-  setBodyHeight();
-});
-
-// Updates the value of the main emoji category dropdown and reset the game when the emoji category dropdown in the header changes.
+// Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
 addEventListenerById("secondaryEmojiCategoryDropdown", "change", (e) => {
-  emojiCategoryDropdown.value = secondaryEmojiCategoryDropdown.value;
+  primaryEmojiCategoryDropdown.value = secondaryEmojiCategoryDropdown.value;
   reset();
 });
 
-// Updates the value of the emoji category dropdown in the header and reset the game when the main emoji category dropdown changes.
-addEventListenerById("emojiCategoryDropdown", "change", (e) => {
-  secondaryEmojiCategoryDropdown.value = emojiCategoryDropdown.value;
+// Updates the value of the secondary emoji category dropdown and resets the game when the primary emoji category dropdown changes.
+addEventListenerById("primaryEmojiCategoryDropdown", "change", (e) => {
+  secondaryEmojiCategoryDropdown.value = primaryEmojiCategoryDropdown.value;
   reset();
 });
 
 // Calls the reset function when the reset button is clicked. 
 addEventListenerById("bannerReset", "click", reset);
-
 // Calls the reset function when the reset button is clicked. 
 addEventListenerById("endScreenReset", "click", reset);
-
 // Calls the reset function when a new emoji skin tone is selected.
 addEventListenerById("emojiSkinToneDropdown", "change", reset);
-
 // Calls the reset function when a new card preview time is selected.
 addEventListenerById("cardPreviewTimeDropdown", "change", reset);
 
@@ -93,7 +65,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 // This function is called when the page loads.
 async function onLoad() {
-  // console.log('onLoad');
   // Fetches the emoji JSON file.
   const response = await fetch("emoji.json");
   // Parses the JSON response and stores it in the emoji variable.
@@ -111,7 +82,7 @@ async function onLoad() {
   // Picks the emoji pairs for the game.
   pickPairs();
   // Starts observing the card elements for size changes.
-  resizeObserver.observe(cards);
+  cardsObserver.observe(cards);
   // Sets the initial state of the cards face up.
   setCardsFaceUp();
   // Starts the countdown timer.
@@ -200,7 +171,7 @@ function createAndAppendEmojiCategoryOptions(dropdown, categories) {
 function populateCategories() {
   // Gets the emoji category dropdown elements.
   const secondaryEmojiCategoryDropdown = document.getElementById("secondaryEmojiCategoryDropdown");
-  const emojiCategoryDropdown = document.getElementById("emojiCategoryDropdown");
+  const primaryEmojiCategoryDropdown = document.getElementById("primaryEmojiCategoryDropdown");
   // Defines the emoji categories.
   const emojiCategories = [
     { icon: "🙂", name: "Smileys & Emotion", value: "smileys_and_emotion" },
@@ -214,7 +185,7 @@ function populateCategories() {
   ];
 
   // Creates and appends the emoji category options to both dropdowns.
-  createAndAppendEmojiCategoryOptions(emojiCategoryDropdown, emojiCategories);
+  createAndAppendEmojiCategoryOptions(primaryEmojiCategoryDropdown, emojiCategories);
   createAndAppendEmojiCategoryOptions(secondaryEmojiCategoryDropdown, emojiCategories);
 }
 
@@ -245,19 +216,16 @@ function populateSkinTones() {
 function populateCardPreviewTimes() {
   // Gets the card preview time dropdown element.
   const cardPreviewTimeDropdown = document.getElementById("cardPreviewTimeDropdown");
-
   // Defines the card preview times.
   const cardPreviewTimes = [
     { name: "4 Seconds", value: "4000" },
     { name: "8 Seconds", value: "8000" },
     { name: "16 Seconds", value: "16000" },
   ];
-
   // Creates the dropdown options for each card preview time.
   const options = cardPreviewTimes.map((cardPreviewTime) => {
     // Checks if the current card preview time is the selected one.
     const isSelected = selectedCardPreviewTime === cardPreviewTime.value;
-
     // Creates a new option element for the dropdown.
     return new Option(
       cardPreviewTime.name,
@@ -266,7 +234,6 @@ function populateCardPreviewTimes() {
       isSelected
     );
   });
-
   // Appends the options to the dropdown.
   cardPreviewTimeDropdown.append(...options);
 }
@@ -283,20 +250,17 @@ function getSelectedValue(id) {
 // This function picks the pairs of emojis for the game.
 function pickPairs() {
   // Gets the selected values from the dropdowns.
-  selectedEmojiCategory = getSelectedValue("emojiCategoryDropdown");
+  selectedEmojiCategory = getSelectedValue("primaryEmojiCategoryDropdown");
   selectedEmojiSkinTone = getSelectedValue("emojiSkinToneDropdown");
   selectedCardPreviewTime = getSelectedValue("cardPreviewTimeDropdown");
-
   // Gets the emoji from the selected category.
-  let selectedEmoji = emoji[emojiCategoryDropdown.selectedIndex].emojis;
+  let selectedEmoji = emoji[primaryEmojiCategoryDropdown.selectedIndex].emojis;
   // Randomizes the array.
   selectedEmoji.sort(() => Math.random() - 0.5);
-
   // Picks half the number of cards requested in cardCount variable.
   pairs = selectedEmoji.slice(0, cardCount / 2);
   // Duplicates each value in the array so that each emoji has a match.
   pairs = [...pairs, ...pairs];
-
   // Randomize the pairs.
   pairs.sort(() => Math.random() - 0.5); // Randomizes the pairs
 }
@@ -307,7 +271,6 @@ function setCardsFaceUp() {
   const cards = document.getElementById("cards");
   // Creates a document fragment to store all the cards.for performance.
   const fragment = document.createDocumentFragment();
-
   // Creates a card element with an image and adds it to the document fragment.
   pairs.forEach((emoji, i) => {
     const card = document.createElement("div");
@@ -320,7 +283,6 @@ function setCardsFaceUp() {
       (emoji.skin_tone_support ? `_${selectedEmojiSkinTone}` : "") +
       ".svg";
     card.appendChild(img);
-
     // Adds a click event listener to the card.
     card.addEventListener("click", (e) => {
       selectedCards = document.querySelectorAll(".faceUp");
@@ -334,11 +296,9 @@ function setCardsFaceUp() {
         checkCards();
       }
     });
-
     // Appends the card to the document fragment.
     fragment.appendChild(card);
   });
-
   // Appends the document fragment to the cards container.
   cards.appendChild(fragment);
 }
@@ -347,15 +307,12 @@ function setCardsFaceUp() {
 function flipCardsFaceDown() {
   // Selects all cards that are currently face up.
   const faceUpCards = document.querySelectorAll(".faceUp");
-
   // Replaces the "faceUp" class with "faceDown".
   faceUpCards.forEach((card) => {
     card.classList.replace("faceUp", "faceDown");
   });
-
   // Allows clicks on the cards again.
   ignoreClicks = false;
-
   // Starts the stopwatch.
   startStopwatch();
 }
@@ -370,18 +327,15 @@ function startStopwatch() {
 function stopwatch() {
   // Increments the seconds variable by 1.
   seconds++;
-
   // Resets seconds to 0 and increment minutes variable by 1 when seconds reach 60.
   if (seconds / 60 === 1) {
     seconds = 0;
     minutes++;
   }
-
   // Adds a leading 0 to seconds if it is less than 10.
   displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
   // Adds a leading 0 to minutes if it is less than 10.
   displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
-
   // Updates the 'clock' element with the new time.
   document.getElementById('clock').innerHTML = `${displayMinutes}:${displaySeconds}`;
 }
@@ -397,7 +351,6 @@ function flipSelectedCardFaceUp(card) {
 function checkCards() {
   // Gets all the cards that are currently face up.
   selectedCards = document.querySelectorAll(".faceUp");
-
   // Checks if the cards are a match and either clears them or flips them back over after a delay.
   if (selectedCards[0].firstChild.src === selectedCards[1].firstChild.src) {
     transitionDelayTimerId = setTimeout(clearMatch, transitionDelayTimeInMS);
@@ -422,7 +375,6 @@ function clearMatch() {
     selectedCards[i].classList.toggle("faceUp");
     selectedCards[i].classList.add("notVisible");
   }
-
   // Hides the cards and shows the end screen if all the cards are not visible (i.e. all matches have been found).
   hiddenCards = document.querySelectorAll(".notVisible");
   if (hiddenCards.length === cardCount) {
@@ -441,25 +393,20 @@ function stopStopwatch() {
 function reset() {
   // Ignores any clicks while resetting.
   ignoreClicks = true;
-
   // Clears any existing timers and intervals.
   clearTimeout(previewTimerId);
   clearTimeout(transitionDelayTimerId);
   clearInterval(countdownIntervalId);
   clearInterval(stopwatchIntervalId);
-
   // Resets the stopwatch and clears the game board.
   resetStopwatch();
   clearBoard();
-
   // Hides the end screen and show the cards container.
   document.getElementById("cards").style.setProperty("display", "flex");
   document.getElementById("endScreen").style.setProperty("display", "none");
-
   // Picks new pairs of cards and sets them face up.
   pickPairs();
   setCardsFaceUp();
-
   // Saves the user's settings and starts the countdown.
   saveUserSettings();
   startCountdown();
@@ -469,7 +416,6 @@ function reset() {
 function clearBoard() {
   // Gets the cards container.
   let cards = document.getElementById("cards");
-
   // Clears the content.
   cards.innerHTML = "";
 }
@@ -491,8 +437,6 @@ window.onkeydown = function (k) {
   }
 };
 
-
-
 // This function saves the user's settings to local storage.
 function saveUserSettings() {
   // Save the selected emoji category, skin tone, and card preview time to local storage.
@@ -513,21 +457,16 @@ function formatCountdownText(countdown) {
 function startCountdown() {
   // Gets the countdown time from the selected card preview time and convert it to seconds.
   let countdown = (selectedCardPreviewTime / 1000);
-  
   // Gets the countdown display element.
   let countdownDisplay = document.getElementById('clock');
-
   // Sets the initial countdown text.
   countdownDisplay.textContent = formatCountdownText(countdown);
-
   // Starts the countdown interval.
   countdownIntervalId = setInterval(function() {
     // Decrements the countdown by 1.
     countdown--;
-    
     // Updates the countdown text.
     countdownDisplay.textContent = formatCountdownText(countdown);
-
     // If the countdown has reached 0, stops the interval, sets the countdown text to "00:00", and flips the cards face down.
     if (countdown <= 0) {
       clearInterval(countdownIntervalId);
@@ -539,31 +478,21 @@ function startCountdown() {
 
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
-  console.log('setBodyHeight');
-  // printToOverlay('setBodyHeight');
-  
   // Gets the body element.
   var body = document.body;
-
   // Set the height of the body to the inner height of the window.
   body.style.height = window.innerHeight + 'px';
 }
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  // console.log('adjustCardSize');
-  // printToOverlay('adjustCardSize');
-
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
   var cardItems = Array.from(cards.children);
-
   // Get the computed style of the cards element
   var style = getComputedStyle(cards);
-
   // Get the gap property and convert it to pixels
   var gap = parseFloat(style.getPropertyValue('gap'));
-
   // If the gap is in rem, convert it to pixels
   if (style.getPropertyValue('gap').includes('rem')) {
     var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -573,19 +502,15 @@ function adjustCardSize() {
   // Gets the width and height of the parent container.
   var parentWidth = cards.offsetWidth;
   var parentHeight = cards.offsetHeight;
-
   // Binary search for the largest size that fits.
   var low = 0;
   var high = Math.min(parentWidth, parentHeight);
-
   // Continue until the difference between high and low is less than or equal to 1.
   while (high - low > 1) {
     var mid = (low + high) / 2;
-
     // Calculate the number of columns and rows that can fit within the parent container.
     var columns = Math.floor(parentWidth / (mid + gap));
     var rows = Math.floor(parentHeight / (mid + gap));
-
     // If the cards can fit within the parent container and there are enough cells for all cards, update low to mid.
     // Otherwise, update high to mid.
     if ((columns * mid + (columns - 1) * gap <= parentWidth) && 
@@ -596,9 +521,9 @@ function adjustCardSize() {
       high = mid;
     }
   }
-
   // Create a CSS class with the desired width and height
   var style = document.createElement('style');
+  var percent = ((low/Math.min(parentWidth, parentHeight))*100);
   style.innerHTML = `
     #cards div {
       width: ${low}px;
@@ -608,16 +533,28 @@ function adjustCardSize() {
   document.head.appendChild(style);
 }
 
-function printToOverlay(message) {
-  // Get the current date and time
-  let now = new Date();
-
-  // Convert to Pacific Time
-  let pacificTime = now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
-
-  // Prepend the timestamp to the message
-  const overlayContent = document.getElementById('overlay-content');
-  overlayContent.textContent += `[${pacificTime}] ${message}\n`;
-  // PREPEND the message to the overlay content
-  // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
+// This function debounces a function.
+function debounce(func, delay) {
+  let debounceTimeout;
+  return function(...args) {
+    const context = this;
+    if (debounceTimeout) {
+      console.log('Debounced ' + func.name);
+      clearTimeout(debounceTimeout);
+    }
+    debounceTimeout = setTimeout(() => func.apply(context, args), delay);
+  };
 }
+
+// This function prints a message to an onscreen overlay. Used for debugging on devices without a console.
+// function printToOverlay(message) {
+//   // Get the current date and time
+//   let now = new Date();
+//   // Convert to Pacific Time
+//   let pacificTime = now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
+//   // Prepend the timestamp to the message
+//   const overlayContent = document.getElementById('overlay-content');
+//   overlayContent.textContent += `[${pacificTime}] ${message}\n`;
+//   // PREPEND the message to the overlay content
+//   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
+// }
