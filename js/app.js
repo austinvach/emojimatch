@@ -22,7 +22,7 @@ let selectedCardPreviewTime;
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-var cardsObserver = new ResizeObserver(debounce(adjustCardSize, 50));
+var cardsObserver = new ResizeObserver(adjustCardSize);
 let windowHeight = window.innerHeight;
 
 // Helper function to add event listeners.
@@ -38,16 +38,10 @@ function addEventListenerById(id, event, handler) {
 }
 
 // Runs the setBodyHeight function when the window is resized.
-// addEventListenerById("window", "resize", (e) => {
-//   console.log('window resize');
-//   printToOverlay('window resize');
-//   setBodyHeight();
-// });
-
-var resizeTimeout;
-window.addEventListener('resize', function() {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(setBodyHeight, 100);
+addEventListenerById("window", "resize", (e) => {
+  console.log('window resize');
+  printToOverlay('window resize');
+  setBodyHeight();
 });
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
@@ -545,8 +539,8 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  console.log('adjustCardSize');
-  printToOverlay('adjustCardSize');
+  // console.log('adjustCardSize');
+  // printToOverlay('adjustCardSize');
 
   // Gets the cards container and its children.
   var cards = document.getElementById('cards');
@@ -600,12 +594,7 @@ function adjustCardSize() {
       height: ${low}px;
     }
   `;
-  // style.innerHTML = `
-  //   #cards div {
-  //     width: ${percent}%;
-  //     height: ${percent}%;
-  //   }
-  // `;
+
   document.head.appendChild(style);
 }
 
@@ -621,13 +610,4 @@ function printToOverlay(message) {
   overlayContent.textContent += `[${pacificTime}] ${message}\n`;
   // PREPEND the message to the overlay content
   // overlayContent.textContent = `[${pacificTime}] ${message}\n` + overlayContent.textContent;
-}
-
-// Debounce function
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
 }
