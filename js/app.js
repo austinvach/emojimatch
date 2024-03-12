@@ -533,6 +533,8 @@ function setBodyHeight() {
 
   // Set the height of the body to the inner height of the window.
   body.style.height = window.innerHeight + 'px';
+  console.log(window.innerHeight + 'px');
+  printToOverlay(window.innerHeight + 'px');
 }
 
 // This function adjusts the size of the cards to fit within their parent container.
