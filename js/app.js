@@ -23,24 +23,7 @@ let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
 let cardsObserver = new ResizeObserver(adjustCardSize);
-
-let lastWindowHeight = window.innerHeight;
-let resizeTimeout;
-let bodyHeightTimeout;
-
-function checkWindowHeight() {
-  console.log('DOUBLE CHECKING');
-  printToOverlay('DOUBLE CHECKING');
-  // If the window height has changed since the last check
-  if (window.innerHeight !== lastWindowHeight) {
-    console.log('UPDATED');
-    printToOverlay('UPDATED');
-    // Update the last window height
-    lastWindowHeight = window.innerHeight;
-    // Call setBodyHeight
-    setBodyHeight();
-  }
-}
+let setBodyHeightTimeout;
 
 // Helper function to add event listeners.
 function addEventListenerById(id, event, handler) {
@@ -56,15 +39,11 @@ function addEventListenerById(id, event, handler) {
 
 // Runs the setBodyHeight function when the window is resized.
 addEventListenerById("window", "resize", (e) => {
-  if (resizeTimeout) {
-    clearTimeout(resizeTimeout);
-  }
-  if (bodyHeightTimeout) {
+  if (setBodyHeightTimeout) {
     clearTimeout(resizeTimeout);
   }
   // Set a new timeout to check the window height after 100 milliseconds
-  resizeTimeout = setTimeout(checkWindowHeight, 200);
-  bodyHeightTimeout = setTimeout(setBodyHeight, 100);
+  setBodyHeightTimeout = setTimeout(setBodyHeight, 100);
 });
 
 // Updates the value of the primary emoji category dropdown and resets the game when the secondary emoji category dropdown changes.
