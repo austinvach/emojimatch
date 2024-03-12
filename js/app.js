@@ -539,6 +539,7 @@ function debounce(func, delay) {
   return function(...args) {
     const context = this;
     if (debounceTimeout) {
+      console.log('Debounced ' + func.name);
       clearTimeout(debounceTimeout);
     }
     debounceTimeout = setTimeout(() => func.apply(context, args), delay);
