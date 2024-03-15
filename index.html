@@ -21,11 +21,12 @@
     <meta property="og:image" content="assets/og.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="assets/emoji/flat/slightly_smiling_face_flat.svg" sizes="any">
+    <style id="myStyle"></style>
 </head>
 
 <body class="overflow-hidden text-center h-full flex flex-col">
     <!-- FIRST BANNER -->
-    <div class="w-full bg-primary">
+    <div id="firstBanner" class="w-full bg-primary">
         <div class="navbar max-w-screen-lg mx-auto">
             <div class="navbar-start">
                 <!-- Emoji Category Dropdown -->
@@ -77,6 +78,11 @@
                                 <select id="emojiSkinToneDropdown" title="Emoji Skin Tone Dropdown" class="select select-bordered w-2/4"></select>
                             </label>
                             <label class="label cursor-pointer">
+                                <span class="label-text">Card Count</span>
+                                <!-- Card Count Dropdown -->
+                                <select id="cardCountDropdown" title="Card Count Dropdown" class="select select-bordered w-2/4"></select>
+                            </label>
+                            <label class="label cursor-pointer">
                                 <span class="label-text">Card Preview Time</span>
                                 <!-- Card Preview Time Dropdown -->
                                 <select id="cardPreviewTimeDropdown" title="Card Preview Time Dropdown" class="select select-bordered w-2/4"></select>
@@ -91,7 +97,7 @@
         </div>
     </div>
     <!-- SECOND BANNER -->
-    <div class="w-full bg-neutral">
+    <div id="secondBanner" class="w-full bg-neutral">
         <div class="flex items-center max-w-screen-lg mx-auto px-2">
             <div class="flex w-2/4 shrink justify-start"></div>
             <!-- Clock -->
