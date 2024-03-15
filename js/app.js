@@ -255,7 +255,7 @@ function populateCardCounts() {
   // Creates the dropdown options for each card preview time.
   const options = cardCounts.map((cardCount) => {
     // Checks if the current card preview time is the selected one.
-    const isSelected = selectedCardCount === cardCount.value;
+    const isSelected = Number(selectedCardCount) === cardCount.value;
     // Creates a new option element for the dropdown.
     return new Option(
       cardCount.name,
