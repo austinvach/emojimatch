@@ -155,7 +155,7 @@ function storageAvailable(type) {
     selectedEmojiCategory = localStorage.getItem("selectedEmojiCategory");
     selectedEmojiSkinTone = localStorage.getItem("selectedEmojiSkinTone");
     selectedCardPreviewTime = localStorage.getItem("selectedCardPreviewTime") || "8000";
-    selectedCardCount = localStorage.getItem("selectedCardCount") || "32";
+    selectedCardCount = localStorage.getItem("selectedCardCount") || 32;
   } else {
     // Logs a message to the console if local storage is not available.
     console.log("LOCAL STORAGE NOT AVAILABLE");
@@ -249,9 +249,9 @@ function populateCardCounts() {
   const cardCountDropdown = document.getElementById("cardCountDropdown");
   // Defines the card preview times.
   const cardCounts = [
-    { name: "16", value: "16" },
-    { name: "32", value: "32" },
-    { name: "48", value: "48" },
+    { name: "16", value: 16 },
+    { name: "32", value: 32 },
+    { name: "48", value: 48 },
   ];
   // Creates the dropdown options for each card preview time.
   const options = cardCounts.map((cardCount) => {
@@ -410,7 +410,7 @@ function clearMatch() {
   }
   // Hides the cards and shows the end screen if all the cards are not visible (i.e. all matches have been found).
   hiddenCards = document.querySelectorAll(".notVisible");
-  if (hiddenCards.length === cardCount) {
+  if (hiddenCards.length === Number(selectedCardCount)) {
     document.getElementById("cards").style.setProperty("display", "none");
     document.getElementById("endScreen").style.setProperty("display", "block");
     stopStopwatch();
@@ -513,7 +513,6 @@ function startCountdown() {
 
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
-  // console.log('Setting body height');
   // Gets the body element.
   var body = document.body;
   // Set the height of the body to the inner height of the window.
@@ -522,62 +521,63 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
-  // console.log('Adjusting card size');
-  // Gets the cards container and its children.
-  var firstBanner = document.getElementById('firstBanner');
-  var secondBanner = document.getElementById('secondBanner');
+  // Get the main, cards, and style elements
   var main = document.getElementById('main');
+  var cards = document.getElementById('cards');
+  var style = document.getElementById('myStyle');
+
+  // Get the computed styles of main and cards
   var mainStyle = getComputedStyle(main);
+  var cardStyle = getComputedStyle(cards);
+
+  // Get the top and bottom padding of main
   var mainPaddingTop = parseFloat(mainStyle.getPropertyValue('padding-top'));
   var mainPaddingBottom = parseFloat(mainStyle.getPropertyValue('padding-bottom'));
-  var cards = document.getElementById('cards');
-  var footer = document.getElementById('footer');
 
-  var occupiedHeight = firstBanner.offsetHeight + secondBanner.offsetHeight + footer.offsetHeight + mainPaddingTop + mainPaddingBottom;
+  // Get the gap between cards
+  var gap = parseFloat(cardStyle.getPropertyValue('gap'));
+
+  // Calculate the total height occupied by the firstBanner, secondBanner, and footer
+  var occupiedHeight = ['firstBanner', 'secondBanner', 'footer'].reduce((total, id) => {
+    return total + document.getElementById(id).offsetHeight;
+  }, mainPaddingTop + mainPaddingBottom);
+
+  // Calculate the available height by subtracting the occupied height from the window height
   var availableHeight = window.innerHeight - occupiedHeight;
 
-  var cardItems = Array.from(cards.children);
-  // Get the computed style of the cards element
-  var style = getComputedStyle(cards);
-  // Get the gap property and convert it to pixels
-  var gap = parseFloat(style.getPropertyValue('gap'));
-  // If the gap is in rem, convert it to pixels
-  if (style.getPropertyValue('gap').includes('rem')) {
-    var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    gap = gap * rootFontSize;
-  }
+  // Get the number of card items
+  var cardItemsCount = cards.childElementCount;
 
-  // Gets the width and height of the parent container.
+  // Get the width and height of the cards container
   var parentWidth = cards.offsetWidth;
   var parentHeight = Math.min(cards.offsetHeight, availableHeight);
-  // Binary search for the largest size that fits.
+
+  // Initialize low and high for binary search
   var low = 0; 
   var high = Math.min(parentWidth, parentHeight);
-  // Continue until the difference between high and low is less than or equal to 1.
+
+  // Binary search to find the maximum size of the cards that will fit in the container
   while (high - low > 1) {
     var mid = (low + high) / 2;
-    // Calculate the number of columns and rows that can fit within the parent container.
     var columns = Math.floor(parentWidth / (mid + gap));
     var rows = Math.floor(parentHeight / (mid + gap));
-    // If the cards can fit within the parent container and there are enough cells for all cards, update low to mid.
-    // Otherwise, update high to mid.
-    if ((columns * mid + (columns - 1) * gap <= parentWidth) && 
-        (rows * mid + (rows - 1) * gap <= parentHeight) && 
-        (columns * rows >= cardItems.length)) {
+
+    // If the number of cards that can fit in the container is greater than or equal to the actual number of cards, increase low
+    if (columns * rows >= cardItemsCount) {
       low = mid;
     } else {
+      // Otherwise, decrease high
       high = mid;
     }
   }
-  // Create a CSS class with the desired width and height
-  var style = document.createElement('style');
+
+  // Set the width and height of the cards to the calculated size
   style.innerHTML = `
     #cards div {
       width: ${low}px;
       height: ${low}px;
     }
   `;
-  document.head.appendChild(style);
 }
 
 // This function debounces a function.
@@ -585,7 +585,7 @@ function debounce(func, delay) {
   let debounceTimeout;
   return function(...args) {
     const context = this;
-    if (debounceTimeout) clearTimeout(debounceTimeout); //console.log("Debounced " + func.name);
+    if (debounceTimeout) clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => func.apply(context, args), delay);
   };
 }
