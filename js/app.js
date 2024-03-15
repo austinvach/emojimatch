@@ -4,7 +4,6 @@ let previewTimerId;
 let stopwatchIntervalId;
 let countdownIntervalId;
 let transitionDelayTimerId;
-let debounceTimeoutId;
 // Variables to hold time values
 let minutes = 0;
 let seconds = 0;
