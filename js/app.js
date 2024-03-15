@@ -1,10 +1,10 @@
-const cardCount = 32; // Must be an even number since every card needs a pair
 const transitionDelayTimeInMS = 400;
 // Variables to hold timeout and interval ids
 let previewTimerId;
 let stopwatchIntervalId;
 let countdownIntervalId;
 let transitionDelayTimerId;
+let debounceTimeoutId;
 // Variables to hold time values
 let minutes = 0;
 let seconds = 0;
@@ -17,13 +17,13 @@ let pairs = [];
 // Variables to store user settings
 let selectedEmojiCategory;
 let selectedEmojiSkinTone;
+let selectedCardCount;
 let selectedCardPreviewTime;
 // Other variables
 let selectedCards = [];
 let ignoreClicks = true;
 let emojiStyle = "flat";
-// let cardsObserver = new ResizeObserver(adjustCardSize);
-let cardsObserver = new ResizeObserver(debounce(adjustCardSize, 100));
+let cardsObserver = new ResizeObserver(debounce(adjustCardSize, 500));
 
 // Event listener to call setBodyHeight when the window is resized
 window.addEventListener("resize", debounce(setBodyHeight, 100));
@@ -52,6 +52,8 @@ addEventListenerById("endScreenReset", "click", reset);
 // Calls the reset function when a new emoji skin tone is selected.
 addEventListenerById("emojiSkinToneDropdown", "change", reset);
 // Calls the reset function when a new card preview time is selected.
+addEventListenerById("cardCountDropdown", "change", reset);
+// Calls the reset function when a new card preview time is selected.
 addEventListenerById("cardPreviewTimeDropdown", "change", reset);
 
 // Calls the onLoad function when the document is fully loaded.
@@ -75,16 +77,18 @@ async function onLoad() {
   populateCategories();
   // Populates the emoji skin tone dropdown.
   populateSkinTones();
-  // Sets the height of the body element.
-  setBodyHeight();
+  // Populates the card count dropdown.
+  populateCardCounts();
   // Populates the card preview time dropdown.
   populateCardPreviewTimes();
   // Picks the emoji pairs for the game.
   pickPairs();
-  // Starts observing the card elements for size changes.
-  cardsObserver.observe(cards);
+  // Sets the height of the body element.
+  setBodyHeight();
   // Sets the initial state of the cards face up.
   setCardsFaceUp();
+  // Starts observing the card elements for size changes.
+  cardsObserver.observe(cards);
   // Starts the countdown timer.
   startCountdown();
 }
@@ -151,6 +155,7 @@ function storageAvailable(type) {
     selectedEmojiCategory = localStorage.getItem("selectedEmojiCategory");
     selectedEmojiSkinTone = localStorage.getItem("selectedEmojiSkinTone");
     selectedCardPreviewTime = localStorage.getItem("selectedCardPreviewTime") || "8000";
+    selectedCardCount = localStorage.getItem("selectedCardCount") || "32";
   } else {
     // Logs a message to the console if local storage is not available.
     console.log("LOCAL STORAGE NOT AVAILABLE");
@@ -238,6 +243,32 @@ function populateCardPreviewTimes() {
   cardPreviewTimeDropdown.append(...options);
 }
 
+// This function populates the card preview time dropdown with options.
+function populateCardCounts() {
+  // Gets the card preview time dropdown element.
+  const cardCountDropdown = document.getElementById("cardCountDropdown");
+  // Defines the card preview times.
+  const cardCounts = [
+    { name: "16", value: "16" },
+    { name: "32", value: "32" },
+    { name: "48", value: "48" },
+  ];
+  // Creates the dropdown options for each card preview time.
+  const options = cardCounts.map((cardCount) => {
+    // Checks if the current card preview time is the selected one.
+    const isSelected = selectedCardCount === cardCount.value;
+    // Creates a new option element for the dropdown.
+    return new Option(
+      cardCount.name,
+      cardCount.value,
+      false,
+      isSelected
+    );
+  });
+  // Appends the options to the dropdown.
+  cardCountDropdown.append(...options);
+}
+
 ///////////////////////////////////////////
 // CARD PREP FUNCTIONS - RUN ON PAGE LOAD/RELOAD AND WHENEVER THE USER CLICKS THE RESET BUTTON
 ///////////////////////////////////////////
@@ -253,12 +284,13 @@ function pickPairs() {
   selectedEmojiCategory = getSelectedValue("primaryEmojiCategoryDropdown");
   selectedEmojiSkinTone = getSelectedValue("emojiSkinToneDropdown");
   selectedCardPreviewTime = getSelectedValue("cardPreviewTimeDropdown");
+  selectedCardCount = getSelectedValue("cardCountDropdown");
   // Gets the emoji from the selected category.
   let selectedEmoji = emoji[primaryEmojiCategoryDropdown.selectedIndex].emojis;
   // Randomizes the array.
   selectedEmoji.sort(() => Math.random() - 0.5);
   // Picks half the number of cards requested in cardCount variable.
-  pairs = selectedEmoji.slice(0, cardCount / 2);
+  pairs = selectedEmoji.slice(0, selectedCardCount / 2);
   // Duplicates each value in the array so that each emoji has a match.
   pairs = [...pairs, ...pairs];
   // Randomize the pairs.
@@ -301,6 +333,7 @@ function setCardsFaceUp() {
   });
   // Appends the document fragment to the cards container.
   cards.appendChild(fragment);
+  adjustCardSize();
 }
 
 // This function flips all cards that are face up, face down.
@@ -404,8 +437,9 @@ function reset() {
   // Hides the end screen and show the cards container.
   document.getElementById("cards").style.setProperty("display", "flex");
   document.getElementById("endScreen").style.setProperty("display", "none");
-  // Picks new pairs of cards and sets them face up.
+  // Picks new cards.
   pickPairs();
+  // Sets them face up.
   setCardsFaceUp();
   // Saves the user's settings and starts the countdown.
   saveUserSettings();
@@ -443,6 +477,7 @@ function saveUserSettings() {
   localStorage.setItem("selectedEmojiCategory", selectedEmojiCategory);
   localStorage.setItem("selectedEmojiSkinTone", selectedEmojiSkinTone);
   localStorage.setItem("selectedCardPreviewTime", selectedCardPreviewTime);
+  localStorage.setItem("selectedCardCount", selectedCardCount);
 }
 
 // HELPER FUNCTIONS
@@ -478,6 +513,7 @@ function startCountdown() {
 
 // This function sets the height of the body element. Needed for mobile browsers to prevent the address bar from pushing content below the fold.
 function setBodyHeight() {
+  // console.log('Setting body height');
   // Gets the body element.
   var body = document.body;
   // Set the height of the body to the inner height of the window.
@@ -486,8 +522,20 @@ function setBodyHeight() {
 
 // This function adjusts the size of the cards to fit within their parent container.
 function adjustCardSize() {
+  // console.log('Adjusting card size');
   // Gets the cards container and its children.
+  var firstBanner = document.getElementById('firstBanner');
+  var secondBanner = document.getElementById('secondBanner');
+  var main = document.getElementById('main');
+  var mainStyle = getComputedStyle(main);
+  var mainPaddingTop = parseFloat(mainStyle.getPropertyValue('padding-top'));
+  var mainPaddingBottom = parseFloat(mainStyle.getPropertyValue('padding-bottom'));
   var cards = document.getElementById('cards');
+  var footer = document.getElementById('footer');
+
+  var occupiedHeight = firstBanner.offsetHeight + secondBanner.offsetHeight + footer.offsetHeight + mainPaddingTop + mainPaddingBottom;
+  var availableHeight = window.innerHeight - occupiedHeight;
+
   var cardItems = Array.from(cards.children);
   // Get the computed style of the cards element
   var style = getComputedStyle(cards);
@@ -501,9 +549,9 @@ function adjustCardSize() {
 
   // Gets the width and height of the parent container.
   var parentWidth = cards.offsetWidth;
-  var parentHeight = cards.offsetHeight;
+  var parentHeight = Math.min(cards.offsetHeight, availableHeight);
   // Binary search for the largest size that fits.
-  var low = 0;
+  var low = 0; 
   var high = Math.min(parentWidth, parentHeight);
   // Continue until the difference between high and low is less than or equal to 1.
   while (high - low > 1) {
@@ -523,7 +571,6 @@ function adjustCardSize() {
   }
   // Create a CSS class with the desired width and height
   var style = document.createElement('style');
-  var percent = ((low/Math.min(parentWidth, parentHeight))*100);
   style.innerHTML = `
     #cards div {
       width: ${low}px;
@@ -538,10 +585,7 @@ function debounce(func, delay) {
   let debounceTimeout;
   return function(...args) {
     const context = this;
-    if (debounceTimeout) {
-      console.log('Debounced ' + func.name);
-      clearTimeout(debounceTimeout);
-    }
+    if (debounceTimeout) clearTimeout(debounceTimeout); //console.log("Debounced " + func.name);
     debounceTimeout = setTimeout(() => func.apply(context, args), delay);
   };
 }
