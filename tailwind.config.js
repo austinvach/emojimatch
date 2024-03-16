@@ -25,4 +25,3 @@ export default {
     themeRoot: ":root", // The element that receives theme color CSS variables
   }
 }
-
